@@ -2,7 +2,7 @@
  * No clustering, no DOM markers. Loaded by dynamic import right after the shell paints. */
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { AWARD, FLAVOR, PALETTE, ZOOM, clearUser, loadMichelinImages, loadPinImages, michelinBadgeLayer, michelinLayers, pinLayers, pulseUser, registerPinImages, setUser, SEARCH_PIN_SVG } from "../../assets/design/map-config.js";
+import { ATTRIBUTION, AWARD, FLAVOR, creditText, PALETTE, ZOOM, clearUser, loadMichelinImages, loadPinImages, michelinBadgeLayer, michelinLayers, pinLayers, pulseUser, registerPinImages, setUser, SEARCH_PIN_SVG } from "../../assets/design/map-config.js";
 import { LOW_MAX_ZOOM, tilesForBounds } from "../data/michelin";
 import type { Config, Place, View } from "./store";
 import { reducedMotion } from "./store";
@@ -22,6 +22,8 @@ export interface MapEvents {
   onBackground(): void;
   onHomeFailing(): void;
   onReady(): void;
+  /** A visitor pan, zoom or pinch (not a programmatic fly-to). */
+  onUserMove(): void;
 }
 export interface MapController {
   map: maplibregl.Map;
@@ -55,6 +57,9 @@ export async function createMap(el: HTMLElement, cfg: Config, start: View, theme
   let placesFC: GeoJSON.FeatureCollection = { type: "FeatureCollection", features: [] };
   let michFC: GeoJSON.FeatureCollection = { type: "FeatureCollection", features: [] };
   let michOn = false, michFilter: unknown = null, radarOn = false, homeOn = true, curTheme = theme;
+  /** The credit line under the map lists only the sources that are showing (the licence duty for OpenStreetMap data). */
+  const writeCredit = () => { const c = document.getElementById("credit"); if (c) c.textContent = creditText({ michelin: michOn, radar: radarOn }); };
+  writeCredit();
   const homeLayers: Record<string, unknown[]> = {};
   const loadHome = async (t: "light" | "dark") => homeLayers[t] ?? (homeLayers[t] = await fetch(`/style/home-${t}.json`).then((r) => r.json()).catch(() => []));
   const images: Record<string, ImageData | null> = {};
@@ -77,11 +82,11 @@ export async function createMap(el: HTMLElement, cfg: Config, start: View, theme
       sources: {
         "world-land": { type: "geojson", data: "/basemap/land.json" },
         "world-cities": { type: "geojson", data: "/basemap/cities.json" },
-        "base-home": { type: "vector", tiles: [`${API_BASE}/v1/tiles/${TILESET}/{z}/{x}/{y}.mvt`], minzoom: HOME_MIN_ZOOM, maxzoom: 15, attribution: "© OpenStreetMap contributors · Protomaps" },
+        "base-home": { type: "vector", tiles: [`${API_BASE}/v1/tiles/${TILESET}/{z}/{x}/{y}.mvt`], minzoom: HOME_MIN_ZOOM, maxzoom: 15, attribution: ATTRIBUTION.standard },
         places: { type: "geojson", data: placesFC },
         michelin: { type: "geojson", data: michFC },
         user: { type: "geojson", data: { type: "FeatureCollection", features: [] } },
-        ...(radarOn ? { radar: { type: "raster", tiles: [NOAA], tileSize: 256, attribution: "Radar: NOAA NWS" } } : {}),
+        ...(radarOn ? { radar: { type: "raster", tiles: [NOAA], tileSize: 256, attribution: ATTRIBUTION.radar } } : {}),
       },
       layers,
     })));
@@ -142,6 +147,7 @@ export async function createMap(el: HTMLElement, cfg: Config, start: View, theme
     src.setData(michFC);
   }
 
+  map.on("movestart", (e) => { if ((e as { originalEvent?: unknown }).originalEvent) ev.onUserMove(); });
   let moveT = 0;
   map.on("moveend", () => { window.clearTimeout(moveT); moveT = window.setTimeout(() => { ev.onMove(view(), bounds()); void refreshMichelin(); }, 120); });
 
@@ -182,7 +188,7 @@ export async function createMap(el: HTMLElement, cfg: Config, start: View, theme
       (map.getSource("places") as maplibregl.GeoJSONSource | undefined)?.setData(placesFC);
     },
     setMichelin(on, bests, currentOnly, edition) {
-      michOn = on;
+      michOn = on; writeCredit();
       const f: unknown[] = ["all"];
       const codes = bests.flatMap((k) => (k === "star" ? ["1s", "2s", "3s"] : [k]));
       if (codes.length) f.push(["in", ["get", "best"], ["literal", codes]]);
@@ -205,7 +211,7 @@ export async function createMap(el: HTMLElement, cfg: Config, start: View, theme
     },
     clearSearchPin() { pin?.remove(); pin = null; },
     setTheme(t) { curTheme = t; void apply(t); },
-    setRadar(on) { radarOn = on; void apply(curTheme); },
+    setRadar(on) { radarOn = on; writeCredit(); void apply(curTheme); },
     setHome(on) { homeOn = on; for (const l of (homeLayers[curTheme] ?? []) as { id: string }[]) if (map.getLayer(l.id)) map.setLayoutProperty(l.id, "visibility", on ? "visible" : "none"); },
     select(id) { selId = id; reselect(); },
     resize() { map.resize(); },

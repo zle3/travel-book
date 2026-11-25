@@ -4,7 +4,8 @@ export interface WeatherNow { temp: number; feels: number; humidity: number; win
 export interface WeatherHour { t: string; temp: number; code: number; pop: number; icon: string }
 export interface WeatherDay { date: string; hi: number; lo: number; code: number; pop: number; sunrise: string; sunset: string; label: string; icon: string }
 export interface Weather { units: Units; tz: string; now: WeatherNow; hours: WeatherHour[]; days: WeatherDay[]; fetched: string }
-export interface WeatherAlert { id: string; event: string; severity: string; headline: string; ends: string; area: string }
+export interface WeatherAlert { id: string; event: string; severity: string; headline: string; ends: string; area: string; /** What the alert says, trimmed. */ description: string; /** The NWS page for the alert, https only; empty when there is none. */ url: string }
+const httpsUrl = (v: unknown): string => { try { const u = new URL(String(v ?? "")); return u.protocol === "https:" ? u.href : ""; } catch { return ""; } };
 
 /** Coordinates leave the browser and reach the Worker rounded to 2 decimals (about 1 km). */
 export const roundCoord = (n: number): number => Math.round(n * 100) / 100;
@@ -71,7 +72,7 @@ export function adaptNwsAlerts(j: any): WeatherAlert[] {
   return feats.flatMap((f) => {
     const p = f?.properties;
     if (!p || typeof p.event !== "string") return [];
-    return [{ id: String(p.id ?? p.event), event: p.event, severity: String(p.severity ?? "Unknown"), headline: String(p.headline ?? p.event).slice(0, 200), ends: String(p.ends ?? p.expires ?? ""), area: String(p.areaDesc ?? "").slice(0, 120) }];
+    return [{ id: String(p.id ?? p.event), event: p.event, severity: String(p.severity ?? "Unknown"), headline: String(p.headline ?? p.event).slice(0, 200), ends: String(p.ends ?? p.expires ?? ""), area: String(p.areaDesc ?? "").slice(0, 120), description: String(p.description ?? "").replace(/\s+/g, " ").trim().slice(0, 600), url: httpsUrl(p["@id"] ?? f.id) }];
   }).sort((a, b) => (rank[b.severity] ?? 0) - (rank[a.severity] ?? 0)).slice(0, 5);
 }
 export const fmtTemp = (t: number): string => `${t}°`;
