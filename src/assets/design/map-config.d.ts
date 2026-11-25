@@ -1,5 +1,7 @@
 // Loose typings for the lifted design module (plain JS, kept as delivered so it can be diffed against the design branch).
 export const ZOOM: any, FLAVOR: any, PALETTE: any, HEART: string, BEEN: string, AWARD: any;
+export const ATTRIBUTION: { standard: string; areas: string; michelin: string; radar: string };
+export function creditText(o?: { michelin?: boolean; radar?: boolean }): string;
 export function pinLayers(o?: any): any[];
 export function michelinLayers(visible?: boolean, filter?: any): any[];
 export function michelinBadgeLayer(): any[];
