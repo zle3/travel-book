@@ -87,7 +87,7 @@ export async function start(): Promise<void> {
     const slice = ordered.slice(0, feedLimit);
     const distOn = !!app.ctl || true;
     body.innerHTML = slice.length
-      ? slice.map((r) => rowHtml(cfg, r.p, distOn ? r.d : null, picked(r.p.id), edition)).join("") + (ordered.length > feedLimit ? `<div class="endnote" id="feedEnd">Showing ${feedLimit} of ${ordered.length}. Keep scrolling for more.</div>` : `<div class="endnote">That is everything in view.</div>`) + `<div class="hid"></div>`
+      ? slice.map((r) => rowHtml(cfg, r.p, distOn ? r.d : null, picked(r.p.id), edition, app.filters.mine && app.filters.other)).join("") + (ordered.length > feedLimit ? `<div class="endnote" id="feedEnd">Showing ${feedLimit} of ${ordered.length}. Keep scrolling for more.</div>` : `<div class="endnote">That is everything in view.</div>`) + `<div class="hid"></div>`
       : `<div class="empty"><b>Nothing here with these filters.</b>Zoom out, move the map, or clear a filter.<button class="btn" data-act="clearF" type="button">Clear filters</button></div><div class="hid"></div>`;
     const cnt = $("[data-cnt]");
     cnt.textContent = app.ctl ? `${ordered.length.toLocaleString()} ${ordered.length === 1 ? "place" : "places"} in this area` : `${ordered.length.toLocaleString()} places`;
@@ -112,9 +112,27 @@ export async function start(): Promise<void> {
   // Michelin chips live at the end of the scrolling row.
   $("#qr2").insertAdjacentHTML("beforeend", `<button class="chip g-mich" data-act="mich" data-mich="star" aria-pressed="false" type="button"><span class="ico sm ringico" style="--rc:var(--michelin)">${icon("u-award")}</span>Stars</button><button class="chip g-mich" data-act="mich" data-mich="bib" aria-pressed="false" type="button"><span class="ico sm ringico" style="--rc:var(--aw-bib)">${icon("u-award")}</span>Bib Gourmand</button>`);
 
+  // ---------- notices: one slot, one at a time. Offline comes first and gives way after a few seconds; the dense hint waits behind it.
+  type Notice = "offline" | "dense";
+  const NOTICES: Notice[] = ["offline", "dense"];
+  const NOTICE_MS = 8000;
+  const wants: Record<Notice, boolean> = { offline: false, dense: false };
+  const retired = new Set<Notice>();
+  let noticeNow: Notice | null = null, noticeTimer = 0;
+  function syncNotices(): void {
+    const next = NOTICES.find((n) => wants[n] && !retired.has(n)) ?? null;
+    if (next === noticeNow) return;
+    noticeNow = next;
+    for (const n of NOTICES) $(`#${n}`).classList.toggle("on", n === next);
+    window.clearTimeout(noticeTimer);
+    if (next === "offline") noticeTimer = window.setTimeout(() => { retired.add("offline"); syncNotices(); }, NOTICE_MS);
+  }
+  const retire = (n: Notice): void => { retired.add(n); syncNotices(); };
+  /** The dense hint is a nudge after the visitor pans or zooms, never on first load. */
+  let userMoved = false;
   function denseHint(): void {
-    const on = !denseDismissed() && app.view.zoom < 14 && app.view.zoom > 9 && ordered.length > 250;
-    whenSettled(() => $("#dense").classList.toggle("on", on && !denseDismissed()));
+    wants.dense = userMoved && !denseDismissed() && app.view.zoom < 14 && app.view.zoom > 9 && ordered.length > 250;
+    syncNotices();
   }
 
   function pushMap(): void {
@@ -296,8 +314,12 @@ ${cfg.manifest.hasBeen ? `<label class="sw"><span class="nm">Hide places I have 
     for (const p of list) { if (app.byId.has(p.id)) continue; app.places.push(p); app.byId.set(p.id, p); }
     app.refresh();
   };
-  app.setBackend = (up) => { app.backendUp = up; whenSettled(() => $("#offline").classList.toggle("on", app.backendUp === false && !offlineDismissed)); app.ctl?.setHome(up); };
-  let offlineDismissed = false;
+  app.setBackend = (up) => {
+    app.backendUp = up;
+    if (up) retired.delete("offline");
+    whenSettled(() => { wants.offline = app.backendUp === false; syncNotices(); });
+    app.ctl?.setHome(up);
+  };
 
   // ---------- events
   document.addEventListener("click", (e) => {
@@ -323,9 +345,9 @@ ${cfg.manifest.hasBeen ? `<label class="sw"><span class="nm">Hide places I have 
       case "theme": { const next = theme() === "light" ? "dark" : "light"; setTheme(next); break; }
       case "locate": locate(); break;
       case "locX": $("#loccard").classList.remove("on"); break;
-      case "offX": offlineDismissed = true; $("#offline").classList.remove("on"); break;
+      case "offX": retire("offline"); break;
       case "dense": sheetCtl?.snap("peek"); app.ctl?.map.zoomIn(); break;
-      case "denseX": dismissDense(); $("#dense").classList.remove("on"); break;
+      case "denseX": dismissDense(); wants.dense = false; retire("dense"); break;
       case "peekX": closePeek(); break;
       case "peekMore": peekOpen = !peekOpen; showPeek(); break;
       case "peekPrev": case "peekNext": { if (selected?.kind !== "place") break; const i = nearby.findIndex((q) => q.id === (selected as { id: string }).id) + (act === "peekNext" ? 1 : -1); const p = nearby[i]; if (p) { selected = { kind: "place", id: p.id }; showPeek(); app.ctl?.flyTo(p.x, p.y, Math.max(app.view.zoom, 15), sheetPad()); } break; }
@@ -386,6 +408,7 @@ ${cfg.manifest.hasBeen ? `<label class="sw"><span class="nm">Hide places I have 
         onMichelin: (m) => void showMichelin(m),
         onBackground: () => { if (selected) closePeek(); closeSort(); if (!isDesktop() && sheetCtl?.current() === "half") sheetCtl.snap("peek"); },
         onHomeFailing: () => app.setBackend(false),
+        onUserMove: () => { userMoved = true; },
         onReady: () => { app.ctl!.setPad(sheetPad()); pushMap(); const b = app.ctl!.bounds(); app.bounds = b; recompute(); renderFeed(); window.dispatchEvent(new CustomEvent("tb:mapready")); },
       });
       app.ctl = ctl;

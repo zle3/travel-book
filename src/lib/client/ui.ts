@@ -20,9 +20,16 @@ export const awardBadge = (mich: string | undefined, edition: number): string =>
 const rankOf = (c: AwardCode): number => ({ S3: 6, S2: 5, S1: 4, B: 3, G: 2, L: 1 })[c];
 export const kindOf = (c: AwardCode) => AWARD_KIND[c];
 
-export function badges(p: Place, edition: number, picked: boolean): string {
+/** A subtle mark for another branch of a saved chain; the long wording is for assistive tech and the tooltip only. */
+export function exMark(p: Place): string {
+  if (!p.ex) return "";
+  const l = `Another location of ${p.n}${p.br ? `, ${p.br}` : ""}`;
+  return `<span class="bd-more" role="img" aria-label="${esc(l)}" title="${esc(l)}">${icon("u-pin")}</span>`;
+}
+
+export function badges(p: Place, edition: number, picked: boolean, withEx = true): string {
   const b: string[] = [];
-  if (p.ex) b.push(`<span class="bd bd-more">Another location of ${esc(p.n)}${p.br ? ` \u00b7 ${esc(p.br)}` : ""}</span>`);
+  if (withEx) { const m = exMark(p); if (m) b.push(`<span class="bd">${m}</span>`); }
   if (p.been) b.push(`<span class="bd bd-been">${icon("u-check")}Been</span>`);
   if (isNew(p.added)) b.push(`<span class="bd bd-new">New</span>`);
   if (p.live) b.push(`<span class="bd bd-pick">Zach's pick</span>`);
@@ -32,11 +39,12 @@ export function badges(p: Place, edition: number, picked: boolean): string {
   return b.length ? `<span class="rb">${b.join("")}</span>` : "";
 }
 
-export function rowHtml(cfg: Config, p: Place, dist: number | null, picked: boolean, edition: number): string {
+/** `showSrc`: tag Other-list places, only worth saying while both sources are on screen. */
+export function rowHtml(cfg: Config, p: Place, dist: number | null, picked: boolean, edition: number, showSrc = false): string {
   const cat = catOf(cfg, p.c);
   const area = cityOf(p.addr);
-  const meta = [cat.label, area, dist === null ? "" : fmtDistance(dist)].filter(Boolean).join(" · ");
-  return `<div class="row" data-id="${esc(p.id)}"><button class="rmain" data-act="open" data-id="${esc(p.id)}" type="button"><span class="ico g-${cat.group}">${icon(cat.icon)}</span><span class="rtx"><span class="rn">${esc(p.n)}</span><span class="rm">${esc(meta)}${p.s === "o" ? '<span class="tag">Other list</span>' : ""}</span>${p.note ? `<span class="rq">${esc(p.note)}</span>` : ""}${badges(p, edition, picked)}</span></button>${heartBtn(p, picked)}</div>`;
+  const meta = [cat.label, area].filter(Boolean).join(" · ");
+  return `<div class="row" data-id="${esc(p.id)}"><button class="rmain" data-act="open" data-id="${esc(p.id)}" type="button"><span class="ico g-${cat.group}">${icon(cat.icon)}</span><span class="rtx"><span class="rn">${esc(p.n)}</span><span class="rm">${esc(meta)}${showSrc && p.s === "o" ? '<span class="tag">Other list</span>' : ""}${exMark(p)}</span>${p.note ? `<span class="rq">${esc(p.note)}</span>` : ""}${badges(p, edition, picked, false)}</span>${dist === null ? "" : `<span class="dst">${esc(fmtDistance(dist))}</span>`}</button>${heartBtn(p, picked)}</div>`;
 }
 export const heartBtn = (p: Place, picked: boolean): string => `<button class="heart" data-act="heart" data-id="${esc(p.id)}" aria-pressed="${picked}" aria-label="${picked ? "Remove" : "Save"} ${esc(p.n)} ${picked ? "from" : "to"} my picks" type="button">${icon("u-heart")}<i></i><i></i><i></i></button>`;
 
