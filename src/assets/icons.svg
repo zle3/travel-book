@@ -1,4 +1,4 @@
-<!-- Little Travel Book icon sprite (round 3). One <symbol id="c-<category>"> per category + c-other, one <symbol id="u-<name>"> per UI icon.
+<!-- Little Travel Book icon sprite (round 3; satellite dropped, weather w-* added). One <symbol id="c-<category>"> per category + c-other, one <symbol id="u-<name>"> per UI icon.
      24x24 grid, stroke 2, round caps/joins, currentColor. Classes inside symbols: .f = soft fill (currentColor at .2, set in CSS), .s = solid.
      INLINE this file in the page (CSS selectors reach <symbol> only when inline): <svg width="0" height="0" style="position:absolute" aria-hidden="true">...</svg>.
      Required CSS: .ic{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round} .ic .f,symbol .f{fill:currentColor;fill-opacity:.2} .ic .s,symbol .s{fill:currentColor;stroke:none} -->
@@ -50,7 +50,6 @@
 <symbol id="u-nav" viewBox="0 0 24 24"><path class="f" d="M20 4L4 10.800l6.500 2.700 2.700 6.500z"/></symbol>
 <symbol id="u-pin" viewBox="0 0 24 24"><path d="M12 21.500s-6.500-5.800-6.500-11.200a6.500 6.500 0 0 1 13 0C18.500 15.700 12 21.500 12 21.500z"/><circle cx="12" cy="10.300" r="2.300"/></symbol>
 <symbol id="u-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
-<symbol id="u-satellite" viewBox="0 0 24 24"><circle class="f" cx="12" cy="12" r="8.500"/><path d="M3.500 12h17M12 3.500c-3 3.200-3 13.800 0 17M12 3.500c3 3.200 3 13.800 0 17"/></symbol>
 <symbol id="u-search" viewBox="0 0 24 24"><circle class="f" cx="10.800" cy="10.800" r="6.500"/><path d="M15.800 15.800L20.500 20.500"/></symbol>
 <symbol id="u-share" viewBox="0 0 24 24"><path d="M12 15V3.500M7.500 7.500L12 3l4.500 4.500"/><path d="M5 12v6.500a1.500 1.500 0 0 0 1.500 1.500h11a1.500 1.500 0 0 0 1.500-1.500V12"/></symbol>
 <symbol id="u-shows" viewBox="0 0 24 24"><path d="M9 17.500V5.500l10-2v12"/><circle class="f" cx="6.800" cy="17.500" r="2.500"/><circle class="f" cx="16.800" cy="15.500" r="2.500"/></symbol>
@@ -58,4 +57,17 @@
 <symbol id="u-sparkle" viewBox="0 0 24 24"><path class="f" d="M12 3l1.900 5.100L19 10l-5.100 1.900L12 17l-1.900-5.100L5 10l5.100-1.900z"/><circle class="s" cx="19" cy="18" r="1.400"/></symbol>
 <symbol id="u-sun" viewBox="0 0 24 24"><circle class="f" cx="12" cy="12" r="4.200"/><path d="M12 2.800v2M12 19.200v2M2.800 12h2M19.200 12h2M5.500 5.500l1.400 1.400M17.100 17.100l1.400 1.400M5.500 18.500l1.400-1.400M17.100 6.900l1.400-1.400"/></symbol>
 <symbol id="u-trash" viewBox="0 0 24 24"><path d="M4.500 7h15M9.500 7V4.500h5V7"/><path class="f" d="M6.500 7l.9 12.500h9.200L17.500 7z"/></symbol>
+<symbol id="w-clear-day" viewBox="0 0 24 24"><circle class="f" cx="12" cy="12" r="4.2"/><path d="M12 2.8v2.2M12 19v2.2M2.8 12H5M19 12h2.2M5.5 5.5l1.6 1.6M16.9 16.9l1.6 1.6M18.5 5.5l-1.6 1.6M7.1 16.9l-1.6 1.6"/></symbol>
+<symbol id="w-clear-night" viewBox="0 0 24 24"><path class="f" d="M20 14.2A8 8 0 0 1 9.8 4a8 8 0 1 0 10.2 10.2z"/></symbol>
+<symbol id="w-partly-day" viewBox="0 0 24 24"><circle class="f" cx="9" cy="8.5" r="3.4"/><path d="M9 2.6v1.4M3 8.5h1.4M4.8 4.3l1 1M13.2 4.3l-1 1"/><path class="f" d="M8.5 19.5h8.8a3.4 3.4 0 0 0 .4-6.8 4.7 4.7 0 0 0-9 1.4 2.7 2.7 0 0 0-.2 5.4z"/></symbol>
+<symbol id="w-partly-night" viewBox="0 0 24 24"><path class="f" d="M14 3.6a5 5 0 1 0 6.4 6.4A5.6 5.6 0 0 1 14 3.6z"/><path class="f" d="M8.5 20h8.8a3.4 3.4 0 0 0 .4-6.800 4.700 4.700 0 0 0-9 1.400A2.700 2.700 0 0 0 8.500 20z"/></symbol>
+<symbol id="w-cloud" viewBox="0 0 24 24"><path class="f" d="M7 18.5h9.5a3.7 3.7 0 0 0 .5-7.4A5.2 5.2 0 0 0 7 10.2 4.2 4.2 0 0 0 7 18.5z"/></symbol>
+<symbol id="w-fog" viewBox="0 0 24 24"><path class="f" d="M7 14h9.500a3.700 3.700 0 0 0 .5-7.400A5.200 5.200 0 0 0 7 5.700 4.200 4.200 0 0 0 7 14z"/><path d="M4 17.500h13M7 21h13"/></symbol>
+<symbol id="w-drizzle" viewBox="0 0 24 24"><path class="f" d="M7 15h9.500a3.700 3.700 0 0 0 .5-7.400A5.200 5.200 0 0 0 7 6.700 4.200 4.200 0 0 0 7 15z"/><path d="M8.500 18.500l-.6 1.800M12.500 18.500l-.6 1.800M16.500 18.500l-.6 1.800"/></symbol>
+<symbol id="w-rain" viewBox="0 0 24 24"><path class="f" d="M7 14.500h9.500a3.700 3.700 0 0 0 .5-7.400A5.200 5.200 0 0 0 7 6.200 4.200 4.200 0 0 0 7 14.500z"/><path d="M8 17.500l-1 3M12.500 17.500l-1 3M17 17.500l-1 3"/></symbol>
+<symbol id="w-snow" viewBox="0 0 24 24"><path class="f" d="M7 14.500h9.500a3.700 3.700 0 0 0 .5-7.400A5.200 5.200 0 0 0 7 6.200 4.200 4.200 0 0 0 7 14.500z"/><path d="M8 18v.1M12 20v.1M16 18v.1M12 17v.1" stroke-width="2.800"/></symbol>
+<symbol id="w-storm" viewBox="0 0 24 24"><path class="f" d="M7 14h9.500a3.700 3.700 0 0 0 .5-7.400A5.200 5.200 0 0 0 7 5.700 4.200 4.200 0 0 0 7 14z"/><path d="M12.500 13.500l-2.300 3.800h3.300l-2 3.700"/></symbol>
+<symbol id="w-radar" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 12l5.500-5.500"/></symbol>
+<symbol id="w-sunrise" viewBox="0 0 24 24"><path d="M3 18h18M7 18a5 5 0 0 1 10 0M12 6v3M5.300 9.800l1.400 1.400M18.700 9.800l-1.400 1.400"/></symbol>
+<symbol id="w-sunset" viewBox="0 0 24 24"><path d="M3 18h18M7 18a5 5 0 0 1 10 0M12 11V8M9.500 6.500L12 9l2.500-2.500"/></symbol>
 </defs></svg>

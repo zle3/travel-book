@@ -1,7 +1,6 @@
 ---
-import { ICONS } from "../lib/icons";
-interface Props { name: string; class?: string; label?: string }
-const { name, class: cls = "", label } = Astro.props;
-const body = ICONS[name] ?? "";
+/** Inline-sprite icon (the sprite is inlined once in index.astro so CSS can reach its .f and .s classes). */
+interface Props { name: string; class?: string }
+const { name, class: cls = "" } = Astro.props;
 ---
-<svg class={`ico ${cls}`.trim()} viewBox="0 0 24 24" aria-hidden={label ? undefined : "true"} role={label ? "img" : undefined} aria-label={label} focusable="false" set:html={body} />
+<svg class={`ic ${cls}`.trim()} aria-hidden="true" focusable="false"><use href={`#${name}`} /></svg>

@@ -69,8 +69,8 @@ for (const r of body) {
   rest.push({ id: r[col.id], name: r[col.name], city: r[col.city], country: r[col.country], lat, lng, best, yr: +r[col.latest_year] || 0, awards: r[col.awards_by_year] ?? "", url: (r[col.url] ?? "").replace("https://guide.michelin.com/", "") });
 }
 rest.sort((a, b) => (a.id < b.id ? -1 : 1));
-// low.json: every point, 2 decimals (about 1 km) for z0-5.5 dots. Columnar to stay small: [lng*100 ints are avoided, plain numbers]
-put("michelin/low.json", JSON.stringify(rest.map((p) => [round(p.lng, 2), round(p.lat, 2), p.best])));
+// low.json: every point as [lng, lat, best, latestYear], 2 decimals (about 1 km), for the z0-5.5 dots.
+put("michelin/low.json", JSON.stringify(rest.map((p) => [round(p.lng, 2), round(p.lat, 2), p.best, p.yr])));
 // z5 grid tiles: [id, lng, lat, best, latestYear, name]
 const tiles = new Map();
 for (const p of rest) {

@@ -17,7 +17,6 @@ export const ATTRIBUTION = {
   standard: '© OpenStreetMap contributors · OpenFreeMap',
 };
 
-/* Satellite was DROPPED by the owner (no third-party imagery). The map style follows light/dark only. */
 
 /* Zoom ladder. Round 2 swapped to icons at 11.2 and crowded SF; 13 keeps dots calm through the dense core and still shows icons at neighbourhood zoom. */
 export const ZOOM = {
