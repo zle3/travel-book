@@ -447,7 +447,7 @@ html{font-family:var(--font-sans)}
 .phone .credit-map{left:12px;bottom:calc(100% + 6px);max-width:calc(100% - 82px)}
 .phone .sheet.full .credit-map{display:none}
 /* Desktop: fixed so the panel's overflow never clips it; it sits at the map's bottom right, under the Key button. */
-.desktop .credit-map{position:fixed;right:16px;bottom:10px;max-width:520px;text-align:right}
+.desktop .credit-map{position:fixed;right:16px;bottom:10px;max-width:680px;text-align:right}
 .phone .sheet{top:calc(var(--topH) + 6px)}
 .phone .peek{bottom:70px}
 .phone .bar .counter{left:calc(50% + 6px)}
@@ -655,6 +655,26 @@ input[type=search]::-webkit-search-cancel-button{display:none}
 .ganchor{display:flex;gap:8px;align-items:flex-start;margin-top:10px;padding:10px 14px;border-radius:var(--radius-sm);background:var(--surface-2);font-size:var(--fs-md);color:var(--ink-2)}
 .ganchor .ic{font-size:var(--fs-icon-sm);margin-top:2px;flex:none}.ganchor b{color:var(--ink)}
 .guiding .sortb{visibility:hidden}
+/* San Francisco neighborhoods: chip in the guides header, the alphabetical list, and the chosen-neighborhood header */
+.gcity{padding:2px 20px 8px}
+.gcity .chip{box-shadow:none;background:var(--surface-2)}
+.gcity .chip[aria-pressed=true]{background:var(--control);color:var(--control-ink)}
+.hsec{padding:4px 0 6px}
+.hsh{display:flex;align-items:center;justify-content:space-between;gap:8px;padding-right:10px}
+.hsh .gh{padding:0 0 0 12px}
+.htog{display:inline-flex;align-items:center;gap:8px;min-height:var(--tap);padding:0 8px;border-radius:var(--radius-sm);font:inherit;color:inherit}
+.htog .ic{font-size:var(--fs-icon-sm);color:var(--muted);transition:transform .2s var(--ease)}
+.htog[aria-expanded=true] .ic{transform:rotate(90deg)}
+.hn2{font-size:var(--fs-sm);font-weight:var(--fw-regular);color:var(--muted)}
+.hlist{list-style:none;margin:0;padding:0}
+.hrow{display:flex;align-items:center;gap:12px;width:100%;min-height:var(--tap);padding:6px 14px 6px 20px;border-radius:var(--radius-sm);text-align:left}
+.hrow .rn{flex:1;font-size:var(--fs-md)}
+.hrow .hc{font-size:var(--fs-sm);color:var(--ink-2);font-variant-numeric:tabular-nums}
+.hrow .ic{font-size:var(--fs-icon-sm);color:var(--muted)}
+.desktop .hrow:hover{background:var(--surface-2)}
+.hhead{display:flex;align-items:center;gap:8px;padding:4px 10px 8px 20px}
+.hhead h2{flex:1;font-size:var(--fs-xl);font-weight:var(--fw-bold);letter-spacing:-.01em;line-height:1.2}
+.hhead .hx{background:var(--surface-2)}
 /* ---------- App launcher: 9-dot "Apps" menu in the header ----------
    Markup: layouts/partials/app-launcher.html, list: data/apps.yaml,
    behaviour: static/js/app-launcher.js. Shared with travel.zachle.info, so

@@ -18,10 +18,25 @@ export const ATTRIBUTION = {
   areas: 'GeoNames · US Census',                           // area search and the gazetteer
   michelin: 'Michelin Guide',                              // only while the Michelin layer is on
   radar: 'Radar: NOAA NWS',                                // only while rain radar is on
+  hoods: 'Neighborhoods: DataSF',                          // only while the San Francisco neighborhood layer is shown
 };
 /** The one credit line under the map, from the sources that are actually showing. */
-export const creditText = ({ michelin = false, radar = false } = {}) =>
-  [ATTRIBUTION.standard, ATTRIBUTION.areas, michelin ? ATTRIBUTION.michelin : '', radar ? ATTRIBUTION.radar : ''].filter(Boolean).join(' · ');
+export const creditText = ({ michelin = false, radar = false, hoods = false } = {}) =>
+  [ATTRIBUTION.standard, ATTRIBUTION.areas, michelin ? ATTRIBUTION.michelin : '', radar ? ATTRIBUTION.radar : '', hoods ? ATTRIBUTION.hoods : ''].filter(Boolean).join(' · ');
+
+/* San Francisco neighborhoods (shown only after the visitor picks San Francisco): thin outlines, a quiet fill for the chosen one, names from zoom 11.
+   Sources 'hoods' (polygons, props slug+name) and 'hood-labels' (one point each). Layers sit under the pins. `sel` is the chosen slug or ''. */
+const HOOD = { light: { line: '#8d7399', fill: '#6c495b', text: '#5a4468', halo: '#ffffff' }, dark: { line: '#a98fb3', fill: '#f6ecf2', text: '#d9c6d0', halo: '#2a1d28' } };
+export const hoodLayers = ({ theme = 'light', on = false, sel = '' } = {}) => {
+  const c = HOOD[theme], vis = { visibility: on ? 'visible' : 'none' };
+  const isSel = ['==', ['get', 'slug'], sel];
+  return [
+    { id: 'hoods-fill', type: 'fill', source: 'hoods', layout: vis, paint: { 'fill-color': c.fill, 'fill-opacity': ['case', isSel, theme === 'dark' ? 0.14 : 0.12, 0] } },
+    { id: 'hoods-line', type: 'line', source: 'hoods', layout: { ...vis, 'line-join': 'round' }, paint: { 'line-color': c.line, 'line-opacity': 0.85, 'line-width': ['interpolate', ['linear'], ['zoom'], 10, 0.6, 14, 1.1] } },
+    { id: 'hoods-sel', type: 'line', source: 'hoods', filter: ['==', ['get', 'slug'], sel], layout: { ...vis, 'line-join': 'round' }, paint: { 'line-color': c.line, 'line-width': 2 } },
+    { id: 'hoods-label', type: 'symbol', source: 'hood-labels', minzoom: 11, maxzoom: 15.6, layout: { ...vis, 'text-field': ['get', 'name'], 'text-font': ['Noto Sans Regular'], 'text-size': ['interpolate', ['linear'], ['zoom'], 11, 10.5, 14, 13], 'text-max-width': 7, 'text-optional': true }, paint: { 'text-color': c.text, 'text-halo-color': c.halo, 'text-halo-width': 1.4 } },
+  ];
+};
 
 
 /* Zoom ladder. Round 2 swapped to icons at 11.2 and crowded SF; 13 keeps dots calm through the dense core and still shows icons at neighbourhood zoom. */
