@@ -7,6 +7,9 @@ import { parseAwards } from "../data/michelin";
 import type { AwardCode } from "../data/michelin";
 import { cleanIds, decodePicks, picksText, shareUrl, cityOf } from "../picks";
 import { QUICK } from "../quick";
+import guidesIndex from "../../data/guides.json";
+import { SF_BOX, inBox, resolveGuide } from "../guides";
+import type { GuideData, ResolvedGuide, ResolvedItem } from "../guides";
 import type { MapController, MichelinPoint } from "./map";
 import { initSheet } from "./sheet";
 import type { SheetCtl, Snap } from "./sheet";
@@ -51,6 +54,9 @@ export async function start(): Promise<void> {
   let nearby: Place[] = [];
   let peekOpen = false;
   let stopPulse: (() => void) | null = null;
+  let mapFailed = false;
+  let guide: ResolvedGuide | null = null;
+  const guides: ResolvedGuide[] = [];
   const edition = cfg.manifest.currentEdition;
   const picked = (id: string) => app.picks.includes(id) || app.shared.includes(id);
   const hearted = () => new Set([...app.picks, ...app.shared]);
@@ -59,6 +65,16 @@ export async function start(): Promise<void> {
   const geo = (await fetch(cfg.manifest.places).then((r) => r.json())) as { features: { geometry: { coordinates: [number, number] }; properties: Record<string, unknown> }[] };
   app.places = geo.features.map((f) => { const p = f.properties as Record<string, unknown>; return { id: String(p.id), n: String(p.n), c: String(p.c), s: p.s === "m" ? "m" : "o", l: (p.l as string[]) ?? [], note: String(p.note ?? ""), addr: String(p.addr ?? ""), maps: String(p.maps ?? ""), x: f.geometry.coordinates[0], y: f.geometry.coordinates[1], mich: p.mich ? String(p.mich) : undefined, ex: p.ex ? 1 : undefined, br: p.br ? String(p.br) : undefined } as Place; });
   app.byId = new Map(app.places.map((p) => [p.id, p]));
+  // Area guides: resolved against the saved places once; guide-only pins are registered by id so hearts and picks work on them.
+  const guideFiles = import.meta.glob("../../data/guide-*.json", { eager: true, import: "default" }) as Record<string, GuideData>;
+  for (const row of guidesIndex.guides) {
+    const data = guideFiles[`../../data/${row.file}`];
+    if (!data) continue;
+    const g = resolveGuide(data, app.places);
+    for (const x of g.extras) app.byId.set(x.id, x as Place);
+    guides.push(g);
+  }
+  const guideFromHash = /(?:^|[#&])guide=([a-z0-9-]+)/.exec(location.hash)?.[1];
   const hash = location.hash;
   if (/picks=/.test(hash)) {
     app.shared = cleanIds(decodePicks(hash)).filter((id) => app.byId.has(id));
@@ -67,7 +83,7 @@ export async function start(): Promise<void> {
 
   // ---------- derived lists
   const ctx = { currentEdition: edition };
-  const filtered = (): Place[] => app.places.filter((p) => matches(p, app.filters, ctx));
+  const filtered = (): Place[] => (guide ? (guide.places as Place[]) : app.places.filter((p) => matches(p, app.filters, ctx)));
   const origin = (): { x: number; y: number } => (app.user ? { x: app.user.lng, y: app.user.lat } : { x: app.view.lng, y: app.view.lat });
   const inBounds = (p: Place) => p.x >= app.bounds[0] && p.x <= app.bounds[2] && p.y >= app.bounds[1] && p.y <= app.bounds[3];
 
@@ -83,15 +99,22 @@ export async function start(): Promise<void> {
   // ---------- rendering
   const body = $("#listBody");
   function renderFeed(reset = true): void {
+    if (guide) { renderChips(); topH(); return; } // the guide view paints itself (paintGuide), so a pan never resets its scroll
     if (reset) feedLimit = FEED_CHUNK;
     const slice = ordered.slice(0, feedLimit);
     const distOn = !!app.ctl || true;
-    body.innerHTML = slice.length
-      ? slice.map((r) => rowHtml(cfg, r.p, distOn ? r.d : null, picked(r.p.id), edition)).join("") + (ordered.length > feedLimit ? `<div class="endnote" id="feedEnd">Showing ${feedLimit} of ${ordered.length}. Keep scrolling for more.</div>` : `<div class="endnote">That is everything in view.</div>`) + `<div class="hid"></div>`
-      : `<div class="empty"><b>Nothing here with these filters.</b>Zoom out, move the map, or clear a filter.<button class="btn" data-act="clearF" type="button">Clear filters</button></div><div class="hid"></div>`;
+    const focusedGuide = (document.activeElement as HTMLElement | null)?.closest?.<HTMLElement>(".gcard")?.dataset.guide; // a re-render (map moved) must not drop focus from a guide card
+    body.innerHTML = guidesHtml() + (slice.length
+      ? slice.map((r) => rowHtml(cfg, r.p, distOn ? r.d : null, picked(r.p.id), edition, app.filters.mine && app.filters.other)).join("") + (ordered.length > feedLimit ? `<div class="endnote" id="feedEnd">Showing ${feedLimit} of ${ordered.length}. Keep scrolling for more.</div>` : `<div class="endnote">That is everything in view.</div>`) + `<div class="hid"></div>`
+      : `<div class="empty"><b>Nothing here with these filters.</b>Zoom out, move the map, or clear a filter.<button class="btn" data-act="clearF" type="button">Clear filters</button></div><div class="hid"></div>`);
+    if (focusedGuide) body.querySelector<HTMLElement>(`.gcard[data-guide="${focusedGuide}"]`)?.focus({ preventScroll: true });
     const cnt = $("[data-cnt]");
-    cnt.textContent = app.ctl ? `${ordered.length.toLocaleString()} ${ordered.length === 1 ? "place" : "places"} in this area` : `${ordered.length.toLocaleString()} places`;
-    $("#hello").textContent = app.user ? "Sorted by distance from you." : sort === "az" ? "Places in view, A to Z." : "Places in view, nearest to the middle of the map first.";
+    // One phrase everywhere: "N places in this area" once the map knows the area; before that, no number to contradict it.
+    cnt.textContent = app.ctl ? `${ordered.length.toLocaleString()} ${ordered.length === 1 ? "place" : "places"} in this area` : mapFailed ? `${ordered.length.toLocaleString()} places` : "Places in this area";
+    // Nearest is the default and needs no caption; only the other orders say what they do.
+    const hello = $("#hello");
+    hello.hidden = sort === "near";
+    hello.textContent = sort === "az" ? "Places in view, A to Z." : sort === "mix" ? "My lists and Other lists, taking turns." : "";
     $("[data-sort]").textContent = sort === "near" ? "Nearest" : sort === "mix" ? "Mix" : "A-Z";
     const io = $("#feedEnd");
     if (io && "IntersectionObserver" in window) new IntersectionObserver((es, ob) => { if (es[0]?.isIntersecting) { ob.disconnect(); feedLimit += FEED_CHUNK; renderFeed(false); } }, { root: body.closest(".sheet") === null ? null : body, rootMargin: "200px" }).observe(io);
@@ -101,19 +124,80 @@ export async function start(): Promise<void> {
     topH();
   }
 
+  // ---------- guides: a section under the feed header while the map is on a city that has them, and the guide view itself
+  const guidesHere = (): ResolvedGuide[] => guides.filter((g) => g.city === "San Francisco" && inBox(app.view.lng, app.view.lat, SF_BOX));
+  function guidesHtml(): string {
+    const here = guidesHere();
+    if (!here.length) return "";
+    return `<section class="gsec" aria-label="Guides in San Francisco"><h3 class="gh">Guides in San Francisco</h3>${here.map((g) => `<button class="gcard" data-act="guide" data-guide="${esc(g.id)}" type="button"><span class="ico g-sights">${icon("u-map")}</span><span class="rtx"><span class="rn">${esc(g.title)}</span><span class="rm">${esc(g.subtitle)}</span></span><span class="go">${icon("u-chev-r")}</span></button>`).join("")}</section>`;
+  }
+  function guideHtml(g: ResolvedGuide): string {
+    const row = (r: ResolvedItem) => rowHtml(cfg, { ...(r.place as Place), note: r.note || (r.place as Place).note }, r.fromAnchorM, picked(r.place.id), edition, false);
+    const a = g.anchor;
+    return `<div class="ghead"><button class="gback" data-act="guideBack" type="button">${icon("u-chev-l")}Back to places</button><h2 tabindex="-1">${esc(g.title)}</h2><p class="gsub">${esc(g.subtitle)}</p>${a ? `<p class="ganchor">${icon("u-pin")}<span>Around <b>${esc(a.place.n)}</b>${a.note ? `, ${esc(a.note)}` : ""}</span></p>` : ""}</div>${g.groups.map((gr) => `<h3 class="gh">${esc(gr.title)}</h3>${gr.items.map(row).join("")}`).join("")}<div class="hid"></div>`;
+  }
+  function paintGuide(): void {
+    if (!guide) return;
+    body.innerHTML = guideHtml(guide);
+    body.scrollTop = 0;
+    const n = guide.groups.reduce((t, gr) => t + gr.items.length, 0);
+    $("[data-cnt]").textContent = `${n} places in ${guide.title}`;
+    $("#hello").hidden = true;
+    $("#sheet").classList.add("guiding");
+  }
+  function openGuide(id: string, focus = true): void {
+    const g = guides.find((x) => x.id === id);
+    if (!g) return;
+    guide = g; selected = null; showPeek();
+    history.replaceState(null, "", `${location.pathname}${location.search}#guide=${g.id}`);
+    paintGuide(); renderChips(); topH(); pushMap();
+    // The list was replaced under the visitor's finger: move focus to the new view's title (the count above is a polite live region, so it is announced).
+    if (focus) $<HTMLElement>(".ghead h2", body).focus({ preventScroll: true });
+    if (g.bounds) app.ctl?.fitBounds(g.bounds, sheetPad());
+  }
+  function closeGuide(): void {
+    if (!guide) return;
+    const id = guide.id;
+    guide = null; selected = null; showPeek();
+    $("#sheet").classList.remove("guiding");
+    history.replaceState(null, "", location.pathname + location.search);
+    recompute(); renderFeed(); pushMap();
+    // Back to where they were: the card that opened the guide .
+    body.querySelector<HTMLElement>(`.gcard[data-guide="${id}"]`)?.focus({ preventScroll: true });
+  }
+
   function renderChips(): void {
-    for (const q of QUICK) { if (q.shows) continue; const el = $<HTMLButtonElement>(`[data-chip="${q.id}"]`); el?.setAttribute("aria-pressed", String(q.cats.every((c) => app.filters.cats.includes(c)))); }
+    for (const q of QUICK) { const el = $<HTMLButtonElement>(`[data-chip="${q.id}"]`); el?.setAttribute("aria-pressed", String(q.cats.every((c) => app.filters.cats.includes(c)))); }
     const f = app.filters;
     const n = activeCount(f);
-    $("#qr1").innerHTML = `${n ? `<button class="chip clr" data-act="clearF" aria-label="Clear ${n} active filters" type="button">${icon("u-close")}</button>` : ""}<div class="srcseg" role="group" aria-label="Sources"><button data-act="src" data-src="mine" aria-pressed="${f.mine}" type="button">${icon("u-pin")}My lists</button><button data-act="src" data-src="other" aria-pressed="${f.other}" type="button">${icon("c-other")}Other lists</button><button data-act="src" data-src="mich" data-michelin aria-pressed="${f.michelinLayer}" type="button">${icon("u-award")}Michelin</button></div>${cfg.manifest.hasBeen ? `<button class="chip q-been" data-act="been" aria-pressed="${f.hideBeen}" type="button">${icon("u-eye-off")}Hide been</button>` : ""}`;
+    // The clear button always has its slot (hidden when nothing is active), so toggling a chip never moves the row.
+    $("#qr1").innerHTML = `<button class="chip clr" data-act="clearF" aria-label="${n ? `Clear ${n} active filters` : "No filters to clear"}" type="button"${n ? "" : " disabled"}>${icon("u-close")}</button><div class="srcseg" role="group" aria-label="Sources"><button data-act="src" data-src="mine" aria-pressed="${f.mine}" type="button">${icon("u-pin")}My lists</button><button data-act="src" data-src="other" aria-pressed="${f.other}" type="button">${icon("c-other")}Other lists</button><button data-act="src" data-src="mich" data-michelin aria-pressed="${f.michelinLayer}" type="button">${icon("u-award")}Michelin</button></div>${cfg.manifest.hasBeen ? `<button class="chip q-been" data-act="been" aria-pressed="${f.hideBeen}" type="button">${icon("u-eye-off")}Hide been</button>` : ""}`;
     for (const k of ["star", "bib"] as AwardKind[]) $("#qr2").querySelector(`[data-mich="${k}"]`)?.setAttribute("aria-pressed", String(f.mich.includes(k)));
   }
   // Michelin chips live at the end of the scrolling row.
   $("#qr2").insertAdjacentHTML("beforeend", `<button class="chip g-mich" data-act="mich" data-mich="star" aria-pressed="false" type="button"><span class="ico sm ringico" style="--rc:var(--michelin)">${icon("u-award")}</span>Stars</button><button class="chip g-mich" data-act="mich" data-mich="bib" aria-pressed="false" type="button"><span class="ico sm ringico" style="--rc:var(--aw-bib)">${icon("u-award")}</span>Bib Gourmand</button>`);
 
+  // ---------- notices: one slot, one at a time. Offline comes first and gives way after a few seconds; the dense hint waits behind it.
+  type Notice = "offline" | "dense";
+  const NOTICES: Notice[] = ["offline", "dense"];
+  const NOTICE_MS = 8000;
+  const wants: Record<Notice, boolean> = { offline: false, dense: false };
+  const retired = new Set<Notice>();
+  let noticeNow: Notice | null = null, noticeTimer = 0;
+  function syncNotices(): void {
+    const next = NOTICES.find((n) => wants[n] && !retired.has(n)) ?? null;
+    if (next === noticeNow) return;
+    noticeNow = next;
+    for (const n of NOTICES) $(`#${n}`).classList.toggle("on", n === next);
+    window.clearTimeout(noticeTimer);
+    if (next === "offline") noticeTimer = window.setTimeout(() => { retired.add("offline"); syncNotices(); }, NOTICE_MS);
+  }
+  const retire = (n: Notice): void => { retired.add(n); syncNotices(); };
+  /** The dense hint is a nudge after the visitor pans or zooms, never on first load. */
+  let userMoved = false;
   function denseHint(): void {
-    const on = !denseDismissed() && app.view.zoom < 14 && app.view.zoom > 9 && ordered.length > 250;
-    whenSettled(() => $("#dense").classList.toggle("on", on && !denseDismissed()));
+    wants.dense = userMoved && !denseDismissed() && app.view.zoom < 14 && app.view.zoom > 9 && ordered.length > 250;
+    syncNotices();
   }
 
   function pushMap(): void {
@@ -136,7 +220,7 @@ export async function start(): Promise<void> {
   app.sheetPad = sheetPad;
   function layoutSheet(): void {
     if (isDesktop()) { sheet.style.transform = ""; sheet.classList.remove("full"); root.classList.remove("fullmode"); app.ctl?.setPad(sheetPad()); return; }
-    sheetCtl ??= initSheet(sheet, [$("#grab"), $(".shead", sheet), $(".crow", sheet), $("#hello")], (s: Snap) => { $$("[data-seg]").forEach((b) => b.setAttribute("aria-pressed", String((b.dataset.seg === "list") === (s === "full")))); app.ctl?.setPad(sheetPad()); });
+    sheetCtl ??= initSheet(sheet, { handles: [$("#grab"), $(".shead", sheet), $(".crow", sheet), $("#hello")], list: $("#listBody") }, (s: Snap) => { $$("[data-seg]").forEach((b) => b.setAttribute("aria-pressed", String((b.dataset.seg === "list") === (s === "full")))); app.ctl?.setPad(sheetPad()); });
     sheetCtl.snap(sheetCtl.current(), false);
   }
   const topH = () => { const t = $("#top"); const h = Math.round(t.getBoundingClientRect().height); document.documentElement.style.setProperty("--topH", `${h}px`); };
@@ -219,7 +303,7 @@ export async function start(): Promise<void> {
     const n = filtered().length;
     return `${sheetHead("Filters", `<button class="link" data-act="clearF" type="button">Clear</button>`)}<div class="fbody">
 <h3>Show</h3><div class="tri"><button data-act="src" data-src="mine" aria-pressed="${f.mine}" type="button">${icon("u-pin")}My lists</button><button data-act="src" data-src="other" aria-pressed="${f.other}" type="button">${icon("c-other")}Other lists</button><button data-act="src" data-src="mich" aria-pressed="${f.michelinLayer}" type="button">${icon("u-award")}Michelin</button></div>
-<p class="hint">Michelin adds every Michelin restaurant worldwide (2022 to ${edition}) as its own layer on the map. Other lists are saved by other people, not friends' picks.</p>
+<p class="hint">Michelin adds every Michelin restaurant worldwide (2022 to ${edition}) as its own layer on the map. Other lists: saved by other people.</p>
 <h3>Michelin distinctions</h3><div class="cw">${kinds.map(([k, l]) => `<button class="chip g-mich" data-act="mich" data-mich="${k}" aria-pressed="${f.mich.includes(k)}" type="button"><span class="ico sm ringico" style="--rc:var(${AWARD_HEX[k]})">${icon("u-award")}</span>${l}</button>`).join("")}</div>
 <label class="sw"><span class="nm">Any year (2022 to ${edition})<small class="hint2">Off: only the ${edition} edition</small></span><input type="checkbox" data-act="anyyear" ${f.anyYear ? "checked" : ""} /><span class="tg"></span></label>
 <h3>Region</h3><div class="cw">${regions.map(([id, l]) => `<button class="chip" data-act="region" data-region="${id}" aria-pressed="${f.regions.includes(id)}" type="button">${esc(l)}</button>`).join("")}</div>
@@ -236,10 +320,13 @@ ${cfg.manifest.hasBeen ? `<label class="sw"><span class="nm">Hide places I have 
     const empty = `<div class="pkempty"><span class="big">${icon("u-heart")}</span><b>No picks yet</b>Tap the heart on any place to keep it here. Picks stay in this browser until you send them.</div>`;
     return `${sheetHead(`Your picks${mine.length ? ` (${mine.length})` : ""}`)}<div class="pkbody">${sh.length ? `<h3 class="shared-h">Shared with you (${sh.length})</h3>${sh.map(row).join("")}<div class="pkfoot"><button class="btn" data-act="saveShared" type="button">${icon("u-heart")}Save these to my picks</button></div>` : ""}${mine.length ? mine.map(row).join("") : sh.length ? "" : empty}</div>${mine.length ? `<div class="pkfoot"><button class="cta" data-act="sharePicks" type="button">${icon("u-share")}Send me your picks</button><button class="btn" data-act="copyPicks" type="button">${icon("u-copy")}Copy as text</button></div>` : ""}`;
   }
+  /** Sun/moon toggle for phones, where the top bar is full (the launcher sits there); desktop has its own at the top right. */
+  const themeLabel = (t: "light" | "dark"): string => (t === "light" ? "Switch to dark theme" : "Switch to light theme");
+  const themeBtnHtml = (): string => `<button class="ibtn themeb" data-act="theme" data-themebtn aria-label="${themeLabel(theme())}" type="button">${icon(theme() === "light" ? "u-moon" : "u-sun")}</button>`;
   function legendHtml(): string {
     const gs = cfg.categories.groups.map((g) => `<h3 class="lgh2">${esc(g.label)}</h3>${cfg.categories.categories.filter((c) => c.group === g.id).map((c) => `<div class="it"><span class="disc g-${g.id}">${icon(c.icon)}</span>${esc(c.label)}</div>`).join("")}`).join("");
     const aw = cfg.categories.awards.map((a) => `<div class="it"><span class="disc ring" style="--rc:var(${AWARD_HEX[a.id]})">${icon("u-award")}</span>${esc(a.label)}</div>`).join("");
-    return `${sheetHead("Key")}<div class="lg2"><h3 class="lgh2">Pins</h3><div class="it"><span class="disc g-other">${icon("u-heart")}</span>Hearted pins wear a rose heart</div><div class="it"><span class="disc dsm g-other">${icon("c-other")}</span>Dots when zoomed out, icons up close</div>${gs}<h3 class="lgh2">Michelin layer</h3>${aw}</div>`;
+    return `${sheetHead("Key", themeBtnHtml())}<div class="lg2"><h3 class="lgh2">Pins</h3><div class="it"><span class="disc g-other">${icon("u-heart")}</span>Hearted pins wear a rose heart</div><div class="it"><span class="disc dsm g-other">${icon("c-other")}</span>Dots when zoomed out, icons up close</div>${gs}<h3 class="lgh2">Michelin layer</h3>${aw}</div>`;
   }
 
   // ---------- picks
@@ -295,8 +382,12 @@ ${cfg.manifest.hasBeen ? `<label class="sw"><span class="nm">Hide places I have 
     for (const p of list) { if (app.byId.has(p.id)) continue; app.places.push(p); app.byId.set(p.id, p); }
     app.refresh();
   };
-  app.setBackend = (up) => { app.backendUp = up; whenSettled(() => $("#offline").classList.toggle("on", app.backendUp === false && !offlineDismissed)); app.ctl?.setHome(up); };
-  let offlineDismissed = false;
+  app.setBackend = (up) => {
+    app.backendUp = up;
+    if (up) retired.delete("offline");
+    whenSettled(() => { wants.offline = app.backendUp === false; syncNotices(); });
+    app.ctl?.setHome(up);
+  };
 
   // ---------- events
   document.addEventListener("click", (e) => {
@@ -304,9 +395,12 @@ ${cfg.manifest.hasBeen ? `<label class="sw"><span class="nm">Hide places I have 
     if (!t) { if (!(e.target as Element).closest(".sortmenu, .sortb")) closeSort(); return; }
     const act = t.dataset.act!, id = t.dataset.id ?? "";
     switch (act) {
+      case "guide": openGuide(t.dataset.guide ?? ""); break;
+      case "guideBack": closeGuide(); break;
       case "open": { const p = app.byId.get(id); if (p) { if (openId) closeSheetNow(false); app.focusPlace(p); } break; }
       case "heart": togglePick(id, t); break;
       case "src": { const k = t.dataset.src; if (k === "mine") app.filters.mine = !app.filters.mine; else if (k === "other") app.filters.other = !app.filters.other; else app.filters.michelinLayer = !app.filters.michelinLayer; app.refresh(); rerenderOpen(); break; }
+      case "quick": { const q = QUICK.find((x) => x.id === t.dataset.chip); if (q) { const on = q.cats.every((c) => app.filters.cats.includes(c)); app.filters.cats = on ? app.filters.cats.filter((c) => !q.cats.includes(c)) : [...new Set([...app.filters.cats, ...q.cats])]; app.refresh(); rerenderOpen(); } break; }
       case "cat": app.filters.cats = toggleCats(app.filters.cats, [t.dataset.cat!]); app.refresh(); rerenderOpen(); break;
       case "grp": { const ids = cfg.categories.categories.filter((c) => c.group === t.dataset.grp).map((c) => c.id); app.filters.cats = toggleCats(app.filters.cats, ids); app.refresh(); rerenderOpen(); break; }
       case "mich": app.filters.mich = toggleIn(app.filters.mich, t.dataset.mich as AwardKind); app.refresh(); rerenderOpen(); break;
@@ -320,10 +414,11 @@ ${cfg.manifest.hasBeen ? `<label class="sw"><span class="nm">Hide places I have 
       case "tab": app.showTab(t.dataset.tab as "places" | "shows" | "picks"); break;
       case "theme": { const next = theme() === "light" ? "dark" : "light"; setTheme(next); break; }
       case "locate": locate(); break;
+      case "zoomIn": case "zoomOut": userMoved = true; if (act === "zoomIn") app.ctl?.map.zoomIn(); else app.ctl?.map.zoomOut(); break;
       case "locX": $("#loccard").classList.remove("on"); break;
-      case "offX": offlineDismissed = true; $("#offline").classList.remove("on"); break;
+      case "offX": retire("offline"); break;
       case "dense": sheetCtl?.snap("peek"); app.ctl?.map.zoomIn(); break;
-      case "denseX": dismissDense(); $("#dense").classList.remove("on"); break;
+      case "denseX": dismissDense(); wants.dense = false; retire("dense"); break;
       case "peekX": closePeek(); break;
       case "peekMore": peekOpen = !peekOpen; showPeek(); break;
       case "peekPrev": case "peekNext": { if (selected?.kind !== "place") break; const i = nearby.findIndex((q) => q.id === (selected as { id: string }).id) + (act === "peekNext" ? 1 : -1); const p = nearby[i]; if (p) { selected = { kind: "place", id: p.id }; showPeek(); app.ctl?.flyTo(p.x, p.y, Math.max(app.view.zoom, 15), sheetPad()); } break; }
@@ -363,7 +458,7 @@ ${cfg.manifest.hasBeen ? `<label class="sw"><span class="nm">Hide places I have 
   $("#grab").addEventListener("keydown", (e) => { if ((e as KeyboardEvent).key === "Enter" || (e as KeyboardEvent).key === " ") { e.preventDefault(); const c = sheetCtl?.current(); sheetCtl?.snap(c === "peek" ? "half" : c === "half" ? "full" : "peek"); } });
   document.addEventListener("tb:theme", (e) => {
     const t = (e as CustomEvent<"light" | "dark">).detail;
-    const b = $("#themeBtn"); b.setAttribute("aria-label", t === "light" ? "Switch to dark theme" : "Switch to light theme"); b.innerHTML = icon(t === "light" ? "u-moon" : "u-sun");
+    for (const b of $$("#themeBtn, [data-themebtn]")) { b.setAttribute("aria-label", themeLabel(t)); b.innerHTML = icon(t === "light" ? "u-moon" : "u-sun"); }
     app.ctl?.setTheme(t);
   });
   { const t = theme(); const b = $("#themeBtn"); b.setAttribute("aria-label", t === "light" ? "Switch to dark theme" : "Switch to light theme"); b.innerHTML = icon(t === "light" ? "u-moon" : "u-sun"); }
@@ -372,6 +467,7 @@ ${cfg.manifest.hasBeen ? `<label class="sw"><span class="nm">Hide places I have 
   syncDevice(); topH(); layoutSheet();
   addEventListener("resize", topH);
   recompute(); renderFeed(); pills();
+  if (guideFromHash) openGuide(guideFromHash, false);
   if (app.shared.length) { toast(`${app.shared.length} picks shared with you. Open Picks to see them.`); }
 
   const mapEl = $("#map");
@@ -384,12 +480,14 @@ ${cfg.manifest.hasBeen ? `<label class="sw"><span class="nm">Hide places I have 
         onMichelin: (m) => void showMichelin(m),
         onBackground: () => { if (selected) closePeek(); closeSort(); if (!isDesktop() && sheetCtl?.current() === "half") sheetCtl.snap("peek"); },
         onHomeFailing: () => app.setBackend(false),
-        onReady: () => { app.ctl!.setPad(sheetPad()); pushMap(); const b = app.ctl!.bounds(); app.bounds = b; recompute(); renderFeed(); window.dispatchEvent(new CustomEvent("tb:mapready")); },
+        onUserMove: () => { userMoved = true; },
+        onReady: () => { app.ctl!.setPad(sheetPad()); pushMap(); if (guide?.bounds) app.ctl!.fitBounds(guide.bounds, sheetPad()); const b = app.ctl!.bounds(); app.bounds = b; recompute(); renderFeed(); window.dispatchEvent(new CustomEvent("tb:mapready")); },
       });
       app.ctl = ctl;
       window.dispatchEvent(new CustomEvent("tb:map"));
     } catch (err) {
       console.warn("map unavailable", err);
+      mapFailed = true; renderFeed();
       $("#mapnote").hidden = false;
       sheetCtl?.snap("full", false);
     }

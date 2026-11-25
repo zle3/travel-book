@@ -58,7 +58,8 @@ export function initSearch(app: App): void {
     if (first) html += `<div class="sgl" role="presentation">Saved places and Michelin</div>` + hits.slice(0, first).map((h, i) => item(h, i)).join("");
     if (second) html += `<div class="sgl" role="presentation">Cities, neighborhoods and ZIP codes</div>` + hits.slice(first).map((h, i) => item(h, i + first)).join("");
     if (!hits.length) html = `<div class="sg-empty">No saved place, Michelin restaurant or area matches. Try a city, neighborhood or ZIP code. Street addresses are not searched.</div>`;
-    html += `<div class="sg-attr">Areas: GeoNames and US Census. Michelin data: Michelin Guide.</div>`;
+    const credits = [hits.some((h) => h.kind === "area") ? "Areas: GeoNames and US Census." : "", hits.some((h) => h.kind === "michelin") ? "Michelin data: Michelin Guide." : ""].filter(Boolean);
+    if (credits.length) html += `<div class="sg-attr">${esc(credits.join(" "))}</div>`;
     box.innerHTML = html;
   }
   function choose(h: Hit | undefined): void {

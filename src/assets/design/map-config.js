@@ -10,12 +10,18 @@
    - Labels only from ZOOM.labels, with collision (no allow-overlap) so they never pile up.
    - Pins stay legible on standard light and dark: white ring plus a soft dark halo. */
 
-export const BASE_STYLE_URL = 'https://tiles.openfreemap.org/styles/positron';   // OpenFreeMap, open data, no key
+/* The shipped basemap is Protomaps (see ATTRIBUTION). Nothing here fetches OpenFreeMap; the layer ids named in the comments below come from an early positron prototype. */
 
 /* Attribution strings (render in a small credit line; keep it visible, never hidden behind sheets). */
 export const ATTRIBUTION = {
-  standard: '© OpenStreetMap contributors · OpenFreeMap',
+  standard: '© OpenStreetMap contributors · Protomaps',   // basemap (ODbL licence duty): always shown
+  areas: 'GeoNames · US Census',                           // area search and the gazetteer
+  michelin: 'Michelin Guide',                              // only while the Michelin layer is on
+  radar: 'Radar: NOAA NWS',                                // only while rain radar is on
 };
+/** The one credit line under the map, from the sources that are actually showing. */
+export const creditText = ({ michelin = false, radar = false } = {}) =>
+  [ATTRIBUTION.standard, ATTRIBUTION.areas, michelin ? ATTRIBUTION.michelin : '', radar ? ATTRIBUTION.radar : ''].filter(Boolean).join(' · ');
 
 
 /* Zoom ladder. Round 2 swapped to icons at 11.2 and crowded SF; 13 keeps dots calm through the dense core and still shows icons at neighbourhood zoom. */

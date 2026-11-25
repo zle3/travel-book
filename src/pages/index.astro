@@ -10,6 +10,7 @@ import { SITE } from "../lib/site";
 import { distanceM, fmtDistance } from "../lib/data/geo";
 import { QUICK } from "../lib/quick";
 import { cityOf } from "../lib/picks";
+import { creditText } from "../assets/design/map-config.js";
 
 const placesFile = `public${manifest.places}`;
 const features = JSON.parse(fs.readFileSync(placesFile, "utf8")).features as { geometry: { coordinates: [number, number] }; properties: { id: string; n: string; c: string; s: string; note?: string; addr?: string } }[];
@@ -21,6 +22,7 @@ const first = features
   .slice(0, 12);
 ---
 <Base title={SITE.name}>
+  <script slot="head" src="/js/app-launcher.js" defer></script>
   <Fragment set:html={`<svg width="0" height="0" class="sprite" aria-hidden="true">${sprite.replace(/<svg[^>]*>|<\/svg>|<!--[\s\S]*?-->/g, "")}</svg>`} />
   <a class="skip" href="#listBody">Skip to the list of places</a>
   <main id="app">
@@ -30,25 +32,36 @@ const first = features
 
     <div class="panel" id="panel">
       <header class="top" id="top">
+        <div class="app-launcher">
+          <button type="button" class="app-launcher__button" aria-label="Apps" aria-haspopup="dialog" aria-expanded="false" aria-controls="app-launcher-panel" popovertarget="app-launcher-panel">
+            <svg class="app-launcher__dots" viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false"><circle cx="5" cy="5" r="2"/><circle cx="12" cy="5" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="12" cy="19" r="2"/><circle cx="19" cy="19" r="2"/></svg>
+          </button>
+          <div class="app-launcher__panel" id="app-launcher-panel" role="dialog" aria-label="Apps" popover>
+            <ul class="app-launcher__list">
+              <li><a class="app-launcher__tile" href="https://zachle.info/"><span class="app-launcher__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" focusable="false" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/></svg></span><span class="app-launcher__label">Blog</span></a></li>
+              <li><a class="app-launcher__tile" href="https://travel.zachle.info/" aria-current="page"><span class="app-launcher__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" focusable="false" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 5-5.5 10.2-7.4 11.8a1 1 0 0 1-1.2 0C9.5 20.2 4 15 4 10a8 8 0 0 1 16 0z"/><path d="M12 7a3 3 0 1 0 0 6a3 3 0 1 0 0-6z"/></svg></span><span class="app-launcher__label">Travel</span></a></li>
+            </ul>
+          </div>
+        </div>
         <div class="search" role="search">
           <Icon name="u-search" />
-          <input id="q" type="search" placeholder="Search saved places, Michelin, cities, ZIPs" aria-label="Search saved places, Michelin restaurants, cities, neighborhoods and ZIP codes" role="combobox" aria-expanded="false" aria-controls="sugg" aria-autocomplete="list" autocomplete="off" enterkeyhint="search" />
+          <input id="q" type="search" placeholder="Search places" aria-label="Search saved places, Michelin restaurants, cities, neighborhoods and ZIP codes" role="combobox" aria-expanded="false" aria-controls="sugg" aria-autocomplete="list" autocomplete="off" enterkeyhint="search" />
           <button class="xq" data-act="xq" aria-label="Clear search" type="button"><Icon name="u-close" /></button>
           <button class="fbtn" data-act="openF" aria-label="Filters" type="button"><Icon name="u-filter" />Filters<span class="badge" data-fcount hidden>0</span></button>
         </div>
         <div class="sugg" id="sugg" role="listbox" aria-label="Suggestions"></div>
         <div class="quick" id="chips" role="group" aria-label="Quick filters">
+          <p class="qlab" id="qlab1">Show</p>
           <div class="qr1" id="qr1"></div>
+          <p class="qlab" id="qlab2">Categories</p>
           <div class="qr2" id="qr2">
-            {QUICK.map((q) => q.shows
-              ? <button class="chip" data-act="tab" data-tab="shows" type="button"><span class="ico sm g-sights"><Icon name="u-shows" /></span>{q.label}</button>
-              : <button class="chip" data-chip={q.id} aria-pressed="false" type="button"><span class={`ico sm g-${q.group}`}><Icon name={q.icon} /></span>{q.label}</button>)}
+            {QUICK.map((q) => <button class="chip" data-act="quick" data-chip={q.id} aria-pressed="false" type="button"><span class={`ico sm g-${q.group}`}><Icon name={q.icon} /></span>{q.label}</button>)}
           </div>
         </div>
       </header>
 
       <section class="sheet" id="sheet" aria-label="Places">
-        <div class="credit-map" id="credit"></div>
+        <div class="credit-map" id="credit">{creditText()}</div>
         <button class="grab" id="grab" aria-label="Resize the list" type="button"><i></i></button>
         <div class="shead">
           <div class="seg" role="group" aria-label="View">
@@ -57,11 +70,11 @@ const first = features
           </div>
         </div>
         <div class="crow">
-          <p class="cnt" data-cnt aria-live="polite">{features.length} places</p>
+          <p class="cnt" data-cnt aria-live="polite">Places in this area</p>
           <button class="sortb" data-act="sort" aria-haspopup="menu" aria-expanded="false" aria-label="Change sort order" type="button"><Icon name="u-sort" />Sort: <span data-sort>Nearest</span></button>
           <div class="sortmenu" id="sortmenu" role="menu"></div>
         </div>
-        <p class="hello" id="hello">Places in view, nearest to the middle of the map first.</p>
+        <p class="hello" id="hello" hidden></p>
         <div class="sbody" id="listBody" tabindex="-1">
           {first.map(({ p, d }) => {
             const cat = catById.get(p.c) ?? cats.uncategorized;
@@ -70,7 +83,8 @@ const first = features
               <div class="row" data-id={p.id}>
                 <button class="rmain" data-act="open" data-id={p.id} type="button">
                   <span class={`ico g-${g}`}><Icon name={cat.icon} /></span>
-                  <span class="rtx"><span class="rn">{p.n}</span><span class="rm">{cat.label}{cityOf(p.addr ?? "") ? ` · ${cityOf(p.addr ?? "")}` : ""} · {fmtDistance(d)}</span>{p.note && <span class="rq">{p.note}</span>}</span>
+                  <span class="rtx"><span class="rn">{p.n}</span><span class="rm">{cat.label}{cityOf(p.addr ?? "") ? ` · ${cityOf(p.addr ?? "")}` : ""}{p.s === "o" && <span class="tag">Other list</span>}</span>{p.note && <span class="rq">{p.note}</span>}</span>
+                  <span class="dst">{fmtDistance(d)}</span>
                 </button>
                 <button class="heart" data-act="heart" data-id={p.id} aria-pressed="false" aria-label={`Save ${p.n} to my picks`} type="button"><Icon name="u-heart" /><i></i><i></i><i></i></button>
               </div>
@@ -81,6 +95,7 @@ const first = features
     </div>
 
     <div class="ctl" id="ctl">
+      <div class="grp zoomg" role="group" aria-label="Zoom"><button class="cb2" data-act="zoomIn" aria-label="Zoom in" type="button"><Icon name="u-plus" /></button><button class="cb2" data-act="zoomOut" aria-label="Zoom out" type="button"><Icon name="u-minus" /></button></div>
       <button class="cb2 wxchip" id="wxchip" data-act="weather" aria-label="Weather for the middle of the map" hidden type="button"><svg class="ic"><use href="#w-cloud"></use></svg><b></b></button>
       <button class="cb2" data-act="locate" id="locateBtn" aria-label="Locate me" type="button"><Icon name="u-locate" /></button>
       <button class="cb2 keyb" data-act="key" type="button"><Icon name="u-key" />Key</button>
@@ -91,9 +106,11 @@ const first = features
       <button class="tb round" data-act="theme" id="themeBtn" aria-label="Switch to light theme" type="button"><Icon name="u-sun" /></button>
     </div>
     <div class="loccard" id="loccard" role="dialog" aria-label="Location"></div>
-    <div class="spin" id="spin" role="status"></div>
-    <div class="offline" id="offline" role="status"><span>Some live bits are offline. Saved places still work.</span><button data-act="offX" aria-label="Dismiss" type="button"><Icon name="u-close" /></button></div>
-    <div class="dense" id="dense" role="status"><button class="dtx" data-act="dense" type="button">Lots here.&nbsp;<span>Filter or zoom in to see icons</span></button><button class="dx" data-act="denseX" aria-label="Dismiss" type="button"><Icon name="u-close" /></button></div>
+    <div class="notices" id="notices">
+      <div class="spin" id="spin" role="status"></div>
+      <div class="offline" id="offline" role="status"><span>Some live bits are offline. Saved places still work.</span><button data-act="offX" aria-label="Dismiss" type="button"><Icon name="u-close" /></button></div>
+      <div class="dense" id="dense" role="status"><button class="dtx" data-act="dense" type="button">Lots here.&nbsp;<span>Filter or zoom in to see icons</span></button><button class="dx" data-act="denseX" aria-label="Dismiss" type="button"><Icon name="u-close" /></button></div>
+    </div>
     <div class="peek" id="peek" role="dialog" aria-label="Place" aria-hidden="true"><div class="pk-track" id="pkTrack"></div></div>
     <section class="page side" id="shows" aria-label="Shows" aria-hidden="true"></section>
     <nav class="bar" id="bar" aria-label="Main">
