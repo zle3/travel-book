@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.astro/
+.wrangler/
+.env
+.env.*
+.dev.vars
+# raw binary capture of an existing site (rebuild mode)
+_source/bin/
+
+# CodeGraph index (generated, local only)
+.codegraph/

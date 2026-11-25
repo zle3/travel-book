@@ -1,0 +1,50 @@
+---
+/** Document shell: head metadata, global CSS, theme-before-paint, concept notice, shared client script. Every page goes through this (directly or via Page.astro). */
+import "../styles/global.css";
+import { SITE } from "../lib/site";
+interface Props { title: string; description?: string; path?: string; bodyClass?: string }
+const { title, description = SITE.description, path = Astro.url.pathname, bodyClass } = Astro.props;
+const canonical = new URL(path, SITE.url).href;
+const image = new URL(SITE.previewImage, SITE.url).href;
+---
+<!doctype html>
+<html lang="en" class="no-js" data-theme-key={SITE.themeKey}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <!-- Prerelease: never indexed. Do not loosen without the owner's decision (see LESSONS.md). -->
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={image} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+    <script is:inline>
+      // Apply a saved theme pick before first paint (no flash). No pick = follow the OS.
+      document.documentElement.classList.remove("no-js");
+      try { var t = localStorage.getItem(document.documentElement.dataset.themeKey); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}
+    </script>
+    <slot name="head" />
+  </head>
+  <body class={bodyClass}>
+    {SITE.conceptOf && <div class="concept-notice" role="note">Concept redesign of {SITE.conceptOf} by {SITE.by}. Not affiliated with {SITE.conceptOf}.</div>}
+    <a href="#main" class="skip-link">Skip to main content</a>
+    <slot />
+    <script>
+      import { initSite } from "../lib/client/site";
+      initSite();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,24 @@
+---
+import Page from "../layouts/Page.astro";
+import Icon from "../components/Icon.astro";
+import { SITE } from "../lib/site";
+---
+<Page title={SITE.name}>
+  <section class="hero">
+    <div class="wrap stack">
+      <h1>{SITE.name}</h1>
+      <p class="lead">Starter page. Replace this with the real home page once PRODUCT.md and the design direction are approved.</p>
+      <p class="actions"><a class="btn btn--primary" href="/about">About<Icon name="arrow-right" /></a><a class="btn btn--secondary" href="/about#contact">Contact</a></p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap">
+      <h2>What the starter gives you</h2>
+      <ul class="grid">
+        <li class="card"><h3>Light and dark</h3><p>Tokens for both themes, applied before first paint, with a header toggle.</p></li>
+        <li class="card"><h3>Accessible navigation</h3><p>Dropdown and phone menu driven by a small state machine; closed menus are not tappable.</p></li>
+        <li class="card"><h3>Honest samples</h3><p>Anything not supplied by the owner is tagged <span class="badge badge--sample">Sample</span> and blocks production deploys.</p></li>
+      </ul>
+    </div>
+  </section>
+</Page>

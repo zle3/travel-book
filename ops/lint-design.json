@@ -1,0 +1,13 @@
+{
+  "cssDirs": ["src/styles"],
+  "pageDirs": ["src/pages", "src/layouts", "src/components"],
+  "inlineStyleAllow": ["width", "height", "visibility"],
+  "backgroundPathIncludes": ["/features/"],
+  "rules": {
+    "noInlineStyle": true,
+    "noThickEdgeStripe": true,
+    "noHardcodedBackground": true,
+    "noPtUnits": true,
+    "noAllCaps": false
+  }
+}

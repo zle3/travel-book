@@ -1,0 +1,23 @@
+{
+  // Cloudflare Workers with static assets. The edge worker (worker/index.ts) runs first
+  // for every request: bot policy, password gate, then env.ASSETS serves the static Astro build in dist/.
+  // See ops/OPERATIONS.md (Hosting) and worker/README.md.
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "travel-book",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-11-01",
+  // Only public address is the custom domain. Preview aliases use versions upload (see scripts/deploy.sh).
+  "workers_dev": false,
+  "routes": [{ "pattern": "travel.zachle.info", "custom_domain": true }],
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": true,
+    "not_found_handling": "404-page"
+  },
+  // Non-secret vars only. SITE_PASSWORD and GATE_SECRET are set with `wrangler secret put`.
+  // GATE_ALLOW_SEARCH "0": no search engine bypasses the gate (also the code default when unset).
+  "vars": {
+    "GATE_ALLOW_SEARCH": "0"
+  }
+}

@@ -1,0 +1,10 @@
+---
+import { SITE, FOOTER_LINKS } from "../lib/site";
+---
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <p class="footer-name">{SITE.name}</p>
+    <nav aria-label="Footer"><ul class="footer-links">{FOOTER_LINKS.map((l) => <li><a href={l.href}>{l.label}</a></li>)}</ul></nav>
+    <p class="meta">&copy; {new Date().getFullYear()} {SITE.name}</p>
+  </div>
+</footer>

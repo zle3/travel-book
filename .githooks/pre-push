@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# Local gate instead of GitHub Actions.
+# - main only moves through the merge queue (KOTONE_MQ=1 set by scripts/ops/mq.sh).
+# - every other push runs the fast check.
+while read -r _ _ remote_ref _; do
+  if [[ "$remote_ref" == refs/heads/main && "${KOTONE_MQ:-0}" != 1 ]]; then
+    echo "pre-push: main only changes through the merge queue (scripts/ops/mq.sh)."; exit 1
+  fi
+done
+[[ "${KOTONE_MQ:-0}" == 1 ]] && exit 0   # merge queue already ran the full check
+exec "$(git rev-parse --show-toplevel)/scripts/check.sh" --fast

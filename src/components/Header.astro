@@ -1,0 +1,29 @@
+---
+import Icon from "./Icon.astro";
+import { SITE, NAV, CTA } from "../lib/site";
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+const current = (href: string) => (href === "/" ? path === "/" : path === href || path.startsWith(href + "/"));
+---
+<header class="site-header" data-site-header data-menu-open="false">
+  <div class="wrap nav">
+    <a class="brand" href="/">{SITE.name}</a>
+    <nav class="nav-links" id="site-nav" aria-label="Primary">
+      {NAV.map((l, i) => l.children ? (
+        <div class="nav-dd" data-dd={`dd${i}`} data-open="false">
+          <a href={l.href} class="nav-dd__link" aria-current={current(l.href) ? "page" : undefined}>{l.label}</a>
+          <button type="button" class="nav-dd__btn" data-dd-button aria-expanded="false" aria-controls={`dd-panel-${i}`} aria-label={`Show ${l.label} menu`}><Icon name="chevron-down" /></button>
+          <div class="nav-dd__panel" id={`dd-panel-${i}`}>
+            {l.children.map((c) => (
+              <a href={c.href} class="nav-dd__item" aria-current={current(c.href) ? "page" : undefined}><b>{c.label}</b>{c.blurb && <span class="nav-dd__desc">{c.blurb}</span>}</a>
+            ))}
+          </div>
+        </div>
+      ) : <a href={l.href} aria-current={current(l.href) ? "page" : undefined}>{l.label}</a>)}
+      {CTA && <a href={CTA.href} class="btn btn--primary nav-cta">{CTA.label}</a>}
+    </nav>
+    <div class="nav-end">
+      <button class="icon-btn theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark theme"><Icon name="moon" class="ico-moon" /><Icon name="sun" class="ico-sun" /></button>
+      <button class="icon-btn nav-toggle" type="button" data-menu-toggle aria-label="Open menu" aria-expanded="false" aria-controls="site-nav"><Icon name="menu" /></button>
+    </div>
+  </div>
+</header>
