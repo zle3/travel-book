@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
+import fs from "node:fs";
 import { adaptLive } from "../../../src/lib/client/live.ts";
 import { NEW_DAYS, isNew } from "../../../src/lib/client/store.ts";
 
@@ -25,4 +26,11 @@ test("New badge lasts 7 days from the added date and nothing is pinned", () => {
 });
 test("the committed generated data is current (run: node scripts/data/build-data.mjs)", () => {
   execFileSync("node", ["scripts/data/build-data.mjs", "--check"], { stdio: "pipe" });
+});
+test("the shipped places data has no score-only notes", () => {
+  const dir = new URL("../../../public/data/", import.meta.url);
+  const file = fs.readdirSync(dir).find((f) => /^places\..*\.json$/.test(f));
+  const feats = JSON.parse(fs.readFileSync(new URL(file, dir), "utf8")).features;
+  const noise = /^\d{1,2}(?:[.,]\d{1,2})?(?:\s+[A-Za-z]+)?$/;
+  assert.equal(feats.filter((f) => f.properties.note && noise.test(f.properties.note)).length, 0);
 });

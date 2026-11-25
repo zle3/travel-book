@@ -1,7 +1,9 @@
 /** Weather: a small chip on the map for the map centre, and a sheet with now, today by hour, 7 days, sunrise and sunset.
  * Only the rounded map centre (2 decimals) is sent, through the Worker, never the visitor's own position. */
 import { defaultUnits, fmtClock, fmtHour, fmtTemp, roundCoord } from "../weather";
-import type { Weather, WeatherAlert } from "../weather";
+import type { Weather } from "../weather";
+import { alertBody, safeMoreUrl, untilLabel } from "../shows";
+import type { AlertView } from "../shows";
 import type { App } from "./app";
 import { $, esc, icon } from "./store";
 
@@ -9,7 +11,7 @@ const FRESH_MS = 15 * 60 * 1000;
 
 export function initWeather(app: App): void {
   const chip = $<HTMLButtonElement>("#wxchip");
-  let wx: Weather | null = null, alerts: WeatherAlert[] = [], at = 0, lastLat = 999, lastLng = 999, timer = 0, radar = false, failed = false;
+  let wx: Weather | null = null, alerts: AlertView[] = [], at = 0, lastLat = 999, lastLng = 999, timer = 0, radar = false, failed = false;
 
   const unitsFor = (lng: number, lat: number) => defaultUnits(lng, lat);
 
@@ -24,7 +26,7 @@ export function initWeather(app: App): void {
       wx = ((await r.json()) as { weather: Weather }).weather;
       at = Date.now(); lastLat = lat; lastLng = lng; failed = false;
       alerts = [];
-      if (units === "f") fetch(`/api/alerts?lat=${lat}&lng=${lng}`).then((a) => (a.ok ? a.json() : { alerts: [] })).then((j: { alerts: WeatherAlert[] }) => { alerts = j.alerts ?? []; paintChip(); if ($("#weatherSheet").classList.contains("on")) paintSheet(); }).catch(() => {});
+      if (units === "f") fetch(`/api/alerts?lat=${lat}&lng=${lng}`).then((a) => (a.ok ? a.json() : { alerts: [] })).then((j: { alerts: AlertView[] }) => { alerts = j.alerts ?? []; paintChip(); if ($("#weatherSheet").classList.contains("on")) paintSheet(); }).catch(() => {});
       paintChip();
     } catch { failed = true; if (!wx) chip.hidden = true; }
   }
@@ -34,13 +36,17 @@ export function initWeather(app: App): void {
     chip.innerHTML = `${icon(wx.now.icon)}<b>${fmtTemp(wx.now.temp)}</b>${alerts.length ? '<i class="dot" aria-hidden="true"></i>' : ""}`;
     chip.setAttribute("aria-label", `Weather near the middle of the map: ${wx.now.temp} degrees, ${wx.now.label}${alerts.length ? `, ${alerts.length} active alert${alerts.length > 1 ? "s" : ""}` : ""}. Open details.`);
   }
+  function alertHtml(a: AlertView): string {
+    const until = untilLabel(a.ends), body = alertBody(a), more = safeMoreUrl(a.url);
+    return `<div class="alert"><b>${esc(a.event)}</b>${until ? `<small>${esc(until)}</small>` : ""}${body ? `<span>${esc(body)}</span>` : ""}${more ? `<a href="${esc(more)}" target="_blank" rel="noopener">More<span class="vh"> about ${esc(a.event)} on the NWS site</span></a>` : ""}</div>`;
+  }
   function paintSheet(): void {
     const host = $("#weatherHost");
     if (!wx) { host.innerHTML = `<div class="shead2"><h2>Weather</h2><button class="ibtn" data-act="closeSheet" aria-label="Close" type="button">${icon("u-close")}</button></div><div class="empty"><b>${failed ? "Weather is unavailable right now." : "Loading weather…"}</b></div>`; return; }
     const u = wx.units === "f" ? "°F" : "°C", sp = wx.units === "f" ? "mph" : "km/h";
     const today = wx.days[0];
     const hourly = wx.hours.length ? `<h3>Today, hour by hour</h3><div class="hours" role="list">${wx.hours.map((h) => `<div class="hr" role="listitem"><span>${fmtHour(h.t)}</span>${icon(h.icon)}<b>${fmtTemp(h.temp)}</b>${h.pop >= 20 ? `<small>${h.pop}%</small>` : "<small>&nbsp;</small>"}</div>`).join("")}</div>` : "";
-    const al = alerts.length ? `<div class="alerts" role="region" aria-label="Weather alerts">${alerts.map((a) => `<div class="alert"><b>${esc(a.event)}</b><span>${esc(a.headline)}</span></div>`).join("")}<p class="hint">Alerts from the US National Weather Service.</p></div>` : "";
+    const al = alerts.length ? `<div class="alerts" role="region" aria-label="Weather alerts">${alerts.map(alertHtml).join("")}<p class="hint">Alerts from the US National Weather Service.</p></div>` : "";
     const days = `<h3>Next 7 days</h3><ul class="days">${wx.days.map((d, i) => `<li><span class="dn">${i === 0 ? "Today" : new Date(`${d.date}T12:00:00`).toLocaleDateString("en-US", { weekday: "short" })}</span>${icon(d.icon)}<span class="dl">${esc(d.label)}${d.pop >= 20 ? ` <small>${d.pop}% rain</small>` : ""}</span><b>${d.hi}${u === "°F" ? "°" : "°"}</b><span class="lo">${d.lo}°</span></li>`).join("")}</ul>`;
     const us = wx.units === "f";
     host.innerHTML = `<div class="shead2"><h2>Weather</h2><button class="ibtn" data-act="closeSheet" aria-label="Close" type="button">${icon("u-close")}</button></div>

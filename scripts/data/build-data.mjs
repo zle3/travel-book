@@ -11,6 +11,7 @@ import path from "node:path";
 import { fold, round } from "../../src/lib/data/geo.ts";
 import { AWARD_LABEL, NAME_SHARDS, TILE_Z, bestOf, parseAwards, prefix3, shardOf, tileXY, tokens } from "../../src/lib/data/michelin.ts";
 import { buildPlaces } from "../../src/lib/data/places.ts";
+import { cleanNote } from "./notes.mjs";
 
 const root = path.resolve(import.meta.dirname, "../..");
 const CHECK = process.argv.includes("--check");
@@ -30,7 +31,7 @@ const geo = {
   features: places.map((p) => ({
     type: "Feature",
     geometry: { type: "Point", coordinates: [p.x, p.y] },
-    properties: { id: p.id, n: p.n, c: p.c, s: p.s, l: p.l, ...(p.note ? { note: p.note } : {}), ...(p.addr ? { addr: p.addr } : {}), ...(p.maps ? { maps: p.maps } : {}), ...(p.mich ? { mich: p.mich } : {}), ...(p.ex ? { ex: 1 } : {}), ...(p.br ? { br: p.br } : {}) },
+    properties: { id: p.id, n: p.n, c: p.c, s: p.s, l: p.l, ...(cleanNote(p.note) ? { note: cleanNote(p.note) } : {}), ...(p.addr ? { addr: p.addr } : {}), ...(p.maps ? { maps: p.maps } : {}), ...(p.mich ? { mich: p.mich } : {}), ...(p.ex ? { ex: 1 } : {}), ...(p.br ? { br: p.br } : {}) },
   })),
 };
 const placesText = JSON.stringify(geo);

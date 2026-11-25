@@ -1,5 +1,5 @@
 /** Shows tab: 19hz.info listings through the Worker (cached an hour), by region and date range, searchable. Owner-added events sit alongside. */
-import { dayLabel, filterShows, groupByDate, regionFor } from "../shows";
+import { dayLabel, filterShows, formatShowLine, groupByDate, regionFor } from "../shows";
 import type { Range, ShowLike } from "../shows";
 import type { App } from "./app";
 import type { LiveEvent } from "./live";
@@ -41,11 +41,11 @@ export function initShows(app: App): void {
     const list = filterShows([...liveShows(), ...(state === "ok" ? events : [])], { q, range, now });
     const groups = groupByDate(list);
     const rows = groups.map((g) => `<h3 class="dayh">${esc(dayLabel(g.date, now))}</h3>${g.items.map((e) => {
-      const inner = `<span class="ico g-sights">${icon("u-shows")}</span><span class="rtx"><h4>${esc(e.title)}</h4><p>${esc([e.when, e.venue, e.city && `(${e.city})`].filter(Boolean).join(" · "))}</p>${e.tags?.length ? `<p class="gn">${esc(e.tags.slice(0, 4).join(", "))}</p>` : ""}${e.price || e.age ? `<p class="gn">${esc([e.price, e.age].filter(Boolean).join(" · "))}</p>` : ""}${e.live ? `<span class="gn"><span class="bd bd-pick">Zach's pick</span>${isNew(e.added) ? '<span class="bd bd-new">New</span>' : ""}</span>` : ""}</span>`;
+      const inner = `<span class="ico g-sights">${icon("u-shows")}</span><span class="rtx"><h4>${esc(e.title)}</h4>${formatShowLine(e) ? `<p>${esc(formatShowLine(e))}</p>` : ""}${e.tags?.length ? `<p class="gn">${esc(e.tags.slice(0, 4).join(", "))}</p>` : ""}${e.price || e.age ? `<p class="gn">${esc([e.price, e.age].filter(Boolean).join(" · "))}</p>` : ""}${e.live ? `<span class="gn"><span class="bd bd-pick">Zach's pick</span>${isNew(e.added) ? '<span class="bd bd-new">New</span>' : ""}</span>` : ""}</span>`;
       return e.url ? `<a class="show${e.live ? " own" : ""}" href="${esc(e.url)}" target="_blank" rel="noopener">${inner}<span class="go" aria-hidden="true">${icon("u-ext")}</span></a>` : `<div class="show${e.live ? " own" : ""}">${inner}</div>`;
     }).join("")}`).join("");
     const status = state === "loading" ? `<div class="empty"><b>Loading shows…</b></div>`
-      : state === "error" ? `<div class="empty"><b>Shows are taking a nap.</b>The listing could not be reached right now.<button class="btn" data-act="showsRetry" type="button">Try again</button></div>`
+      : state === "error" ? `<div class="empty"><b>Couldn't load shows.</b>The listing could not be reached right now.<button class="btn" data-act="showsRetry" type="button">Try again</button></div>`
       : !list.length ? `<div class="empty"><b>No shows match.</b>Try another day range, region or search.</div>` : "";
     host.innerHTML = `<div class="shead2"><h2>Shows coming up</h2><button class="ibtn" data-act="tab" data-tab="places" aria-label="Close shows" type="button">${icon("u-close")}</button></div>
 <div class="showsbar"><div class="seg" role="group" aria-label="Region">${REGIONS.map(([k, l]) => `<button data-act="region2" data-r="${k}" aria-pressed="${region === k}" type="button">${l}</button>`).join("")}</div>
