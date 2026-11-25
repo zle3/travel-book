@@ -1,0 +1,309 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Little Travel Book</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Shrikhand&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Caveat+Brush&display=swap" rel="stylesheet"><style>:root,.frame[data-theme=light]{--paper:#E4E0F0;--paper-2:#D3CFE3;--ink:#3B2832;--ink-2:#6C495B;--mauve:#845970;--rose:#FB7185;--rose-ink:#BE123C;
+--dot-m:rgba(132,89,111,.55);--dot-r:rgba(251,113,133,.75);--line:rgba(108,73,91,.5);--blend:multiply;--sun:none;--moon:block;
+--btn-bg:#FB7185;--btn-ink:#3B2832;--focus:#BE123C;--sel:rgba(251,113,133,.45);--water:#F2B3C4;--grainop:.5;
+--grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .28 0 0 0 0 .36 0 0 0 1.4 -.62'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");color-scheme:light;}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]){--paper:#22161F;--paper-2:#2E1E29;--ink:#FFE9EB;--ink-2:#E2C6D0;--mauve:#FFE4E6;--rose:#FB7185;--rose-ink:#FDA4AF;
+--dot-m:rgba(217,198,208,.4);--dot-r:rgba(251,113,133,.7);--line:rgba(217,198,208,.45);--blend:screen;--sun:block;--moon:none;
+--btn-bg:#FB7185;--btn-ink:#22161F;--focus:#FFE4E6;--sel:rgba(251,113,133,.5);--water:#5A2A3E;--grainop:.55;
+--grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 .8 0 0 0 0 .85 0 0 0 1.2 -.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");color-scheme:dark;}}
+:root[data-theme=dark],.frame[data-theme=dark]{--paper:#22161F;--paper-2:#2E1E29;--ink:#FFE9EB;--ink-2:#E2C6D0;--mauve:#FFE4E6;--rose:#FB7185;--rose-ink:#FDA4AF;
+--dot-m:rgba(217,198,208,.4);--dot-r:rgba(251,113,133,.7);--line:rgba(217,198,208,.45);--blend:screen;--sun:block;--moon:none;
+--btn-bg:#FB7185;--btn-ink:#22161F;--focus:#FFE4E6;--sel:rgba(251,113,133,.5);--water:#5A2A3E;--grainop:.55;
+--grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 .8 0 0 0 0 .85 0 0 0 1.2 -.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");color-scheme:dark;}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper-2);color:var(--ink);font:400 16px/1.4 'Bricolage Grotesque',system-ui,sans-serif;scrollbar-color:var(--mauve) var(--paper-2)}
+::selection{background:var(--sel);color:var(--ink)}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:6px}
+button,select{font:inherit;color:inherit;caret-color:var(--rose-ink)}
+a{color:inherit;text-underline-offset:4px;text-decoration-thickness:2px;text-decoration-color:var(--rose)}
+.hand{font-family:'Caveat Brush','Comic Sans MS',cursive;font-weight:400}
+.disp{font-family:'Shrikhand',Georgia,serif;font-weight:400;letter-spacing:0}
+svg.defs{position:absolute;width:0;height:0;overflow:hidden}
+
+/* phone */
+.phone{position:relative;width:390px;height:844px;overflow:hidden;background:var(--paper);color:var(--ink);display:flex;flex-direction:column;isolation:isolate}
+.phone::before{content:"";position:absolute;inset:0;background:var(--grain);opacity:var(--grainop);z-index:-1;pointer-events:none}
+.live .phone{width:100%;max-width:430px;height:100vh;height:100dvh;margin:0 auto}
+.scroll{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;padding:0 16px 20px;scrollbar-width:thin;scrollbar-color:var(--mauve) transparent}
+
+/* two-ink display type */
+.dt{position:relative;display:block;color:var(--mauve);mix-blend-mode:var(--blend);white-space:nowrap}
+.hand-up{}
+.dt::before{content:attr(data-t);position:absolute;left:3px;top:2px;color:var(--rose);mix-blend-mode:var(--blend);z-index:-1;pointer-events:none}
+.dt.sm::before{left:2px;top:1.5px}
+
+/* header */
+.top{display:flex;align-items:center;gap:2px;padding:6px 10px 0 8px;min-height:60px;position:relative}
+.top nav{display:flex;flex:1;gap:0}
+.top nav a{display:inline-flex;align-items:center;min-height:44px;padding:0 10px;font:400 24px/1 'Caveat Brush',cursive;text-decoration:none;position:relative;color:var(--ink)}
+.top nav a[aria-current=page]::after{content:"";position:absolute;left:8px;right:8px;bottom:6px;height:7px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 8' preserveAspectRatio='none'%3E%3Cpath d='M1 5 C8 1 12 7 20 4 S32 1 40 5 S52 6 59 3' fill='none' stroke='%23FB7185' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E") center/100% 100% no-repeat}
+.iconbtn{width:44px;height:44px;display:grid;place-items:center;background:none;border:0;cursor:pointer;color:var(--ink)}
+.iconbtn svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.ico-sun{display:var(--sun)}.ico-moon{display:var(--moon)}
+.pickcount{position:relative;width:56px;height:56px;display:grid;place-items:center;background:none;border:0;cursor:pointer;color:var(--ink);flex:none}
+.pickcount svg.ring{position:absolute;inset:0;width:100%;height:100%;fill:none;stroke-width:3;stroke-linecap:round}
+.pickcount .r1{stroke:var(--rose);transform:translate(2px,1.5px);mix-blend-mode:var(--blend)}
+.pickcount .r2{stroke:var(--mauve)}
+.pickcount b{font:400 31px/1 'Caveat Brush',cursive;position:relative;top:1px}
+.pickcount small{position:absolute;right:-2px;bottom:-14px;font:400 16px/1 'Caveat Brush',cursive;color:var(--ink-2);white-space:nowrap;display:none}
+
+/* title */
+.title{margin:0;position:relative;height:238px;overflow:visible}
+.title .dt{position:absolute;font-size:80px;line-height:1}
+.title .l1{left:-2px;top:-6px}
+.title .l2{left:52px;top:62px}
+.title .l3{left:-2px;top:130px}
+.title .blob{position:absolute;right:-30px;top:40px;width:210px;height:210px;border-radius:50%;background:radial-gradient(var(--dot-r) 2.2px,transparent 2.8px) 0 0/8px 8px;-webkit-mask:radial-gradient(circle,#000 35%,transparent 70%);mask:radial-gradient(circle,#000 35%,transparent 70%);z-index:-1;pointer-events:none}
+.title .doodle{position:absolute;right:6px;top:136px;width:112px;height:100px;transform:rotate(8deg)}
+.hello{position:relative;margin:2px 0 6px;max-width:330px;transform:rotate(-1.2deg)}
+.hello p{margin:0;font:400 24px/1.15 'Caveat Brush',cursive;color:var(--ink)}
+.hello .arrow{position:absolute;right:4px;top:74px;width:70px;height:56px;stroke:var(--rose-ink);fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+
+/* groups and entries */
+.group{margin-top:26px}
+.ghead{display:flex;align-items:flex-end;justify-content:space-between;min-height:76px;position:relative}
+.ghead h2{margin:0;font-size:40px;line-height:.95}
+.ghead h2 .dt{white-space:normal}
+.illo{width:96px;height:80px;flex:none;overflow:visible}
+.illo .m{mix-blend-mode:var(--blend)}
+.entries{list-style:none;margin:6px 0 0;padding:0}
+.entry{display:grid;grid-template-columns:44px 1fr 52px;gap:10px;align-items:start;padding:14px 0 14px;background:radial-gradient(circle,var(--line) 1.1px,transparent 1.5px) 0 100%/7px 4px repeat-x}
+.num{position:relative;width:44px;height:44px;display:grid;place-items:center;font:400 25px/1 'Caveat Brush',cursive;color:var(--ink)}
+.num svg{position:absolute;inset:0;width:100%;height:100%;fill:none;stroke-width:2.6;stroke-linecap:round}
+.num .r1{stroke:var(--rose);transform:translate(1.8px,1.4px);mix-blend-mode:var(--blend)}
+.num .r2{stroke:var(--mauve)}
+.num span{position:relative}
+.ebody{min-width:0;padding-top:2px}
+.ebody h3{margin:0;font:700 19px/1.15 'Bricolage Grotesque',sans-serif;letter-spacing:-.01em;color:var(--ink)}
+.where{margin:3px 0 0;font-size:14px;line-height:1.3;color:var(--ink-2)}
+.note{margin:4px 0 0;font:400 24px/1.1 'Caveat Brush',cursive;color:var(--rose-ink);transform:rotate(-1.2deg);transform-origin:left}
+.tag{display:inline-block;margin-left:6px;font:400 18px/1 'Caveat Brush',cursive;color:var(--rose-ink)}
+.margin{font:400 23px/1.1 'Caveat Brush',cursive;color:var(--rose-ink);position:relative;padding:6px 0 0 44px;transform:rotate(-1.5deg)}
+.margin svg{position:absolute;left:0;top:2px;width:40px;height:30px;stroke:var(--rose-ink);fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+
+/* heart stamp */
+.stamp{width:52px;height:52px;display:grid;place-items:center;background:none;border:0;padding:0;cursor:pointer;margin:-4px 0 0;-webkit-tap-highlight-color:transparent}
+.stamp svg{width:46px;height:46px;overflow:visible;transform:rotate(var(--r,0deg))}
+.stamp .guide-r{fill:none;stroke:var(--rose);stroke-width:2;stroke-dasharray:3 3.5;stroke-linecap:round;transform:translate(2px,1.5px);mix-blend-mode:var(--blend)}
+.stamp .guide-m{fill:none;stroke:var(--mauve);stroke-width:2;stroke-dasharray:3 3.5;stroke-linecap:round}
+.stamp .ink{opacity:0;transition:opacity .22s ease-out;transform-box:fill-box;transform-origin:center;mix-blend-mode:var(--blend)}
+.stamp .inner{fill:none;stroke:var(--paper);stroke-width:1.6;stroke-linecap:round;opacity:.9}
+.stamp .gloss{fill:#fff;opacity:0}
+.stamp:hover .guide-m{stroke-dasharray:none}
+.stamp[aria-pressed=true] .guide-m,.stamp[aria-pressed=true] .guide-r{opacity:0}
+.stamp[aria-pressed=true] .ink{opacity:1;animation:land .18s cubic-bezier(.2,.9,.25,1) both}
+.stamp[aria-pressed=true] .dry{animation:dry .4s .18s ease-out both}
+.stamp[aria-pressed=true] .gloss{animation:gloss .4s .1s ease-out both}
+@keyframes land{from{transform:scale(1.55) rotate(0deg)}to{transform:scale(1) rotate(0deg)}}
+@keyframes dry{from{filter:saturate(1.7) brightness(1.18)}to{filter:none}}
+@keyframes gloss{from{opacity:.6}to{opacity:0}}
+.stamp.big{width:76px;height:76px}.stamp.big svg{width:68px;height:68px}
+
+/* bottom bar + buttons */
+.bar{flex:none;position:relative;padding:14px 14px 12px;display:flex;gap:10px;align-items:center;background:var(--paper);z-index:3}
+.bar::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:radial-gradient(circle,var(--ink-2) 1.3px,transparent 1.7px) 0 0/8px 4px repeat-x}
+.btn{min-height:46px;padding:0 18px;border-radius:14px 18px 15px 17px;border:2px solid var(--mauve);background:var(--paper);color:var(--ink);font:700 16px/1 'Bricolage Grotesque',sans-serif;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;white-space:nowrap}
+.btn svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.btn.go{background:var(--btn-bg);color:var(--btn-ink);border-color:var(--mauve)}
+.btn:hover{transform:rotate(-.6deg)}
+.btn:active{transform:rotate(.6deg) scale(.98)}
+.bar .btn.go{flex:1}
+.toast{position:absolute;left:14px;right:14px;bottom:76px;z-index:6;padding:12px 14px;background:var(--btn-bg);color:var(--btn-ink);font:400 23px/1.1 'Caveat Brush',cursive;border-radius:14px;transform:rotate(-.8deg);opacity:0;visibility:hidden;transition:opacity .2s}
+.toast.on{opacity:1;visibility:visible}
+
+/* order form */
+.order{position:relative;padding:18px 18px 8px}
+.order h2{margin:0 0 2px;font-size:46px;line-height:1}
+.order .sub{margin:6px 0 10px;font:400 24px/1.1 'Caveat Brush',cursive;color:var(--ink)}
+.orows{list-style:none;margin:0;padding:0}
+.orow{display:grid;grid-template-columns:34px 1fr;gap:10px;align-items:center;min-height:50px;padding:6px 0}
+.tick{position:relative;width:32px;height:32px}
+.tick svg{width:100%;height:100%;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.tick .bx{stroke:var(--mauve);stroke-width:2.2}
+.tick .ck{stroke:var(--rose-ink);stroke-width:3.4}
+.oname{display:flex;align-items:baseline;gap:6px;min-width:0}
+.oname b{font:700 17px/1.2 'Bricolage Grotesque',sans-serif;flex:none;max-width:70%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.oname i{flex:1;min-width:14px;height:4px;align-self:flex-end;margin-bottom:5px;background:radial-gradient(circle,var(--ink-2) 1.1px,transparent 1.5px) 0 0/6px 4px repeat-x}
+.oname em{font:400 22px/1 'Caveat Brush',cursive;color:var(--rose-ink);font-style:normal;flex:none}
+.oempty{margin:10px 0;font:400 24px/1.15 'Caveat Brush',cursive;color:var(--rose-ink)}
+.tear{position:relative;margin:12px -18px 0;height:28px;display:flex;align-items:center;padding:0 18px}
+.tear::before{content:"";position:absolute;left:0;right:0;top:50%;height:4px;margin-top:-2px;background:radial-gradient(circle,var(--ink) 1.5px,transparent 2px) 0 0/10px 4px repeat-x}
+.tear span{position:relative;display:flex;gap:6px;align-items:center;background:var(--paper);padding:0 8px;font:400 20px/1 'Caveat Brush',cursive;color:var(--ink-2)}
+.tear svg{width:22px;height:22px;fill:none;stroke:var(--ink);stroke-width:1.8;stroke-linecap:round}
+.oact{display:flex;gap:10px;padding:12px 0 6px;flex-wrap:wrap}
+.oact .btn{flex:1;min-width:140px}
+
+.sheet{position:absolute;left:0;right:0;top:64px;bottom:0;z-index:5;background:var(--paper);overflow-y:auto;transform:translateY(102%);visibility:hidden;transition:transform .32s cubic-bezier(.16,1,.3,1),visibility 0s .32s;border-radius:22px 22px 0 0;box-shadow:0 -10px 30px rgba(59,40,50,.25)}
+.sheet.open{transform:none;visibility:visible;transition:transform .32s cubic-bezier(.16,1,.3,1)}
+.sheet::before{content:"";position:fixed;inset:0;display:none}
+.sheet .close{position:sticky;top:0;float:right;margin:6px 6px 0 0;z-index:2}
+
+/* map + filters */
+.filters{padding:2px 12px 8px;display:flex;flex-direction:column;gap:6px}
+.frow{display:flex;gap:6px;align-items:center}
+.chips{overflow-x:auto;scrollbar-width:none;padding:2px 2px}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;min-height:44px;padding:0 14px;border-radius:999px 800px 900px 700px;border:2px solid var(--mauve);background:transparent;color:var(--ink);font:400 21px/1 'Caveat Brush',cursive;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+.chip[aria-pressed=true]{background:var(--rose);color:var(--btn-ink)}
+.chip svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.sel{flex:1;min-width:0;min-height:44px;padding:0 10px;border:2px solid var(--mauve);border-radius:12px 16px 13px 15px;background:var(--paper);color:var(--ink);font:600 15px/1 'Bricolage Grotesque',sans-serif;cursor:pointer}
+.mapwrap{position:relative;flex:none;height:320px;margin:0 12px;border:2px solid var(--mauve);border-radius:6px;overflow:hidden;background:var(--water)}
+.mapwrap.tall{height:100%;margin:0}
+.mapwrap .mapbox{position:absolute!important;inset:0;width:100%;height:100%}
+.credit{position:absolute;left:6px;bottom:4px;z-index:3;font-size:12px;line-height:1.2;padding:2px 6px;background:var(--paper);color:var(--ink-2);border-radius:4px}
+.credit a{text-decoration-thickness:1px}
+.maplibregl-ctrl-attrib{display:none!important}
+.maplibregl-ctrl-group{background:var(--paper)!important;border:2px solid var(--mauve);box-shadow:none!important;border-radius:10px!important}
+.maplibregl-ctrl-group button{width:44px!important;height:44px!important}
+.maplibregl-ctrl-group button .maplibregl-ctrl-icon{filter:none}
+:root[data-theme=dark] .maplibregl-ctrl-icon,.frame[data-theme=dark] .maplibregl-ctrl-icon{filter:invert(1)}
+@media (prefers-color-scheme:dark){:root:not([data-theme=light]) .maplibregl-ctrl-icon{filter:invert(1)}}
+.peekhead{display:flex;align-items:center;justify-content:space-between;padding:10px 16px 0}
+.peekhead h2{margin:0;font-size:30px;line-height:1}
+.peekhead span.hand{font-size:19px;color:var(--ink-2)}
+.peek{flex:1;min-height:0;overflow-y:auto;padding:0 16px 8px;scrollbar-width:thin;scrollbar-color:var(--mauve) transparent}
+.peek .entry{grid-template-columns:44px 1fr 52px;padding:10px 0}
+.peek .ebody{cursor:pointer}
+.empty{font:400 25px/1.15 'Caveat Brush',cursive;color:var(--rose-ink);padding:16px 0}
+.src{display:inline-block;font:400 19px/1 'Caveat Brush',cursive;color:var(--ink);background:var(--rose);padding:2px 7px;border-radius:8px 10px 8px 11px;margin-left:6px;vertical-align:1px}
+
+/* detail */
+.detail{padding:4px 0 0}
+.back{display:inline-flex;align-items:center;gap:6px;min-height:44px;font:400 24px/1 'Caveat Brush',cursive;text-decoration:none;padding:0 8px}
+.back svg{width:30px;height:20px;fill:none;stroke:var(--rose-ink);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.dtl-art{position:relative;height:210px;margin:0 -16px}
+.dtl-art svg{position:absolute;left:50%;top:0;width:264px;height:200px;margin-left:-132px;overflow:visible}
+.detail h1{margin:0;font-size:46px;line-height:.95}
+.detail h1 .dt{white-space:normal}
+.big-note{position:relative;margin:16px 0 4px;display:inline-block;font:400 59px/1 'Caveat Brush',cursive;color:var(--rose-ink);transform:rotate(-3deg);padding:14px 26px}
+.big-note svg{position:absolute;inset:0;width:100%;height:100%;fill:none;stroke:var(--mauve);stroke-width:2.8;stroke-linecap:round}
+.facts{margin:10px 0 0;display:grid;gap:4px;font-size:16px;color:var(--ink-2)}
+.facts a{color:var(--ink)}
+.stamprow{display:flex;align-items:center;gap:10px;margin-top:14px}
+.stamprow .hand{font-size:24px;color:var(--ink);transform:rotate(-2deg)}
+
+/* shows */
+.shows{list-style:none;margin:6px 0 0;padding:0}
+.show{display:grid;grid-template-columns:78px 1fr;gap:12px;padding:12px 0;background:radial-gradient(circle,var(--line) 1.1px,transparent 1.5px) 0 100%/7px 4px repeat-x}
+.sdate{position:relative;text-align:center;line-height:.9;color:var(--mauve);mix-blend-mode:var(--blend)}
+.sdate b{display:block;position:relative;font:400 44px/.95 'Shrikhand',sans-serif}
+.sdate b::before{content:attr(data-t);position:absolute;left:2px;top:1.5px;color:var(--rose);mix-blend-mode:var(--blend);z-index:-1}
+.sdate span{display:block;font:400 20px/1.1 'Caveat Brush',cursive}
+.sdate.sm{white-space:pre-line}
+.show h3{margin:0;font:700 17px/1.2 'Bricolage Grotesque',sans-serif;color:var(--ink)}
+.show p{margin:3px 0 0;font-size:14px;line-height:1.35;color:var(--ink-2)}
+.show p.hand{font-size:19px;color:var(--rose-ink);line-height:1.1}
+.snap{font:400 23px/1.1 'Caveat Brush',cursive;color:var(--ink);padding:6px 0 4px;transform:rotate(-1deg)}
+.credit-line{margin:12px 0 4px;font-size:14px;color:var(--ink-2)}
+
+/* spread (desktop) */
+.desk{min-height:100vh;display:grid;place-items:center;background:var(--paper-2)}
+.spread{position:relative;width:1440px;height:900px;display:grid;grid-template-columns:1fr 1fr;background:var(--paper);overflow:hidden;isolation:isolate}
+.spread::before{content:"";position:absolute;inset:0;background:var(--grain);opacity:var(--grainop);z-index:-1;pointer-events:none}
+.spread::after{content:"";position:absolute;left:calc(50% - 46px);width:92px;top:0;bottom:0;background:linear-gradient(90deg,transparent,rgba(59,40,50,.16) 44%,rgba(59,40,50,.28) 50%,rgba(59,40,50,.16) 56%,transparent);pointer-events:none;z-index:4}
+.pg{position:relative;display:flex;flex-direction:column;min-height:0;min-width:0}
+.pg.left{padding:0 44px 0 40px}
+.pg.right{padding:0 40px 0 44px}
+.staple{position:absolute;left:calc(50% - 30px);width:60px;height:22px;z-index:5}
+.spread .title{height:112px;margin-top:6px;flex:none}
+.spread .title .dt{font-size:92px}
+.spread .title .l1{left:-2px;top:-10px}
+.spread .title .l2{left:330px;top:-10px}
+.spread .title .l3{left:660px;top:-10px;display:none}
+.spread .scroll{padding:0 6px 20px 0}
+.spread .top{padding-left:0}
+.spread .pg.right .top{justify-content:flex-end}
+.spread .mapwrap{height:auto;flex:1;margin:0}
+.spread .order{padding:12px 0 6px}
+.spread .order h2{font-size:38px}
+.spread .orows{columns:2;column-gap:28px}
+.spread .oact{padding-top:4px}
+.credits{font-size:13px;color:var(--ink-2)}
+
+@media (prefers-reduced-motion:reduce){
+ *,*::before,*::after{animation:none!important;transition:none!important}
+ .btn:hover,.btn:active{transform:none}
+}
+/* screens board */
+.board{display:flex;gap:36px;padding:36px;width:max-content;background:var(--paper-2)}
+.fig{display:flex;flex-direction:column;gap:12px}
+.fig figcaption{font:400 25px/1.15 'Caveat Brush',cursive;color:var(--ink);max-width:390px;min-height:50px}
+.fig{margin:0}
+.frame{border-radius:6px;overflow:hidden;box-shadow:0 8px 28px rgba(59,40,50,.28)}
+
+h1.disp{text-wrap:balance}
+.pnote{margin:18px 0 0;font:400 25px/1.15 'Caveat Brush',cursive;color:var(--rose-ink);transform:rotate(-1.5deg);position:relative;padding-left:46px}
+.pnote svg{position:absolute;left:0;top:-2px;width:38px;height:38px}
+</style></head><body class="live"><svg class="defs" aria-hidden="true" focusable="false"><defs>
+<pattern id="htm" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(30)"><circle cx="3" cy="3" r="1.7" style="fill:var(--dot-m)"/></pattern>
+<pattern id="htr" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(15)"><circle cx="3" cy="3" r="1.9" style="fill:var(--dot-r)"/></pattern>
+<path id="heart" d="M24 42 C11 32 4.5 24 6.5 15.5 C8.5 8 19 6.5 24 14 C29 6.5 39.5 8 41.5 15.5 C43.5 24 37 32 24 42Z"/>
+<path id="heart-in" d="M24 35 C15 28 11 22.5 12.2 17.5 C13.4 13 20 12.2 24 17.5"/>
+<path id="ring1" d="M27 4 C41 3 51 14 50 28 C49 42 37 51 24 50 C11 49 3 38 5 25 C7 12 17 5 31 6"/>
+<path id="ring2" d="M22 5 C37 2 50 12 50 26 C50 41 39 51 26 50 C11 50 3 40 4 27 C5 14 14 6 26 4"/>
+<path id="ring3" d="M29 5 C43 6 51 18 49 30 C47 43 33 51 21 49 C9 46 3 34 6 22 C9 11 20 4 32 5"/>
+<filter id="grain" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".6" numOctaves="2" seed="4" result="n"/><feColorMatrix in="n" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -4.4 0 0 0 3.5" result="m"/><feComposite in="SourceGraphic" in2="m" operator="in"/></filter>
+</defs></svg><div class="phone"><header class="top"><nav aria-label="Sections"><a href="index.html" aria-current="page">Places</a><a href="screens.html#map">Map</a><a href="screens.html#shows">Shows</a></nav><button class="iconbtn" type="button" id="theme" aria-label="Switch light or dark paper"><svg class="ico-moon" viewBox="0 0 24 24"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5z"/></svg><svg class="ico-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg></button><button class="pickcount" type="button" data-open-sheet aria-label="My picks, 0 so far"><svg class="ring" viewBox="0 0 54 54" aria-hidden="true"><use href="#ring2" class="r1"/><use href="#ring2" class="r2"/></svg><b data-count>0</b></button></header><div class="scroll"><h1 class="title disp" aria-label="Little Travel Book"><span class="blob" aria-hidden="true"></span><span class="dt l1" data-t="Little" aria-hidden="true">Little</span><span class="dt l2" data-t="Travel" aria-hidden="true">Travel</span><span class="dt l3" data-t="Book" aria-hidden="true">Book</span><svg class="doodle" viewBox="0 0 48 48" aria-hidden="true"><g class="m" style="mix-blend-mode:var(--blend)"><use href="#heart" fill="var(--rose)" transform="translate(2,1.5)"/></g><use href="#heart" fill="url(#htm)" stroke="var(--mauve)" stroke-width="1.6" stroke-linejoin="round"/><path d="M15 17c1-3 4-4 6-2" stroke="var(--paper)" stroke-width="2" fill="none" stroke-linecap="round"/></svg></h1><div class="hello"><p>Hi! I saved a pile of places for us to flip through. Stamp the ones that sound fun, then send them back to me.</p><svg class="arrow" viewBox="0 0 70 56" aria-hidden="true"><path d="M4 8 C26 4 50 14 54 44"/><path d="M42 36 L55 48 L62 32"/></svg></div><section class="group"><div class="ghead"><h2 class="disp"><span class="dt sm" data-t="Food">Food</span></h2><svg class="illo" viewBox="0 0 96 80" aria-hidden="true"><g transform="translate(3,2)" class="m" opacity=".9"><path d="M10 40h76c0 20-14 32-38 32S10 60 10 40z" fill="var(--rose)"/><path d="M14 22c-6-8 6-10 0-18M44 24c-6-8 6-10 0-20" stroke="var(--rose)" stroke-width="4" fill="none" stroke-linecap="round"/></g>
+<g><path d="M10 40h76c0 20-14 32-38 32S10 60 10 40z" fill="url(#htm)"/><path d="M10 40h76c0 20-14 32-38 32S10 60 10 40z" fill="none" stroke="var(--mauve)" stroke-width="2.4" stroke-linejoin="round"/><path d="M6 36h84" stroke="var(--mauve)" stroke-width="3" stroke-linecap="round"/><path d="M14 22c-6-8 6-10 0-18M44 24c-6-8 6-10 0-20M70 26c6-6-6-12 0-20" stroke="var(--mauve)" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M60 8l30 22M68 4l26 20" stroke="var(--mauve)" stroke-width="2.4" stroke-linecap="round"/></g></svg></div><ol class="entries"><li class="entry"><div class="num "><svg viewBox="0 0 54 54" aria-hidden="true"><use href="#ring2" class="r1"/><use href="#ring2" class="r2"/></svg><span>1</span></div><div class="ebody" data-focus="1"><h3>Golden Gate Bakery</h3><p class="where">Bakery</p><p class="note">8.5 Egg Tart</p></div><button class="stamp" type="button" aria-pressed="false" data-id="1" aria-label="Pick Golden Gate Bakery" style="--r:3deg"><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#heart" class="guide-r"/><use href="#heart" class="guide-m"/><g class="ink"><g class="dry"><use href="#heart" fill="var(--rose)" filter="url(#grain)"/><use href="#heart-in" class="inner"/></g><use href="#heart" class="gloss"/></g></svg></button></li><li class="entry"><div class="num "><svg viewBox="0 0 54 54" aria-hidden="true"><use href="#ring3" class="r1"/><use href="#ring3" class="r2"/></svg><span>2</span></div><div class="ebody" data-focus="2"><h3>Dumpling Home</h3><p class="where">Casual Food</p><p class="note">8.4</p></div><button class="stamp" type="button" aria-pressed="false" data-id="2" aria-label="Pick Dumpling Home" style="--r:-6deg"><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#heart" class="guide-r"/><use href="#heart" class="guide-m"/><g class="ink"><g class="dry"><use href="#heart" fill="var(--rose)" filter="url(#grain)"/><use href="#heart-in" class="inner"/></g><use href="#heart" class="gloss"/></g></svg></button></li><li class="entry"><div class="num "><svg viewBox="0 0 54 54" aria-hidden="true"><use href="#ring1" class="r1"/><use href="#ring1" class="r2"/></svg><span>3</span></div><div class="ebody" data-focus="3"><h3>Rintaro</h3><p class="where">Sit Down Restaurants</p><p class="note">Michelin Bib</p></div><button class="stamp" type="button" aria-pressed="false" data-id="3" aria-label="Pick Rintaro" style="--r:8deg"><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#heart" class="guide-r"/><use href="#heart" class="guide-m"/><g class="ink"><g class="dry"><use href="#heart" fill="var(--rose)" filter="url(#grain)"/><use href="#heart-in" class="inner"/></g><use href="#heart" class="gloss"/></g></svg></button></li><li class="entry"><div class="num "><svg viewBox="0 0 54 54" aria-hidden="true"><use href="#ring2" class="r1"/><use href="#ring2" class="r2"/></svg><span>4</span></div><div class="ebody" data-focus="4"><h3>Taqueria El Farolito</h3><p class="where">Casual Food · 2950 24th St</p><p class="note">Opens late</p></div><button class="stamp" type="button" aria-pressed="false" data-id="4" aria-label="Pick Taqueria El Farolito" style="--r:-1deg"><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#heart" class="guide-r"/><use href="#heart" class="guide-m"/><g class="ink"><g class="dry"><use href="#heart" fill="var(--rose)" filter="url(#grain)"/><use href="#heart-in" class="inner"/></g><use href="#heart" class="gloss"/></g></svg></button></li></ol><p class="margin"><svg viewBox="0 0 40 30" aria-hidden="true"><path d="M3 22 C12 6 26 6 34 16"/><path d="M26 18 L35 17 L33 7"/></svg>start with the egg tart? it is 8.5 for a reason</p></section><section class="group"><div class="ghead"><h2 class="disp"><span class="dt sm" data-t="Drinks and Nightlife">Drinks and Nightlife</span></h2><svg class="illo" viewBox="0 0 96 80" aria-hidden="true"><g transform="translate(3,2)" class="m" opacity=".9"><path d="M26 28h40l-5 48H31z" fill="var(--rose)"/><path d="M22 28a26 14 0 0 1 48 0z" fill="var(--rose)"/></g>
+<g><path d="M26 28h40l-5 48H31z" fill="url(#htm)"/><path d="M26 28h40l-5 48H31z" fill="none" stroke="var(--mauve)" stroke-width="2.4" stroke-linejoin="round"/><path d="M22 28a26 14 0 0 1 48 0z" fill="none" stroke="var(--mauve)" stroke-width="2.4" stroke-linejoin="round"/><path d="M50 14L60-2" stroke="var(--mauve)" stroke-width="3" stroke-linecap="round"/><path d="M36 48h20" stroke="var(--mauve)" stroke-width="2.4" stroke-linecap="round"/><circle cx="40" cy="62" r="3" fill="var(--mauve)"/><circle cx="52" cy="66" r="3" fill="var(--mauve)"/><circle cx="46" cy="55" r="3" fill="var(--mauve)"/></g></svg></div><ol class="entries"><li class="entry"><div class="num "><svg viewBox="0 0 54 54" aria-hidden="true"><use href="#ring3" class="r1"/><use href="#ring3" class="r2"/></svg><span>5</span></div><div class="ebody" data-focus="5"><h3>Matcha Cafe Maiko</h3><p class="where">Tea/Drinks</p><p class="note">8.3 matcha</p></div><button class="stamp" type="button" aria-pressed="false" data-id="5" aria-label="Pick Matcha Cafe Maiko" style="--r:-10deg"><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#heart" class="guide-r"/><use href="#heart" class="guide-m"/><g class="ink"><g class="dry"><use href="#heart" fill="var(--rose)" filter="url(#grain)"/><use href="#heart-in" class="inner"/></g><use href="#heart" class="gloss"/></g></svg></button></li><li class="entry"><div class="num "><svg viewBox="0 0 54 54" aria-hidden="true"><use href="#ring1" class="r1"/><use href="#ring1" class="r2"/></svg><span>6</span></div><div class="ebody" data-focus="6"><h3>Kiss of Matcha</h3><p class="where">Tea/Drinks</p><p class="note">7.9 matcha</p></div><button class="stamp" type="button" aria-pressed="false" data-id="6" aria-label="Pick Kiss of Matcha" style="--r:4deg"><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#heart" class="guide-r"/><use href="#heart" class="guide-m"/><g class="ink"><g class="dry"><use href="#heart" fill="var(--rose)" filter="url(#grain)"/><use href="#heart-in" class="inner"/></g><use href="#heart" class="gloss"/></g></svg></button></li><li class="entry"><div class="num "><svg viewBox="0 0 54 54" aria-hidden="true"><use href="#ring2" class="r1"/><use href="#ring2" class="r2"/></svg><span>7</span></div><div class="ebody" data-focus="7"><h3>Hi Sweetie Tea and Treats</h3><p class="where">Tea/Drinks</p><p class="note">7.6</p></div><button class="stamp" type="button" aria-pressed="false" data-id="7" aria-label="Pick Hi Sweetie Tea and Treats" style="--r:-5deg"><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#heart" class="guide-r"/><use href="#heart" class="guide-m"/><g class="ink"><g class="dry"><use href="#heart" fill="var(--rose)" filter="url(#grain)"/><use href="#heart-in" class="inner"/></g><use href="#heart" class="gloss"/></g></svg></button></li></ol></section><section class="group"><div class="ghead"><h2 class="disp"><span class="dt sm" data-t="Sightseeing and Culture">Sightseeing and Culture</span></h2><svg class="illo" viewBox="0 0 96 80" aria-hidden="true"><g transform="translate(3,2)" class="m" opacity=".9"><circle cx="68" cy="22" r="14" fill="var(--rose)"/><path d="M0 74C16 40 30 36 44 56 56 36 72 40 94 74z" fill="var(--rose)"/></g>
+<g><path d="M0 74C16 40 30 36 44 56 56 36 72 40 94 74z" fill="url(#htm)"/><path d="M0 74C16 40 30 36 44 56 56 36 72 40 94 74" fill="none" stroke="var(--mauve)" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/><circle cx="68" cy="22" r="14" fill="url(#htr)" stroke="var(--mauve)" stroke-width="2.4"/><path d="M14 74h72" stroke="var(--mauve)" stroke-width="2.4" stroke-linecap="round"/></g></svg></div><ol class="entries"><li class="entry"><div class="num "><svg viewBox="0 0 54 54" aria-hidden="true"><use href="#ring3" class="r1"/><use href="#ring3" class="r2"/></svg><span>8</span></div><div class="ebody" data-focus="8"><h3>Asian Art Museum</h3><p class="where">Museums</p></div><button class="stamp" type="button" aria-pressed="false" data-id="8" aria-label="Pick Asian Art Museum" style="--r:9deg"><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#heart" class="guide-r"/><use href="#heart" class="guide-m"/><g class="ink"><g class="dry"><use href="#heart" fill="var(--rose)" filter="url(#grain)"/><use href="#heart-in" class="inner"/></g><use href="#heart" class="gloss"/></g></svg></button></li><li class="entry"><div class="num "><svg viewBox="0 0 54 54" aria-hidden="true"><use href="#ring1" class="r1"/><use href="#ring1" class="r2"/></svg><span>9</span></div><div class="ebody" data-focus="9"><h3>Golden Gate Park</h3><p class="where">Parks</p></div><button class="stamp" type="button" aria-pressed="false" data-id="9" aria-label="Pick Golden Gate Park" style="--r:0deg"><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#heart" class="guide-r"/><use href="#heart" class="guide-m"/><g class="ink"><g class="dry"><use href="#heart" fill="var(--rose)" filter="url(#grain)"/><use href="#heart-in" class="inner"/></g><use href="#heart" class="gloss"/></g></svg></button></li><li class="entry"><div class="num "><svg viewBox="0 0 54 54" aria-hidden="true"><use href="#ring2" class="r1"/><use href="#ring2" class="r2"/></svg><span>10</span></div><div class="ebody" data-focus="10"><h3>Japantown Peace Plaza</h3><p class="where">Tourist Attractions</p></div><button class="stamp" type="button" aria-pressed="false" data-id="10" aria-label="Pick Japantown Peace Plaza" style="--r:-9deg"><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#heart" class="guide-r"/><use href="#heart" class="guide-m"/><g class="ink"><g class="dry"><use href="#heart" fill="var(--rose)" filter="url(#grain)"/><use href="#heart-in" class="inner"/></g><use href="#heart" class="gloss"/></g></svg></button></li><li class="entry"><div class="num "><svg viewBox="0 0 54 54" aria-hidden="true"><use href="#ring3" class="r1"/><use href="#ring3" class="r2"/></svg><span>11</span></div><div class="ebody" data-focus="11"><h3>Twin Peaks</h3><p class="where">Parks</p></div><button class="stamp" type="button" aria-pressed="false" data-id="11" aria-label="Pick Twin Peaks" style="--r:5deg"><svg viewBox="0 0 48 48" aria-hidden="true"><use href="#heart" class="guide-r"/><use href="#heart" class="guide-m"/><g class="ink"><g class="dry"><use href="#heart" fill="var(--rose)" filter="url(#grain)"/><use href="#heart-in" class="inner"/></g><use href="#heart" class="gloss"/></g></svg></button></li></ol><p class="margin"><svg viewBox="0 0 40 30" aria-hidden="true"><path d="M3 22 C12 6 26 6 34 16"/><path d="M26 18 L35 17 L33 7"/></svg>a little walk between bites?</p></section><p class="credit-line">From my own saved lists. Friends' picks live on the map, marked as theirs.</p></div><div class="bar"><button class="btn" type="button" data-open-sheet><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3h14v18l-7-4-7 4z"/></svg>My picks</button><button class="btn go" type="button" data-send><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5L21 3l-6 18-3.5-7.5z"/></svg>Send to Zach</button></div><div class="sheet" role="dialog" aria-label="Order form"><button class="iconbtn close" type="button" data-close-sheet aria-label="Close order form"><svg viewBox="0 0 24 24"><path d="M5 5l14 14M19 5L5 19"/></svg></button><div class="order"><h2 class="disp"><span class="dt" data-t="Order form">Order form</span></h2><p class="sub">Tick what sounds good, tear it off, send it back to me. xo Zach</p><p class="oempty" data-rows>Nothing stamped yet. Go stamp a few things that sound fun!</p><div class="tear"><span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M8.5 7.5L21 18M8.5 16.5L21 6"/></svg>tear here</span></div><div class="oact"><button class="btn go" type="button" data-send><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11.5L21 3l-6 18-3.5-7.5z"/></svg>Send to Zach</button><button class="btn" type="button" data-copy><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/></svg>Copy as text</button></div></div></div><div class="toast" role="status" aria-live="polite"></div></div><script>var PLACES=[{"i":1,"n":"Golden Gate Bakery","w":"","l":"bakery","ln":"Bakery","g":"Food","s":"mine","la":37.79641,"lo":-122.40684,"no":"8.5 Egg Tart"},{"i":2,"n":"Dumpling Home","w":"","l":"casual-food","ln":"Casual Food","g":"Food","s":"mine","la":37.77582,"lo":-122.42264,"no":"8.4"},{"i":3,"n":"Rintaro","w":"","l":"sit-down-restaurants","ln":"Sit Down Restaurants","g":"Food","s":"mine","la":37.76888,"lo":-122.41514,"no":"Michelin Bib"},{"i":4,"n":"Taqueria El Farolito","w":"2950 24th St","l":"casual-food","ln":"Casual Food","g":"Food","s":"mine","la":37.75278,"lo":-122.41114,"no":"Opens late"},{"i":5,"n":"Matcha Cafe Maiko","w":"","l":"tea-drinks","ln":"Tea/Drinks","g":"Drinks and Nightlife","s":"mine","la":37.79421,"lo":-122.40622,"no":"8.3 matcha"},{"i":6,"n":"Kiss of Matcha","w":"","l":"tea-drinks","ln":"Tea/Drinks","g":"Drinks and Nightlife","s":"mine","la":37.79803,"lo":-122.40736,"no":"7.9 matcha"},{"i":7,"n":"Hi Sweetie Tea and Treats","w":"","l":"tea-drinks","ln":"Tea/Drinks","g":"Drinks and Nightlife","s":"mine","la":37.79578,"lo":-122.4078,"no":"7.6"},{"i":8,"n":"Asian Art Museum","w":"","l":"museums","ln":"Museums","g":"Sightseeing and Culture","s":"mine","la":37.78028,"lo":-122.41616,"no":""},{"i":9,"n":"Golden Gate Park","w":"","l":"parks","ln":"Parks","g":"Outdoors","s":"mine","la":37.76892,"lo":-122.48298,"no":""},{"i":10,"n":"Japantown Peace Plaza","w":"","l":"tourist-attractions","ln":"Tourist Attractions","g":"Sightseeing and Culture","s":"mine","la":37.78522,"lo":-122.42973,"no":""},{"i":11,"n":"Twin Peaks","w":"","l":"parks","ln":"Parks","g":"Outdoors","s":"mine","la":37.75291,"lo":-122.44741,"no":""}];
+(function(){
+ var picks=new Set(), byId={};
+ PLACES.forEach(function(p){byId[p.i]=p;});
+ try{var q=new URLSearchParams(location.search).get('picks'); if(q) q.split(',').forEach(function(x){x=+x; if(byId[x]) picks.add(x);});}catch(e){}
+ var toastEl=document.querySelector('.toast'), tt;
+ function toast(msg){ if(!toastEl) return; toastEl.textContent=msg; toastEl.classList.add('on'); clearTimeout(tt); tt=setTimeout(function(){toastEl.classList.remove('on');},2600); }
+ function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+ function sync(){
+  document.querySelectorAll('.stamp').forEach(function(b){ b.setAttribute('aria-pressed', picks.has(+b.dataset.id)?'true':'false'); });
+  document.querySelectorAll('[data-count]').forEach(function(e){e.textContent=picks.size;});
+  document.querySelectorAll('[data-open-sheet]').forEach(function(e){e.setAttribute('aria-label','My picks, '+picks.size+' so far');});
+  document.querySelectorAll('[data-rows]').forEach(function(el){
+   if(el.closest('[data-static]')) return;
+   var arr=Array.from(picks).sort(function(a,b){return a-b;}).map(function(i){return byId[i];});
+   var box='<svg viewBox="0 0 32 32" aria-hidden="true"><path class="bx" d="M5 6 C12 4 20 5 27 5 C28 12 27 20 27 27 C20 28 12 27 5 27 C4 20 5 12 5 6z"/><path class="ck" d="M8 16 C11 19 13 22 15 25 C18 15 23 9 30 2"/></svg>';
+   if(!arr.length){ el.outerHTML='<p class="oempty" data-rows>Nothing stamped yet. Go stamp a few things that sound fun!</p>'; return; }
+   var html=arr.map(function(p){return '<li class="orow"><div class="tick">'+box+'</div><div class="oname"><b>'+esc(p.n)+'</b><i></i><em>'+p.i+'</em></div></li>';}).join('');
+   var n=document.createElement('ul'); n.className='orows'; n.setAttribute('data-rows',''); n.innerHTML=html; el.replaceWith(n);
+  });
+ }
+ window.ZINE={picks:picks,sync:sync,toast:toast,byId:byId};
+ document.addEventListener('click',function(e){
+  var b=e.target.closest('.stamp');
+  if(b){ var id=+b.dataset.id; if(picks.has(id)) picks.delete(id); else picks.add(id); sync(); return; }
+  var o=e.target.closest('[data-open-sheet]'); var sh=document.querySelector('.sheet');
+  if(o&&sh){ sh.classList.add('open'); sh.querySelector('.close').focus(); return; }
+  if(e.target.closest('[data-close-sheet]')&&sh){ sh.classList.remove('open'); return; }
+  if(e.target.closest('[data-send]')) return send();
+  if(e.target.closest('[data-copy]')) return copy();
+ });
+ document.addEventListener('keydown',function(e){ if(e.key==='Escape'){var sh=document.querySelector('.sheet'); if(sh) sh.classList.remove('open');} });
+ function text(){
+  var arr=Array.from(picks).sort(function(a,b){return a-b;}).map(function(i){return byId[i];});
+  return "My picks from the Little Travel Book:\n"+arr.map(function(p){return p.i+'. '+p.n+(p.no?' ('+p.no+')':'');}).join('\n');
+ }
+ function link(){ var u=location.href.split('#')[0].split('?')[0]; return u+'?picks='+Array.from(picks).sort(function(a,b){return a-b;}).join(','); }
+ function clip(s,msg){
+  if(navigator.clipboard&&navigator.clipboard.writeText){ navigator.clipboard.writeText(s).then(function(){toast(msg);},function(){toast('Press and hold to copy it');}); }
+  else { var t=document.createElement('textarea'); t.value=s; document.body.appendChild(t); t.select(); try{document.execCommand('copy'); toast(msg);}catch(e){toast('Press and hold to copy it');} t.remove(); }
+ }
+ function send(){
+  if(!picks.size){ toast('Stamp a few places first!'); return; }
+  if(navigator.share){ navigator.share({title:'My picks',text:'My picks from your Little Travel Book',url:link()}).catch(function(){}); }
+  else clip(link(),'Link copied. Paste it in a text to Zach!');
+ }
+ function copy(){ if(!picks.size){ toast('Stamp a few places first!'); return; } clip(text(),'Copied. Paste it in a text!'); }
+ var th=document.getElementById('theme');
+ try{var sv=localStorage.getItem('ltb-theme'); if(sv) document.documentElement.setAttribute('data-theme',sv);}catch(e){}
+ if(th) th.addEventListener('click',function(){
+  var cur=document.documentElement.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+  var nx=cur==='dark'?'light':'dark'; document.documentElement.setAttribute('data-theme',nx);
+  try{localStorage.setItem('ltb-theme',nx);}catch(e){}
+  document.dispatchEvent(new CustomEvent('zine-theme'));
+ });
+ var pre=window.PRESET; if(pre) pre.forEach(function(i){picks.add(i);});
+ sync();
+})();
+</script></body></html>

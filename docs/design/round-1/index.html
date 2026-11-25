@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Round 1 directions</title>
+<style>
+  :root {
+    --bg: rgb(249,249,251); --ink: rgb(45,45,63); --ink-2: rgb(79,79,110); --line: rgb(205,205,219);
+    --accent: rgb(190,18,60); --chip: rgb(248,244,246); --card: rgb(255,255,255);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg: rgb(30,24,30); --ink: rgb(249,249,251); --ink-2: rgb(205,205,219); --line: rgb(79,79,110); --accent: rgb(253,164,175); --chip: rgb(59,40,50); --card: rgb(45,32,40); }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 1280px; margin: 0 auto; padding: 40px 16px 80px; }
+  h1 { font-size: 2rem; letter-spacing: -0.02em; margin: 0 0 8px; }
+  .lead { color: var(--ink-2); max-width: 70ch; margin: 0 0 32px; }
+  .dir { border-top: 1px solid var(--line); padding: 32px 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  @media (min-width: 900px) { .dir { grid-template-columns: 340px minmax(0, 1fr); } }
+  h2 { font-size: 1.5rem; margin: 0 0 4px; letter-spacing: -0.01em; }
+  .tag { display: inline-block; font-size: .8125rem; color: var(--ink-2); margin-bottom: 12px; }
+  .pitch { margin: 0 0 12px; }
+  .risk { color: var(--ink-2); font-size: .9375rem; }
+  .links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .links a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; border: 1px solid var(--line); border-radius: 22px; color: var(--ink); text-decoration: none; background: var(--chip); }
+  .links a:hover { border-color: var(--accent); }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .shots { display: flex; gap: 16px; overflow-x: auto; padding-bottom: 8px; }
+  .shots img { height: 420px; width: auto; border-radius: 12px; border: 1px solid var(--line); background: var(--card); }
+  .shots img.wide { height: 420px; }
+  ol { padding-left: 1.2em; } li { margin-bottom: 8px; max-width: 75ch; }
+  ::selection { background: var(--accent); color: var(--bg); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Little Travel Book, round 1</h1>
+  <p class="lead">Four artistic worlds for the same site, each shown as the phone landing (light and dark), four key phone screens, and a desktop view. All places, lists, notes and shows are real data from his exports (shows are a 19hz.info snapshot from 24 Nov). Pick one or two to branch in round 2, or say what to merge.</p>
+
+  <section class="dir" id="a">
+    <div>
+      <h2>A · The Sampler</h2>
+      <span class="tag">Cross-stitch on dyed linen</span>
+      <p class="pitch">Every saved place is a stitch on mauve linen, and her hearts are cross-stitched in, leg by leg, as she taps. Her picks become a little sampler she sends back.</p>
+      <p class="risk">Risk: embroidery can turn twee if the scale is timid.</p>
+      <div class="links"><a href="a-sampler/index.html">Phone landing</a><a href="a-sampler/screens.html">Key screens</a><a href="a-sampler/desktop.html">Desktop</a><a href="a-sampler/notes.md">Notes</a></div>
+    </div>
+    <div class="shots"><img src="a-sampler/index-light.png" alt="The Sampler, phone landing, light"><img src="a-sampler/index-dark.png" alt="The Sampler, phone landing, dark"><img class="wide" src="a-sampler/desktop.png" alt="The Sampler, desktop"></div>
+  </section>
+
+  <section class="dir" id="b">
+    <div>
+      <h2>B · Photo Booth Sticker Sheet</h2>
+      <span class="tag">Purikura stickers and gel pen</span>
+      <p class="pitch">The book is a purikura sticker sheet: places are die-cut stickers with doodles, and a heart stamps a puffy sticker on. Her picks print out as a photo-booth strip for him.</p>
+      <p class="risk">Risk: the most familiar cute answer; can tip into childish, and there are no place photos.</p>
+      <div class="links"><a href="b-photobooth/index.html">Phone landing</a><a href="b-photobooth/screens.html">Key screens</a><a href="b-photobooth/desktop.html">Desktop</a><a href="b-photobooth/notes.md">Notes</a></div>
+    </div>
+    <div class="shots"><img src="b-photobooth/index-light.png" alt="Photo booth, phone landing, light"><img src="b-photobooth/index-dark.png" alt="Photo booth, phone landing, dark"><img class="wide" src="b-photobooth/desktop.png" alt="Photo booth, desktop"></div>
+  </section>
+
+  <section class="dir" id="c">
+    <div>
+      <h2>C · Par Avion</h2>
+      <span class="tag">Airmail letter, stamps, wax seal</span>
+      <p class="pitch">He mailed her a letter of places: each one is a perforated stamp, and her heart presses a rose wax seal. Her picks are the airmail letter she writes back.</p>
+      <p class="risk">Risk: can read vintage or wedding-invitation if the colour is shy.</p>
+      <div class="links"><a href="c-airmail/index.html">Phone landing</a><a href="c-airmail/screens.html">Key screens</a><a href="c-airmail/desktop.html">Desktop</a><a href="c-airmail/notes.md">Notes</a></div>
+    </div>
+    <div class="shots"><img src="c-airmail/index-light.png" alt="Par Avion, phone landing, light"><img src="c-airmail/index-dark.png" alt="Par Avion, phone landing, dark"><img class="wide" src="c-airmail/desktop.png" alt="Par Avion, desktop"></div>
+  </section>
+
+  <section class="dir" id="d">
+    <div>
+      <h2>D · Two-Ink Zine</h2>
+      <span class="tag">Risograph, rose and mauve overprint</span>
+      <p class="pitch">A two-ink riso zine of his places, with a huge misregistered title, numbered listings and margin notes. Her heart is a rubber stamp, and her picks fill the tear-off order form.</p>
+      <p class="risk">Risk: graphic and loud; can read cool rather than romantic.</p>
+      <div class="links"><a href="d-riso/index.html">Phone landing</a><a href="d-riso/screens.html">Key screens</a><a href="d-riso/desktop.html">Desktop</a><a href="d-riso/notes.md">Notes</a></div>
+    </div>
+    <div class="shots"><img src="d-riso/index-light.png" alt="Two-ink zine, phone landing, light"><img src="d-riso/index-dark.png" alt="Two-ink zine, phone landing, dark"><img class="wide" src="d-riso/desktop.png" alt="Two-ink zine, desktop"></div>
+  </section>
+
+  <section class="dir" id="questions">
+    <div><h2>To pick, tell us</h2></div>
+    <ol>
+      <li>Which world feels most like something you'd hand her: stitched (A), stickers (B), a letter (C) or a zine (D)? Keep one or two for round 2.</li>
+      <li>How cute versus grown-up? B is the cutest and D the most graphic; A and C sit in between.</li>
+      <li>Should the site open in dark or light for her, given that zachle.info defaults to dark? Both themes will work either way.</li>
+      <li>How should the heart feel when she taps it: stitched in slowly (A), stamped on quickly (B, D) or pressed like a seal (C)?</li>
+      <li>How should she send her picks back: as a made object (a sampler, photo strip, letter or order form) or as a plain list?</li>
+      <li>Is the scrapbook with washi tape and pressed flowers something you want to see after all? It was left out on purpose as the obvious choice. A re-roll can also deal fresh worlds.</li>
+    </ol>
+  </section>
+</main>
+</body>
+</html>

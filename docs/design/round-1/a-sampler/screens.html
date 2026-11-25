@@ -1,0 +1,615 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Little Travel Book, screens</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=Patrick+Hand&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css"><script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script><style>/*TOKENS_LIGHT*/
+:root{
+  --is-dark:0;
+  --linen:231 222 230; --linen-2:222 211 222; --weave:205 205 219; --weave-a:.34;
+  --patch:240 233 240; --ink:59 40 50; --ink-2:96 70 86; --stitch:132 89 111;
+  --label:205 205 219; --label-ink:45 45 63; --paper:248 244 246; --tag:253 228 233;
+  --water:196 192 222; --hatch:116 116 155; --road:132 89 111; --land:222 208 220;
+  --btn-bg:190 18 60; --btn-ink:255 255 255; --heart:244 63 94; --heart-d:190 18 60; --focus:108 73 91; --sel:253 164 175;
+  --g1:225 29 72; --g2:116 116 155; --g3:155 107 132; --g4:244 63 94; --g5:79 79 110; --g6:108 73 91; --g7:96 96 134; --g8:190 18 60;
+  --shadow:0 6px 18px rgb(59 40 50/.18), 0 1px 3px rgb(59 40 50/.2);
+  --ok:96 70 86; --on-th:248 244 246; --paper-ink:45 45 63;
+}
+[data-theme=light]{
+  --is-dark:0;
+  --linen:231 222 230; --linen-2:222 211 222; --weave:205 205 219; --weave-a:.34;
+  --patch:240 233 240; --ink:59 40 50; --ink-2:96 70 86; --stitch:132 89 111;
+  --label:205 205 219; --label-ink:45 45 63; --paper:248 244 246; --tag:253 228 233;
+  --water:196 192 222; --hatch:116 116 155; --road:132 89 111; --land:222 208 220;
+  --btn-bg:190 18 60; --btn-ink:255 255 255; --heart:244 63 94; --heart-d:190 18 60; --focus:108 73 91; --sel:253 164 175;
+  --g1:225 29 72; --g2:116 116 155; --g3:155 107 132; --g4:244 63 94; --g5:79 79 110; --g6:108 73 91; --g7:96 96 134; --g8:190 18 60;
+  --shadow:0 6px 18px rgb(59 40 50/.18), 0 1px 3px rgb(59 40 50/.2);
+  --ok:96 70 86; --on-th:248 244 246; --paper-ink:45 45 63;
+}
+/*TOKENS_DARK*/
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){
+--is-dark:1;
+  --linen:42 27 37; --linen-2:54 37 49; --weave:134 120 160; --weave-a:.17;
+  --patch:58 40 52; --ink:249 244 246; --ink-2:217 198 208; --stitch:186 153 170;
+  --label:96 66 82; --label-ink:249 244 246; --paper:226 222 236; --tag:104 56 76; --on-th:42 27 37; --paper-ink:45 45 63;
+  --water:62 48 90; --hatch:160 160 187; --road:186 153 170; --land:52 36 48;
+  --btn-bg:251 113 133; --btn-ink:59 40 50; --heart:251 113 133; --heart-d:244 63 94; --focus:253 164 175; --sel:132 89 111;
+  --g1:251 113 133; --g2:160 160 187; --g3:186 153 170; --g4:253 164 175; --g5:134 134 190; --g6:217 198 208; --g7:205 205 219; --g8:244 63 94;
+  --shadow:0 6px 18px rgb(0 0 0/.5),0 1px 3px rgb(0 0 0/.4);
+}}
+[data-theme=dark]{
+--is-dark:1;
+  --linen:42 27 37; --linen-2:54 37 49; --weave:134 120 160; --weave-a:.17;
+  --patch:58 40 52; --ink:249 244 246; --ink-2:217 198 208; --stitch:186 153 170;
+  --label:96 66 82; --label-ink:249 244 246; --paper:226 222 236; --tag:104 56 76; --on-th:42 27 37; --paper-ink:45 45 63;
+  --water:62 48 90; --hatch:160 160 187; --road:186 153 170; --land:52 36 48;
+  --btn-bg:251 113 133; --btn-ink:59 40 50; --heart:251 113 133; --heart-d:244 63 94; --focus:253 164 175; --sel:132 89 111;
+  --g1:251 113 133; --g2:160 160 187; --g3:186 153 170; --g4:253 164 175; --g5:134 134 190; --g6:217 198 208; --g7:205 205 219; --g8:244 63 94;
+  --shadow:0 6px 18px rgb(0 0 0/.5),0 1px 3px rgb(0 0 0/.4);
+}
+:root{--font:'Bricolage Grotesque',system-ui,sans-serif;--hand:'Patrick Hand','Bricolage Grotesque',cursive;}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%}
+body{font-family:var(--font);font-size:15px;line-height:1.4;color:rgb(var(--ink));background:rgb(var(--linen));-webkit-text-size-adjust:100%}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;padding:0}
+ul{list-style:none;padding:0}
+::selection{background:rgb(var(--heart)/.45);color:rgb(var(--ink))}
+:focus-visible{outline:2.5px dashed rgb(var(--focus));outline-offset:3px;border-radius:4px}
+*{scrollbar-width:thin;scrollbar-color:rgb(var(--stitch)/.6) transparent;caret-color:rgb(var(--heart))}
+::-webkit-scrollbar{height:8px;width:8px}::-webkit-scrollbar-thumb{background:rgb(var(--stitch)/.55);border-radius:4px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* THE CLOTH */
+.app{color:rgb(var(--ink));position:relative;width:100%;max-width:430px;height:100dvh;margin:0 auto;overflow:hidden;background:rgb(var(--linen));display:flex;flex-direction:column;isolation:isolate}
+.cloth-tex{position:absolute;inset:0;pointer-events:none;z-index:0;
+  background-image:
+   repeating-linear-gradient(0deg,rgb(var(--weave)/var(--weave-a)) 0 1px,transparent 1px 3px),
+   repeating-linear-gradient(90deg,rgb(var(--weave)/var(--weave-a)) 0 1px,transparent 1px 3px),
+   url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9 .06' numOctaves='2' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 .4 0 0 0 0 .3 0 0 0 0 .4 0 0 0 .5 -.12'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity:.9}
+.app>*:not(.cloth-tex){position:relative;z-index:1}
+.tabs{display:flex;align-items:center;gap:4px;padding:8px 8px 4px;flex:none}
+.tabs .tab{flex:1;min-height:44px;display:grid;place-items:center}
+.label{position:relative;display:inline-grid;place-items:center;padding:5px 16px;font-weight:650;font-size:13.5px;line-height:1.15;font-stretch:92%;color:rgb(var(--label-ink));
+  background:linear-gradient(rgb(var(--label)),rgb(var(--label))),repeating-linear-gradient(90deg,rgb(255 255 255/.22) 0 1px,transparent 1px 3px);background-blend-mode:normal;
+  background-color:rgb(var(--label));
+  background-image:repeating-linear-gradient(0deg,rgb(255 255 255/.16) 0 1px,transparent 1px 2px),repeating-linear-gradient(90deg,rgb(0 0 0/.045) 0 1px,transparent 1px 2px)}
+.label::before,.label::after{content:"";position:absolute;top:3px;bottom:3px;width:1px;background:repeating-linear-gradient(rgb(var(--label-ink)/.7) 0 3px,transparent 3px 5px)}
+.label::before{left:6px}.label::after{right:6px}
+.tab .label{width:100%;min-height:36px;padding:5px 4px;white-space:nowrap;font-size:13px;transition:background .15s}
+.tab .label::before{left:3px}.tab .label::after{right:3px}
+.tab[aria-current=page] .label{background-color:rgb(var(--btn-bg));color:rgb(var(--btn-ink))}
+.tab[aria-current=page] .label::before,.tab[aria-current=page] .label::after{background:repeating-linear-gradient(rgb(var(--btn-ink)/.8) 0 3px,transparent 3px 5px)}
+.tab:hover .label{filter:brightness(.96)}
+.tbtn{width:44px;height:44px;display:grid;place-items:center;flex:none;color:rgb(var(--ink))}
+.tbtn svg,.ico{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.scroll{flex:1;overflow-y:auto;overflow-x:hidden;padding-bottom:84px;position:relative}
+.view[hidden]{display:none}
+
+/* title */
+.title-wrap{padding:14px 18px 6px}
+.title-wrap svg{display:block;width:100%;height:auto;max-width:340px}
+.hello{padding:8px 18px 10px;font-family:var(--hand);font-size:21px;line-height:1.2;max-width:34ch;color:rgb(var(--ink))}
+.zone{display:flex;align-items:center;gap:10px;padding:14px 14px 6px}
+.zone .meta{font-size:13px;color:rgb(var(--ink-2))}
+
+/* spool racks */
+.rack-wrap{display:flex;align-items:stretch;padding:2px 0 0 10px;min-width:0}
+.label.rail{writing-mode:vertical-rl;transform:rotate(180deg);flex:none;width:28px;margin:4px 0 12px;padding:8px 3px;align-self:stretch;font-size:13px;white-space:nowrap}
+.label.rail::before,.label.rail::after{display:none}
+.rack-wrap .rack{flex:1;min-width:0;padding-left:6px}
+.rack-head{display:flex;align-items:center;gap:10px;padding:0 14px 4px}
+.rack-head .meta{font-size:13px;color:rgb(var(--ink-2))}
+.rack{display:flex;gap:4px;overflow-x:auto;padding:2px 14px 9px;scroll-snap-type:x proximity;position:relative}
+.rack::after{content:"";position:absolute;left:0;right:0;bottom:6px;height:3px;border-radius:2px;background:rgb(var(--stitch)/.35)}
+.spool{position:relative;flex:none;width:78px;height:68px;scroll-snap-align:start;--th:var(--g1);z-index:1;border-radius:6px}
+.sp-cap{position:absolute;left:10px;right:10px;height:7px;border-radius:3px;background:rgb(var(--paper));box-shadow:0 1px 1px rgb(0 0 0/.18)}
+.sp-cap.t{top:2px}.sp-cap.b{bottom:2px}
+.sp-body{position:absolute;left:14px;right:14px;top:8px;bottom:8px;border-radius:3px;overflow:hidden;transition:background .25s}
+/* unlit = printed ghost chart */
+.spool .sp-body{background:
+  repeating-linear-gradient(45deg,rgb(var(--th)/.32) 0 1px,transparent 1px 5px),
+  repeating-linear-gradient(-45deg,rgb(var(--th)/.32) 0 1px,transparent 1px 5px),rgb(var(--paper)/.35);
+  box-shadow:inset 0 0 0 1px rgb(var(--th)/.4)}
+.spool[aria-pressed=true] .sp-body{background:
+  linear-gradient(90deg,rgb(255 255 255/.28),transparent 28%,transparent 70%,rgb(0 0 0/.18)),
+  repeating-linear-gradient(0deg,rgb(var(--th)) 0 2px,rgb(var(--th)/.74) 2px 3px);box-shadow:none}
+.sp-band{position:absolute;left:3px;right:3px;top:50%;transform:translateY(-50%);min-height:30px;padding:2px 3px;display:grid;place-items:center;text-align:center;font-size:12px;line-height:1.05;font-weight:650;font-stretch:80%;color:rgb(var(--paper-ink));background:rgb(var(--paper));
+  box-shadow:0 1px 2px rgb(0 0 0/.25)}
+.spool[aria-pressed=true] .sp-band{background:rgb(var(--paper));outline:1.5px dashed rgb(var(--th));outline-offset:-3px}
+.sp-n{position:absolute;right:0;top:-1px;min-width:22px;height:22px;padding:0 3px;border-radius:11px;display:grid;place-items:center;font-size:12px;font-weight:700;line-height:1;background:rgb(var(--th));color:rgb(var(--on-th));z-index:2;font-variant-numeric:tabular-nums}
+.spool:hover .sp-body{filter:brightness(1.05)}
+.spool.friend .sp-band{outline:1.5px dashed rgb(var(--th));outline-offset:-3px}
+.chips{display:flex;gap:6px;overflow-x:auto;padding:2px 14px 6px;align-items:center}
+.chip{flex:none;min-height:44px;display:grid;place-items:center}
+.chip .label{min-height:30px;padding:3px 14px;font-weight:600;font-size:13px;opacity:.82}
+.chip[aria-pressed=true] .label{opacity:1;background-color:rgb(var(--sel));outline:1.5px dashed rgb(var(--ink));outline-offset:-3px}
+.chip-sep{flex:none;width:1px;height:22px;background:rgb(var(--stitch)/.4);margin:0 4px}
+
+/* rows */
+.rows{padding:0 14px}
+.row{position:relative;display:grid;grid-template-columns:52px 1fr;align-items:center;gap:6px;padding:10px 0 12px}
+.row::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:repeating-linear-gradient(90deg,rgb(var(--stitch)/.55) 0 7px,transparent 7px 11px)}
+.r-name{display:block;padding:10px 0;margin:-10px 0 -6px;text-align:left;font-weight:700;font-size:17.5px;line-height:1.15;min-height:24px}
+.r-name:hover{text-decoration:underline;text-decoration-style:dashed;text-underline-offset:4px;text-decoration-thickness:1.5px}
+.r-sub{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center;margin-top:3px;font-size:13px;color:rgb(var(--ink-2))}
+.knot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:5px;vertical-align:-1px;background:radial-gradient(circle at 35% 30%,rgb(255 255 255/.5),transparent 45%),rgb(var(--th));box-shadow:0 0 0 1.5px rgb(var(--linen)),0 0 0 2.5px rgb(var(--th)/.55)}
+.xmark{display:inline-block;width:11px;height:11px;margin-right:5px;vertical-align:-1px;background:rgb(var(--th));-webkit-mask:var(--xm) center/contain no-repeat;mask:var(--xm) center/contain no-repeat;--xm:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M1.5 1.5L8.5 8.5M8.5 1.5L1.5 8.5' stroke='black' stroke-width='2.4' stroke-linecap='round'/%3E%3C/svg%3E")}
+.tag{display:inline-block;font-family:var(--hand);font-size:17px;line-height:1.1;padding:3px 10px 2px;color:rgb(var(--ink));background:rgb(var(--tag));outline:1.5px dashed rgb(var(--stitch));outline-offset:-3px;clip-path:polygon(0 0,100% 0,100% 100%,0 100%,5px 50%)}
+.tag{padding-left:13px}
+.more{display:block;margin:14px auto;min-height:44px}
+.empty{padding:26px 18px;font-family:var(--hand);font-size:20px;text-align:center;color:rgb(var(--ink-2))}
+
+/* heart */
+.heart{width:52px;height:48px;display:grid;place-items:center;border-radius:8px;--hc:var(--heart)}
+.heart svg{display:block;overflow:visible}
+.heart .ghost{stroke:rgb(var(--hc)/.55);fill:none;stroke-linecap:round}
+.heart .leg line{stroke:rgb(var(--hc));stroke-linecap:round;stroke-dasharray:var(--l) var(--l);stroke-dashoffset:var(--l);transition:stroke-dashoffset .06s linear;transition-delay:calc((var(--n) - var(--i))*3.5ms)}
+.heart .leg line.sheen{stroke:rgb(255 255 255/.34)}
+.heart.on .leg line{stroke-dashoffset:0;transition:stroke-dashoffset .09s linear;transition-delay:calc(var(--i)*7.5ms)}
+.heart.on .ghost{stroke:rgb(var(--hc)/.15);transition:stroke .3s}
+.heart:hover .ghost{stroke:rgb(var(--hc)/.85)}
+.heart:active svg{transform:translateY(1px)}
+
+/* needle bar */
+.needle{position:absolute;left:0;right:0;bottom:0;height:72px;z-index:5;display:flex;align-items:center;padding:0 10px;gap:6px;background:linear-gradient(rgb(var(--linen)/0),rgb(var(--linen)) 38%)}
+.needle .pick-tag{flex:none;min-height:44px;width:104px}
+.needle .pick-tag .label{width:100%;min-height:40px;font-size:14px;gap:0}
+.needle .pick-tag b{font-size:18px;font-variant-numeric:tabular-nums}
+.thread{flex:1;height:60px;min-width:0}
+.thread svg{display:block;height:60px}
+.thread .needle-body{fill:rgb(var(--label-ink)/.9)}
+.thread path.t{fill:none;stroke:rgb(var(--heart));stroke-linecap:round;stroke-width:3;transition:stroke-dashoffset .5s cubic-bezier(.25,.1,.25,1)}
+.thread path.s{fill:none;stroke:rgb(255 255 255/.4);stroke-linecap:round;stroke-width:.9;transition:stroke-dashoffset .5s cubic-bezier(.25,.1,.25,1)}
+.thread path.k{fill:none;stroke:rgb(var(--heart-d));stroke-linecap:round;stroke-width:8;transition:stroke-dashoffset .5s cubic-bezier(.25,.1,.25,1)}
+.btn{position:relative;display:inline-grid;place-items:center;min-height:44px;padding:0 18px;font-weight:700;font-size:15px;color:rgb(var(--btn-ink));background:rgb(var(--btn-bg));outline:1.5px dashed rgb(var(--btn-ink)/.75);outline-offset:-4px;border-radius:3px;transition:filter .15s}
+.btn:hover{filter:brightness(1.08)}
+.btn:active{filter:brightness(.92)}
+.btn.alt{background:rgb(var(--label));color:rgb(var(--label-ink));outline-color:rgb(var(--label-ink)/.6)}
+.needle .btn{flex:none;width:96px;padding:0}
+
+/* patch + sheet */
+.sheet-back{position:absolute;inset:0;z-index:20;background:rgb(var(--linen)/.62);display:flex;align-items:flex-end}
+.sheet-back[hidden]{display:none}
+.patch{position:relative;width:100%;max-height:92%;overflow-y:auto;margin:0 8px 8px;padding:20px 20px 22px;background:rgb(var(--patch));box-shadow:var(--shadow);border-radius:10px;animation:rise .35s cubic-bezier(.2,.8,.2,1)}
+.patch>.cloth-tex2{position:absolute;inset:0;pointer-events:none;background-image:repeating-linear-gradient(0deg,rgb(var(--weave)/.3) 0 1px,transparent 1px 3px),repeating-linear-gradient(90deg,rgb(var(--weave)/.3) 0 1px,transparent 1px 3px);border-radius:10px}
+.patch>*{position:relative}
+.patch>svg.edge{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.patch .edge rect{x:5px;y:5px;width:calc(100% - 10px);height:calc(100% - 10px);rx:7px;fill:none;stroke:rgb(var(--stitch));stroke-width:2;stroke-dasharray:8 6;stroke-linecap:round}
+@keyframes rise{from{transform:translateY(24px);opacity:0}to{transform:none;opacity:1}}
+.patch h2{font-size:30px;line-height:1.02;font-weight:760;letter-spacing:-.02em;text-wrap:balance;padding-right:48px}
+.patch .x{position:absolute;right:10px;top:10px;width:44px;height:44px;display:grid;place-items:center}
+.p-meta{display:flex;flex-wrap:wrap;gap:6px 14px;margin:10px 0;font-size:14px;color:rgb(var(--ink-2))}
+.hand{font-family:var(--hand);font-size:19px;color:rgb(var(--ink-2))}
+.aida{position:relative;display:grid;place-items:center;width:152px;height:132px;margin:12px auto 4px;
+  background-color:rgb(var(--linen-2));background-image:radial-gradient(circle,rgb(var(--ink)/.35) 1px,transparent 1.3px),repeating-linear-gradient(0deg,rgb(var(--weave)/.5) 0 1px,transparent 1px 8px),repeating-linear-gradient(90deg,rgb(var(--weave)/.5) 0 1px,transparent 1px 8px);background-size:8px 8px,auto,auto;outline:1.5px dashed rgb(var(--stitch));outline-offset:-4px;border-radius:2px}
+.aida .heart{width:100%;height:100%}
+.p-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;justify-content:center}
+.hint{text-align:center;font-family:var(--hand);font-size:19px;color:rgb(var(--ink-2));min-height:24px}
+
+/* sampler */
+.band{height:12px;background:rgb(var(--th,var(--g1)));-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 2L10 10M10 2L2 10' stroke='black' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E") 0 0/12px 12px repeat-x;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath d='M2 2L10 10M10 2L2 10' stroke='black' stroke-width='2.6' stroke-linecap='round'/%3E%3C/svg%3E") 0 0/12px 12px repeat-x}
+.band.h{height:12px;margin:2px 0 10px}
+.patch .band.h:first-child{margin-right:50px}
+.pk{display:grid;grid-template-columns:36px 1fr;gap:4px 8px;align-items:center;padding:8px 0}
+.pk .mini{grid-row:span 2;width:36px;height:32px}
+.pk .nm{font-weight:700;font-size:17px;line-height:1.15}
+.pk .ls{font-size:13px;color:rgb(var(--ink-2))}
+.pk .band{grid-column:1/-1;height:12px}
+.pk.fresh .band{animation:rowin .7s steps(16) both}
+@keyframes rowin{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 0 0 0)}}
+.mini svg{width:100%;height:100%;display:block}
+.mini .leg line{stroke:rgb(var(--heart));stroke-linecap:round}
+.toast{position:absolute;left:50%;transform:translateX(-50%);bottom:84px;z-index:30;font-family:var(--hand);font-size:19px;padding:6px 16px;background:rgb(var(--label));color:rgb(var(--label-ink));box-shadow:var(--shadow);border-radius:3px;white-space:nowrap}
+.toast[hidden]{display:none}
+
+/* map */
+.mapbox{position:relative;flex:1;min-height:150px;background:rgb(var(--linen))}
+.mapbox .m{position:absolute;inset:0}
+.mapbox .weave{position:absolute;inset:0;pointer-events:none;z-index:2;background-image:repeating-linear-gradient(0deg,rgb(var(--weave)/.18) 0 1px,transparent 1px 3px),repeating-linear-gradient(90deg,rgb(var(--weave)/.18) 0 1px,transparent 1px 3px)}
+.credit{position:absolute;left:8px;bottom:4px;z-index:3;font-size:12px;padding:1px 6px;background:rgb(var(--linen)/.85);color:rgb(var(--ink-2))}
+.mapbox .label.corner{position:absolute;left:10px;top:10px;z-index:3}
+.maplibregl-ctrl-top-right{top:6px}
+.maplibregl-ctrl-group{background:rgb(var(--patch))!important;box-shadow:var(--shadow)!important}
+.maplibregl-ctrl-group button{width:44px!important;height:44px!important}
+.maplibregl-ctrl-icon{filter:invert(var(--is-dark))}
+.seam{height:14px;flex:none;position:relative;background:rgb(var(--linen))}
+.seam::before{content:"";position:absolute;left:0;right:0;top:6px;height:2px;background:repeating-linear-gradient(90deg,rgb(var(--stitch)) 0 8px,transparent 8px 12px)}
+.peek{flex:none;height:var(--peek,210px);overflow-y:auto;padding-bottom:78px}
+.peek-head{display:flex;align-items:center;gap:10px;padding:2px 14px 0;font-size:13px;color:rgb(var(--ink-2))}
+.map-mode .scroll{display:flex;flex-direction:column;padding-bottom:0;overflow:hidden}
+.map-mode .view.map-app{display:flex;flex-direction:column;flex:1;min-height:0}
+.map-mode .view.map-app[hidden]{display:none}
+.map-app .racks,.map-app .chips,.map-app .seam{flex:none}
+.map-app>div:nth-child(3){flex:1;min-height:120px;position:relative}
+
+/* shows */
+.band-list{padding:4px 14px 0;display:grid;gap:12px}
+.wrist{position:relative;display:grid;grid-template-columns:76px 1fr;min-height:92px;color:rgb(var(--ink));background:rgb(var(--patch));box-shadow:0 2px 6px rgb(59 40 50/.14);border-radius:4px;overflow:hidden}
+.wrist .wd{display:grid;place-items:center;text-align:center;padding:6px;background:rgb(var(--th));color:rgb(var(--on-th));
+  background-image:repeating-linear-gradient(90deg,rgb(255 255 255/.14) 0 2px,transparent 2px 4px);position:relative}
+.wrist .wd b{display:block;font-size:26px;line-height:1;font-weight:780;font-variant-numeric:tabular-nums}
+.wrist .wd span{display:block;font-size:13px;font-weight:600}
+.wrist .wd::after{content:"";position:absolute;right:-1px;top:8px;bottom:8px;width:6px;background:radial-gradient(circle at 100% 50%,transparent 3px,rgb(var(--patch)) 3.5px) 0 0/6px 12px}
+.wrist .wb{padding:9px 12px 10px 12px}
+.wrist .wt{font-weight:720;font-size:15.5px;line-height:1.16;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.wrist .wv{font-size:14px;margin-top:3px;font-weight:600}
+.wrist .wg{font-size:13px;color:rgb(var(--ink-2));margin-top:2px}
+.wrist .wp{position:absolute;right:8px;bottom:5px;font-family:var(--hand);font-size:16px;color:rgb(var(--ink-2))}
+.credit-line{padding:14px 18px 0;font-size:13px;color:rgb(var(--ink-2))}
+.credit-line a{color:inherit;text-underline-offset:3px}
+
+/* screens board + desktop */
+.board{display:flex;gap:36px;padding:36px;width:max-content}
+.fr{width:390px}
+.frame{width:390px;height:844px;position:relative;overflow:hidden;box-shadow:0 10px 30px rgb(0 0 0/.3);border-radius:4px}
+.frame .app{height:844px;max-width:none}
+.cap{font-size:15px;margin-top:10px;font-weight:600;color:#ece6ee}
+.cap span{font-weight:400;opacity:.8}
+.desk{display:grid;grid-template-columns:480px 1fr;height:100vh;background:rgb(var(--linen))}
+.desk .app{max-width:none;height:100vh}
+.desk-map{position:relative;display:flex;flex-direction:column}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+.mini .ghost{fill:none;stroke:rgb(var(--heart)/.55);stroke-linecap:round}
+.mini.ph .leg{display:none}
+.mini:not(.ph) .ghost{display:none}
+.hero{display:grid;grid-template-columns:202px 1fr;gap:12px;align-items:center;padding:10px 14px 4px}.hero h1{font-size:0;line-height:0}.hero svg{width:100%;height:auto;display:block}.hero .hello{padding:0;font-size:19px;line-height:1.15}
+.zone{padding:8px 14px 0}
+.aida .heart .ghost{stroke:rgb(var(--hc)/.8);stroke-width:1px}
+.aida .heart.on .ghost{stroke:rgb(var(--hc)/.2)}
+
+.hero{display:block;padding:8px 14px 0}.hero svg{width:100%;max-width:356px;height:auto;display:block}
+.hero .hello{margin-top:4px;font-size:19px;line-height:1.15;max-width:none}
+.chips.land{padding:2px 12px 2px;gap:6px}
+.chips.land .chip .label{min-height:34px;font-size:14px}
+.linkbtn{flex:none;min-height:44px;padding:0 8px;font-weight:650;font-size:14px;color:rgb(var(--ink));text-decoration:underline dashed;text-decoration-thickness:1.5px;text-underline-offset:5px;margin-left:auto}
+.row{grid-template-columns:60px 1fr;padding:11px 0 13px}
+.heart{width:60px;height:52px}
+.desk .hero{display:grid;grid-template-columns:270px 1fr;gap:14px;align-items:center}
+.desk .hero .hello{margin:0;font-size:20px}
+.board-body{background:#2a1e29;min-height:100%}.frame .app{width:390px;max-width:none}body{height:auto}html{height:auto}</style></head><body><div class="board-body"><div class="board">
+<div class="fr"><div class="frame" id="fa"></div><p class="cap">Map, filters and the list peek <span>light</span></p></div>
+<div class="fr"><div class="frame" id="fb"></div><p class="cap">One place, patched on, heart unworked <span>dark</span></p></div>
+<div class="fr"><div class="frame" id="fc"></div><p class="cap">Your sampler: picks, send, copy <span>light</span></p></div>
+<div class="fr"><div class="frame" id="fd"></div><p class="cap">Shows coming up, wristbands <span>dark</span></p></div>
+</div></div><script>const DATA={"lists":[{"id":"breakfast-brunch","name":"Breakfast/Brunch","group":"Food","source":"mine","count":6},{"id":"casual-food","name":"Casual Food","group":"Food","source":"mine","count":136},{"id":"sit-down-restaurants","name":"Sit Down Restaurants","group":"Food","source":"mine","count":68},{"id":"fine-dining","name":"Fine Dining","group":"Food","source":"mine","count":2},{"id":"bakery","name":"Bakery","group":"Food","source":"mine","count":29},{"id":"desserts","name":"Desserts","group":"Food","source":"mine","count":21},{"id":"tea-drinks","name":"Tea/Drinks","group":"Drinks and Nightlife","source":"mine","count":61},{"id":"bar-club","name":"Bar/Club","group":"Drinks and Nightlife","source":"mine","count":1},{"id":"shopping","name":"Shopping","group":"Shopping","source":"mine","count":29},{"id":"clothing","name":"Clothing","group":"Shopping","source":"mine","count":23},{"id":"grocery","name":"Grocery","group":"Shopping","source":"mine","count":25},{"id":"points-of-interest","name":"Points of Interest","group":"Sightseeing and Culture","source":"mine","count":8},{"id":"tourist-attractions","name":"Tourist Attractions","group":"Sightseeing and Culture","source":"mine","count":33},{"id":"museums","name":"Museums","group":"Sightseeing and Culture","source":"mine","count":12},{"id":"venues","name":"Venues","group":"Sightseeing and Culture","source":"mine","count":1},{"id":"roadside-destinations","name":"Roadside Destinations","group":"Sightseeing and Culture","source":"mine","count":4},{"id":"parks","name":"Parks","group":"Outdoors","source":"mine","count":30},{"id":"hiking","name":"Hiking","group":"Outdoors","source":"mine","count":5},{"id":"trails","name":"Trails","group":"Outdoors","source":"mine","count":2},{"id":"activities","name":"Activities","group":"Activities and Recreation","source":"mine","count":11},{"id":"sports","name":"Sports","group":"Activities and Recreation","source":"mine","count":35},{"id":"guns","name":"Guns","group":"Activities and Recreation","source":"mine","count":9},{"id":"hotels","name":"Hotels","group":"Travel Logistics","source":"mine","count":7},{"id":"parking-lots","name":"Parking Lots","group":"Travel Logistics","source":"mine","count":17},{"id":"sf-shared","name":"SF","group":"Friends' lists","source":"friends","count":388},{"id":"sac-shared","name":"Sac","group":"Friends' lists","source":"friends","count":340},{"id":"bay-area-shared","name":"Bay Area","group":"Friends' lists","source":"friends","count":317},{"id":"nyc-shared","name":"NYC","group":"Friends' lists","source":"friends","count":461},{"id":"sacramento-picks","name":"Sacramento picks","group":"Curated","source":"mine","count":1,"curated":true}],"places":[{"n":"Golden Gate Bakery","a":"","la":37.79641,"ln":-122.40684,"t":"8.5 Egg Tart","l":"bakery","source":"mine","been":false},{"n":"Rintaro","a":"","la":37.76888,"ln":-122.41514,"t":"Michelin Bib","l":"sit-down-restaurants","source":"mine","been":false},{"n":"Kiss of Matcha","a":"","la":37.79803,"ln":-122.40736,"t":"7.9 matcha","l":"tea-drinks","source":"mine","been":false},{"n":"Matcha Cafe Maiko","a":"","la":37.79421,"ln":-122.40622,"t":"8.3 matcha","l":"tea-drinks","source":"mine","been":false},{"n":"Dumpling Home","a":"","la":37.77582,"ln":-122.42264,"t":"8.4","l":"casual-food","source":"mine","been":false},{"n":"Hi Sweetie Tea and Treats","a":"","la":37.79578,"ln":-122.4078,"t":"7.6","l":"tea-drinks","source":"mine","been":false},{"n":"Taqueria El Farolito","a":"2950 24th St, San Francisco, CA 94110","la":37.75278,"ln":-122.41114,"t":"Opens late","l":"casual-food","source":"mine","been":false},{"n":"Cocobang","a":"550 Taylor St, San Francisco, CA 94102","la":37.78764,"ln":-122.41156,"t":"Opens late","l":"sit-down-restaurants","source":"mine","been":false},{"n":"Tacos 65","a":"6498 Broadway, Sacramento, CA 95820","la":38.54663,"ln":-121.42804,"t":"Highly rated on beli","l":"casual-food","source":"mine","been":false},{"n":"Taquería El Farolito","a":"2779 Mission St, San Francisco, CA 94110","la":37.75264,"ln":-122.41835,"t":"Opens late","l":"casual-food","source":"mine","been":false},{"n":"Spartan Taco Truck","a":"447 E William St, San Jose, CA 95112","la":37.33313,"ln":-121.87579,"t":"Opens late","l":"casual-food","source":"mine","been":false},{"n":"Pho Momma","a":"9555 Folsom Blvd Ste A, Sacramento, CA 95827","la":38.57129,"ln":-121.33957,"t":"Michelin Gourmand Bib 2025","l":"casual-food","source":"mine","been":false},{"n":"Cajun Bistro 7","a":"3005 Silver Creek Rd Ste 116, San Jose, CA 95121","la":37.30886,"ln":-121.8132,"t":"Opens late","l":"sit-down-restaurants","source":"mine","been":false},{"n":"6th/8th Street Lot W/X Freeway","a":"","la":38.56627,"ln":-121.50274,"t":"Sunday Farmer Market","l":"grocery","source":"mine","been":false},{"n":"THIÊN LONG SƠN - THE DRAGON MOUNTAIN","a":"","la":37.45242,"ln":-121.85045,"t":"Moderate 1 Mile, 1 Hour","l":"trails","source":"mine","been":false},{"n":"Don and Brenda Nottoli Community Park","a":"","la":38.48771,"ln":-121.34758,"t":"Tennis Courts","l":"sports","source":"mine","been":false},{"n":"Z & Y Restaurant","a":"655 Jackson St, San Francisco, CA 94133","la":37.79603,"ln":-122.40606,"t":"Duck!","l":"sf-shared","source":"friends","been":false},{"n":"Starlite","a":"450 Powell St, San Francisco, CA 94102","la":37.78897,"ln":-122.40841,"t":"Mocktails!","l":"sf-shared","source":"friends","been":false},{"n":"Krazy marys boutique","a":"3230 Folsom Blvd, Sacramento, CA 95816","la":38.56757,"ln":-121.46467,"t":"Cute clothing store","l":"sac-shared","source":"friends","been":false},{"n":"Cake Expressions","a":"2325 De La Cruz Blvd, Santa Clara, CA 95050","la":37.36395,"ln":-121.94111,"t":"Guava cake","l":"bay-area-shared","source":"friends","been":false},{"n":"Bouche","a":"603 Bush St, San Francisco, CA 94108","la":37.79025,"ln":-122.40735,"t":"","l":"breakfast-brunch","source":"mine","been":false},{"n":"Marugame Udon","a":"","la":37.72748,"ln":-122.4765,"t":"","l":"casual-food","source":"mine","been":false},{"n":"Sobakatsu 03","a":"1700 Laguna St, San Francisco, CA 94115","la":37.78687,"ln":-122.42821,"t":"","l":"casual-food","source":"mine","been":false},{"n":"Fog Harbor Fish House","a":"","la":37.809,"ln":-122.41029,"t":"","l":"casual-food","source":"mine","been":false},{"n":"Cafe Okawari","a":"","la":37.77816,"ln":-122.39388,"t":"","l":"casual-food","source":"mine","been":false},{"n":"Deli Board","a":"1058 Folsom St, San Francisco, CA 94103","la":37.77756,"ln":-122.40703,"t":"","l":"casual-food","source":"mine","been":false},{"n":"Barbara Pinseria & Cocktail Bar","a":"431 Columbus Ave, San Francisco, CA 94133","la":37.79901,"ln":-122.40869,"t":"","l":"casual-food","source":"mine","been":false},{"n":"The Italian Homemade Company","a":"716 Columbus Ave, San Francisco, CA 94133","la":37.8016,"ln":-122.41181,"t":"","l":"casual-food","source":"mine","been":false},{"n":"Marcella's Lasagneria","a":"1099 Tennessee St, San Francisco, CA 94107","la":37.75802,"ln":-122.38914,"t":"","l":"casual-food","source":"mine","been":false},{"n":"El Gallo Giro Food Truck","a":"986-998 Treat Ave, San Francisco, CA 94110","la":37.75434,"ln":-122.41302,"t":"","l":"casual-food","source":"mine","been":false},{"n":"Molinari Delicatessen","a":"373 Columbus Ave, San Francisco, CA 94133","la":37.79849,"ln":-122.40787,"t":"","l":"casual-food","source":"mine","been":false},{"n":"Tony's Pizza Napoletana","a":"1570 Stockton St, San Francisco, CA 94133","la":37.80039,"ln":-122.40905,"t":"","l":"casual-food","source":"mine","been":false},{"n":"FUSION DUMPLING","a":"","la":37.79626,"ln":-122.40607,"t":"","l":"casual-food","source":"mine","been":false},{"n":"Tadaima Mission","a":"3515 20th St B, San Francisco, CA 94110","la":37.75852,"ln":-122.41956,"t":"","l":"casual-food","source":"mine","been":false},{"n":"La Taqueria","a":"2889 Mission St, San Francisco, CA 94110","la":37.75088,"ln":-122.41818,"t":"","l":"casual-food","source":"mine","been":false},{"n":"Fish In The Box","a":"","la":37.77386,"ln":-122.44585,"t":"","l":"casual-food","source":"mine","been":false},{"n":"Bread n' Chu","a":"","la":37.7824,"ln":-122.47969,"t":"","l":"casual-food","source":"mine","been":false},{"n":"Ernest","a":"","la":37.76315,"ln":-122.41099,"t":"","l":"sit-down-restaurants","source":"mine","been":false},{"n":"SAN HO WON","a":"","la":37.7596,"ln":-122.41025,"t":"","l":"sit-down-restaurants","source":"mine","been":false},{"n":"Sotto Mare","a":"","la":37.7997,"ln":-122.40833,"t":"","l":"sit-down-restaurants","source":"mine","been":false},{"n":"Waystone","a":"","la":37.79949,"ln":-122.41083,"t":"","l":"sit-down-restaurants","source":"mine","been":false},{"n":"Ganji","a":"","la":37.78619,"ln":-122.42971,"t":"","l":"sit-down-restaurants","source":"mine","been":false},{"n":"Itria","a":"3266 24th St, San Francisco, CA 94110","la":37.75245,"ln":-122.41783,"t":"","l":"sit-down-restaurants","source":"mine","been":false},{"n":"Piccino","a":"1001 Minnesota St, San Francisco, CA 94107","la":37.75758,"ln":-122.38996,"t":"","l":"sit-down-restaurants","source":"mine","been":false},{"n":"Swan Oyster Depot","a":"1517 Polk St, San Francisco, CA 94109","la":37.79087,"ln":-122.42091,"t":"","l":"sit-down-restaurants","source":"mine","been":false},{"n":"Onsen","a":"466 Eddy St, San Francisco, CA 94109","la":37.7837,"ln":-122.4154,"t":"","l":"sit-down-restaurants","source":"mine","been":false},{"n":"Khao Tiew","a":"272 Claremont Blvd, San Francisco, CA 94127","la":37.74109,"ln":-122.46507,"t":"","l":"sit-down-restaurants","source":"mine","been":false},{"n":"Arsicault Bakery","a":"87 McAllister St, San Francisco, CA 94102","la":37.78081,"ln":-122.41334,"t":"","l":"bakery","source":"mine","been":false},{"n":"Butter & Crumble","a":"271 Francisco St, San Francisco, CA 94133","la":37.80508,"ln":-122.40969,"t":"","l":"bakery","source":"mine","been":false},{"n":"Pineapple King Bakery - San Francisco","a":"1915 Irving St, San Francisco, CA 94122","la":37.76341,"ln":-122.47847,"t":"","l":"bakery","source":"mine","been":false},{"n":"AA Bakery & Cafe","a":"","la":37.79568,"ln":-122.40813,"t":"","l":"bakery","source":"mine","been":false},{"n":"Yummy Bakery & Cafe","a":"","la":37.79609,"ln":-122.40549,"t":"","l":"bakery","source":"mine","been":false},{"n":"Stockton Bakery","a":"","la":37.79561,"ln":-122.40837,"t":"","l":"bakery","source":"mine","been":false},{"n":"Philmore Creamery","a":"1840 Fillmore St, San Francisco, CA 94115","la":37.78654,"ln":-122.43327,"t":"","l":"desserts","source":"mine","been":false},{"n":"U :Dessert Story","a":"","la":37.76429,"ln":-122.43061,"t":"","l":"desserts","source":"mine","been":false},{"n":"Na Ya Dessert Cafe","a":"","la":37.77723,"ln":-122.42489,"t":"","l":"desserts","source":"mine","been":false},{"n":"Na Ya Dessert Cafe","a":"","la":37.78064,"ln":-122.47686,"t":"","l":"desserts","source":"mine","been":false},{"n":"Matcha Toko","a":"","la":37.72775,"ln":-122.47697,"t":"","l":"tea-drinks","source":"mine","been":false},{"n":"By Me Boba Tea","a":"","la":37.79559,"ln":-122.40734,"t":"","l":"tea-drinks","source":"mine","been":false},{"n":"Chinatown Taiwan Fruit Tea","a":"","la":37.79508,"ln":-122.40762,"t":"","l":"tea-drinks","source":"mine","been":false},{"n":"Dots Boba","a":"","la":37.72422,"ln":-122.45704,"t":"","l":"tea-drinks","source":"mine","been":false},{"n":"Momo Tea","a":"","la":37.76405,"ln":-122.46387,"t":"","l":"tea-drinks","source":"mine","been":false},{"n":"Stonemill Matcha","a":"","la":37.76397,"ln":-122.42166,"t":"","l":"tea-drinks","source":"mine","been":false},{"n":"Asha Tea House","a":"","la":37.78817,"ln":-122.40371,"t":"","l":"tea-drinks","source":"mine","been":false},{"n":"Kiss of Matcha","a":"","la":37.78293,"ln":-122.46746,"t":"","l":"tea-drinks","source":"mine","been":false},{"n":"Maruwu Seicha - SF Japantown","a":"","la":37.7852,"ln":-122.43031,"t":"","l":"tea-drinks","source":"mine","been":false},{"n":"Ceré Tea","a":"","la":37.75397,"ln":-122.42102,"t":"","l":"tea-drinks","source":"mine","been":false},{"n":"Tadaima Marina","a":"","la":37.79773,"ln":-122.42975,"t":"","l":"tea-drinks","source":"mine","been":false},{"n":"Komeya No Bento","a":"","la":37.80009,"ln":-122.43137,"t":"","l":"tea-drinks","source":"mine","been":false},{"n":"Relic Vintage","a":"1475 Haight St, San Francisco, CA 94117","la":37.76996,"ln":-122.4466,"t":"","l":"clothing","source":"mine","been":false},{"n":"Big Time Vintage","a":"968 Valencia St, San Francisco, CA 94110","la":37.75745,"ln":-122.42134,"t":"","l":"clothing","source":"mine","been":false},{"n":"Big Time Vintage","a":"1630 Haight St, San Francisco, CA 94117","la":37.76984,"ln":-122.44919,"t":"","l":"clothing","source":"mine","been":false},{"n":"Indigo Vintage Coopertive","a":"1649 Haight St, San Francisco, CA 94117","la":37.76958,"ln":-122.44946,"t":"","l":"clothing","source":"mine","been":false},{"n":"710 Collective","a":"1644 Haight St, San Francisco, CA 94117","la":37.76993,"ln":-122.44944,"t":"","l":"clothing","source":"mine","been":false},{"n":"Buffalo Exchange","a":"1210 Valencia St, San Francisco, CA 94110","la":37.75344,"ln":-122.42097,"t":"","l":"clothing","source":"mine","been":false},{"n":"Buffalo Exchange","a":"1555 Haight St, San Francisco, CA 94117","la":37.76979,"ln":-122.44791,"t":"","l":"clothing","source":"mine","been":false},{"n":"Wasteland","a":"1660 Haight St, San Francisco, CA 94117","la":37.76982,"ln":-122.44962,"t":"","l":"clothing","source":"mine","been":false},{"n":"Fuzz & Sway","a":"683 Haight St, San Francisco, CA 94117","la":37.77161,"ln":-122.43342,"t":"","l":"clothing","source":"mine","been":false},{"n":"Indigo Vintage","a":"2266 Chestnut St, San Francisco, CA 94123","la":37.80037,"ln":-122.44066,"t":"","l":"clothing","source":"mine","been":false},{"n":"Closet 1951","a":"1951 Union St, San Francisco, CA 94123","la":37.79752,"ln":-122.43137,"t":"","l":"clothing","source":"mine","been":false},{"n":"Lisa Says Gah","a":"522 Octavia St, San Francisco, CA 94102","la":37.77705,"ln":-122.42461,"t":"","l":"clothing","source":"mine","been":false},{"n":"LOVED AGAIN","a":"4068 24th St, San Francisco, CA 94114","la":37.75144,"ln":-122.43343,"t":"","l":"clothing","source":"mine","been":false},{"n":"Blue Bin Vintage","a":"1525 Haight St, San Francisco, CA 94117","la":37.76974,"ln":-122.44737,"t":"","l":"clothing","source":"mine","been":false},{"n":"2nd STREET Haight St","a":"1560 Haight St, San Francisco, CA 94117","la":37.77013,"ln":-122.44805,"t":"","l":"clothing","source":"mine","been":false},{"n":"Out of the Closet - Polk","a":"1498 Polk St, San Francisco, CA 94109","la":37.79036,"ln":-122.42043,"t":"","l":"clothing","source":"mine","been":false},{"n":"Out of the Closet - Folsom","a":"1295 Folsom St, San Francisco, CA 94103","la":37.77376,"ln":-122.41127,"t":"","l":"clothing","source":"mine","been":false},{"n":"Valencia Street Vintage","a":"714 Valencia St, San Francisco, CA 94110","la":37.76138,"ln":-122.42173,"t":"","l":"clothing","source":"mine","been":false},{"n":"Haight Street Vintage","a":"1519 Haight St, San Francisco, CA 94117","la":37.76986,"ln":-122.44731,"t":"","l":"clothing","source":"mine","been":false},{"n":"Rare Vintage Finds","a":"910 Valencia St, San Francisco, CA 94110","la":37.75823,"ln":-122.42143,"t":"","l":"clothing","source":"mine","been":false},{"n":"Community Thrift","a":"623 Valencia St, San Francisco, CA 94110","la":37.76277,"ln":-122.42149,"t":"","l":"clothing","source":"mine","been":false},{"n":"H Mart San Francisco","a":"","la":37.7103,"ln":-122.46777,"t":"","l":"grocery","source":"mine","been":false},{"n":"Nijiya Market","a":"","la":37.78528,"ln":-122.43111,"t":"","l":"grocery","source":"mine","been":false},{"n":"Haight-Ashbury","a":"San Francisco, CA 94117","la":37.77022,"ln":-122.44536,"t":"","l":"points-of-interest","source":"mine","been":false},{"n":"Japantown","a":"San Francisco, CA 94115","la":37.78632,"ln":-122.43159,"t":"","l":"points-of-interest","source":"mine","been":false},{"n":"Chinatown","a":"San Francisco, CA","la":37.79447,"ln":-122.40481,"t":"","l":"points-of-interest","source":"mine","been":false},{"n":"Westlake Shopping Center","a":"","la":37.70109,"ln":-122.48318,"t":"","l":"points-of-interest","source":"mine","been":false},{"n":"Stonestown Galleria","a":"","la":37.72803,"ln":-122.47709,"t":"","l":"points-of-interest","source":"mine","been":false},{"n":"Union Square","a":"San Francisco, CA","la":37.78755,"ln":-122.40662,"t":"","l":"points-of-interest","source":"mine","been":false},{"n":"Hayes Promenade","a":"","la":37.77684,"ln":-122.42415,"t":"","l":"points-of-interest","source":"mine","been":false},{"n":"SFCM Bowes Center","a":"200 Van Ness Ave, San Francisco, CA 94102","la":37.77752,"ln":-122.41934,"t":"","l":"tourist-attractions","source":"mine","been":false},{"n":"PIER 39","a":"","la":37.80867,"ln":-122.40982,"t":"","l":"tourist-attractions","source":"mine","been":false},{"n":"Chinatown San Francisco","a":"","la":37.79398,"ln":-122.40808,"t":"","l":"tourist-attractions","source":"mine","been":false},{"n":"Japantown Peace Plaza","a":"","la":37.78522,"ln":-122.42973,"t":"","l":"tourist-attractions","source":"mine","been":false},{"n":"San Francisco Zoo","a":"","la":37.73294,"ln":-122.50283,"t":"","l":"tourist-attractions","source":"mine","been":false},{"n":"Cow Palace Arena & Event Center","a":"","la":37.707,"ln":-122.41965,"t":"","l":"tourist-attractions","source":"mine","been":false},{"n":"Asian Art Museum","a":"","la":37.78028,"ln":-122.41616,"t":"","l":"museums","source":"mine","been":false},{"n":"San Francisco Museum of Modern Art","a":"","la":37.78573,"ln":-122.40103,"t":"","l":"museums","source":"mine","been":false},{"n":"War Memorial Opera House","a":"","la":37.77848,"ln":-122.42032,"t":"","l":"venues","source":"mine","been":false},{"n":"California Academy of Sciences","a":"","la":37.76986,"ln":-122.46609,"t":"","l":"parks","source":"mine","been":false},{"n":"Twin Peaks","a":"","la":37.75291,"ln":-122.44741,"t":"","l":"parks","source":"mine","been":false},{"n":"Golden Gate Park","a":"","la":37.76892,"ln":-122.48298,"t":"","l":"parks","source":"mine","been":false},{"n":"The Panhandle","a":"","la":37.77244,"ln":-122.44637,"t":"","l":"parks","source":"mine","been":false},{"n":"Transamerica Redwood Park","a":"","la":37.79517,"ln":-122.40228,"t":"","l":"parks","source":"mine","been":false},{"n":"Ina Coolbrith Park","a":"","la":37.79827,"ln":-122.41346,"t":"","l":"parks","source":"mine","been":false},{"n":"San Francisco Main Public Library","a":"","la":37.77908,"ln":-122.4158,"t":"","l":"activities","source":"mine","been":false},{"n":"222 24th St","a":"222 24th St, San Francisco, CA 94107","la":37.75401,"ln":-122.38451,"t":"","l":"parking-lots","source":"mine","been":false},{"n":"SFMTA - Sutter Stockton Garage","a":"","la":37.79011,"ln":-122.4066,"t":"","l":"parking-lots","source":"mine","been":false},{"n":"Trinity Parking Garage","a":"","la":37.77821,"ln":-122.41381,"t":"","l":"parking-lots","source":"mine","been":false},{"n":"1355 Fulton St","a":"1355 Fulton St, San Francisco, CA 94117","la":37.77647,"ln":-122.43908,"t":"","l":"parking-lots","source":"mine","been":false},{"n":"Holiday Inn Express & Suites San Francisco Fishermans Wharf by IHG","a":"","la":37.8067,"ln":-122.41635,"t":"","l":"parking-lots","source":"mine","been":false},{"n":"Impark - Civic Center Garage Lot 200","a":"355 McAllister St, San Francisco, CA 94102","la":37.78013,"ln":-122.41776,"t":"","l":"parking-lots","source":"mine","been":false},{"n":"Impark - Performing Arts Garage Lot 201","a":"360 Grove St, San Francisco, CA 94102","la":37.77802,"ln":-122.42255,"t":"","l":"parking-lots","source":"mine","been":false},{"n":"54 Mint Cucina Romana","a":"16 Mint Plaza, San Francisco, CA 94103","la":37.78257,"ln":-122.4079,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Sutro Baths","a":"1004 Point Lobos Ave, San Francisco, CA 94121","la":37.78044,"ln":-122.51365,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Original Joe's \"We've eaten at Original Joe'sand it was…\"","a":"","la":37.80018,"ln":-122.40931,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Mollie Stone's Markets","a":"2435 California St, San Francisco, CA 94115","la":37.78871,"ln":-122.43449,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Julius' Castle","a":"302 Greenwich St, San Francisco, CA 94133","la":37.80299,"ln":-122.40496,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Filbert Steps","a":"202 Filbert St, San Francisco, CA 94133","la":37.8021,"ln":-122.40337,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Aziza","a":"5800 Geary Blvd, San Francisco, CA 94121","la":37.78043,"ln":-122.48169,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"La Mar Cocina Peruana San Francisco","a":"PIER 1 1/2 The Embarcadero N, San Francisco, CA 94111","la":37.79721,"ln":-122.39544,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Ox & Tiger","a":"552 Jones St, San Francisco, CA 94102","la":37.78652,"ln":-122.41297,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Four Kings 四大天王","a":"710 Commercial St, San Francisco, CA 94108","la":37.79404,"ln":-122.4051,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Wood Thumb","a":"968 Mission St, San Francisco, CA 94103","la":37.78181,"ln":-122.40824,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Amarena","a":"2162 Larkin St, San Francisco, CA 94109","la":37.79795,"ln":-122.42039,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Seven Hills","a":"1896 Hyde St, San Francisco, CA 94109","la":37.79815,"ln":-122.41874,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Pepperjack Provisions","a":"1232 9th Ave, San Francisco, CA 94122","la":37.76523,"ln":-122.46629,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Polly Ann Ice Cream","a":"3138 Noriega St, San Francisco, CA 94122","la":37.75349,"ln":-122.49773,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Britex Fabrics","a":"117 Post St, San Francisco, CA 94108","la":37.78873,"ln":-122.40425,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Iggy’s Burgers","a":"4248 18th St, San Francisco, CA 94114","la":37.76094,"ln":-122.43695,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"LOQUAT","a":"198 Gough St, San Francisco, CA 94102","la":37.77494,"ln":-122.42249,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"TUR","a":"1 W Portal Ave, San Francisco, CA 94127","la":37.74073,"ln":-122.46573,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Go Duck Yourself 去你鸭的","a":"439 Cortland Ave, San Francisco, CA 94110","la":37.7393,"ln":-122.41706,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Sergeant Ma","a":"185 Berry St Ste 1500, San Francisco, CA 94107","la":37.77631,"ln":-122.39168,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Andytown Coffee Roasters","a":"3655 Lawton St, San Francisco, CA 94122","la":37.75673,"ln":-122.5023,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Andytown Coffee Roasters","a":"66 Kearny St, San Francisco, CA 94108","la":37.78847,"ln":-122.4033,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Waterbar Restaurant","a":"399 The Embarcadero, San Francisco, CA 94105","la":37.79049,"ln":-122.38904,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"SAAM","a":"415 Brannan St, San Francisco, CA 94107","la":37.77968,"ln":-122.39462,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"The View Lounge","a":"780 Mission St, San Francisco, CA 94103","la":37.78523,"ln":-122.40448,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Norcina","a":"3251 Pierce St, San Francisco, CA 94123","la":37.80014,"ln":-122.43965,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Bernal Cutlery","a":"766 Valencia St, San Francisco, CA 94110","la":37.76068,"ln":-122.42183,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Entropy Creamery","a":"576 Union St, San Francisco, CA 94133","la":37.80059,"ln":-122.40886,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Stuff","a":"1545 Pacific Ave, San Francisco, CA 94109","la":37.7949,"ln":-122.42066,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Beit Rima","a":"138 Church St, San Francisco, CA 94114","la":37.76872,"ln":-122.42925,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Okaeri Japanese Bistro","a":"3515 20th St, San Francisco, CA 94110","la":37.75852,"ln":-122.41957,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Tano","a":"303 2nd St N102, San Francisco, CA 94107","la":37.78562,"ln":-122.39638,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Stray Dog Coffee & Bar","a":"2545 24th St, San Francisco, CA 94110","la":37.75292,"ln":-122.40516,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Patrick & Co","a":"560 Market St, San Francisco, CA 94104","la":37.78994,"ln":-122.40105,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Kibatsu","a":"400 Haight St, San Francisco, CA 94117","la":37.77244,"ln":-122.429,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Kawanoya","a":"1689 Church St, San Francisco, CA 94131","la":37.74392,"ln":-122.42659,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Panoramic view of San Francisco Oakland Bay Bridge","a":"1000 Vallejo St, San Francisco, CA 94133","la":37.79793,"ln":-122.41432,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Binge Coffee House","a":"530 Valencia St, San Francisco, CA 94110","la":37.76437,"ln":-122.42202,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Holy Crepe","a":"715 Irving St, San Francisco, CA 94122","la":37.76396,"ln":-122.46554,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Z Touch Salon","a":"1930 Ocean Ave, San Francisco, CA 94127","la":37.7258,"ln":-122.46327,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Wolfsbane","a":"2495 3rd St, San Francisco, CA 94107","la":37.75806,"ln":-122.38815,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Omnivore Books on Food","a":"3885 Cesar Chavez St, San Francisco, CA 94131","la":37.74763,"ln":-122.42676,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"post.script.","a":"2413 California St, San Francisco, CA 94115","la":37.78876,"ln":-122.4342,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Liholiho Yacht Club","a":"871 Sutter St, San Francisco, CA 94109","la":37.78823,"ln":-122.41461,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Honey and Stardust","a":"2070 Union St, San Francisco, CA 94123","la":37.79757,"ln":-122.43347,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Palm House Less busy than usual","a":"","la":37.79764,"ln":-122.43289,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Udon Mugizo - SF","a":"1581 Webster St #217, San Francisco, CA 94115","la":37.78496,"ln":-122.43213,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"BANGKOK STREET Thai Street Food","a":"1826 Buchanan St, San Francisco, CA 94115","la":37.78694,"ln":-122.42984,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Taksim","a":"564 4th St, San Francisco, CA 94107","la":37.77865,"ln":-122.39734,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Pàng","a":"1309 9th Ave, San Francisco, CA 94122","la":37.76377,"ln":-122.46646,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Dartealing Lounge","a":"470 3rd St, San Francisco, CA 94107","la":37.78158,"ln":-122.3964,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"HINODEYA Ramen & Bar Chestnut","a":"3340 Steiner St, San Francisco, CA 94123","la":37.80024,"ln":-122.43755,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Wako Japanese Restaurant","a":"211 Clement St, San Francisco, CA 94118","la":37.78297,"ln":-122.46156,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Izakaya mayumi","a":"2221 Clement St, San Francisco, CA 94121","la":37.78199,"ln":-122.48318,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Amelie San Francisco","a":"1754 Polk St, San Francisco, CA 94109","la":37.79311,"ln":-122.42097,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Osha Thai Restaurant and Bar (Embarcadero)","a":"4 Embarcadero Ctr, San Francisco, CA 94111","la":37.79481,"ln":-122.39565,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"The Happy Crane","a":"451 Gough St, San Francisco, CA 94102","la":37.77749,"ln":-122.4233,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"NEW PEOPLE","a":"1746 Post St, San Francisco, CA 94115","la":37.78562,"ln":-122.4306,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"SAN FRANCISCO SOU・SOU","a":"1746 Post St 2nd floor, San Francisco, CA 94115","la":37.78576,"ln":-122.4306,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Owl Tree","a":"601 Post St, San Francisco, CA 94109","la":37.78777,"ln":-122.41186,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"The Wild Fox","a":"123 Battery St, San Francisco, CA 94111","la":37.79272,"ln":-122.40008,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Caffe Capriccio","a":"2200 Mason St, San Francisco, CA 94133","la":37.80389,"ln":-122.41313,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"SHOWA Le Gourmet Tonkatsu","a":"1550 Howard St, San Francisco, CA 94103","la":37.77244,"ln":-122.41654,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"The ThongLor SF - Thai Restaurant","a":"420 Geary St, San Francisco, CA 94102","la":37.7872,"ln":-122.41034,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Bello Coffee & Tea","a":"2885 Diamond St, San Francisco, CA 94131","la":37.73381,"ln":-122.43398,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Propagation","a":"895 Post St, San Francisco, CA 94109","la":37.78719,"ln":-122.41644,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"San Remo Hotel","a":"2237 Mason St, San Francisco, CA 94133","la":37.8043,"ln":-122.4135,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Sobakatsu","a":"1700 Laguna St, San Francisco, CA 94115","la":37.78687,"ln":-122.42821,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Hikari Bullet Train Sushi & Bar","a":"1734 Post St, San Francisco, CA 94115","la":37.78561,"ln":-122.43049,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Kindred Studio","a":"1910 Bryant St, San Francisco, CA 94107","la":37.76281,"ln":-122.41054,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Lily","a":"225 Clement St, San Francisco, CA 94118","la":37.78297,"ln":-122.46173,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Lore Speakeasy and Escape Room","a":"3065 16th St, San Francisco, CA 94103","la":37.76486,"ln":-122.42104,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Bituin Studio","a":"445 Natoma St, San Francisco, CA 94103","la":37.78091,"ln":-122.40653,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Shoji","a":"140 New Montgomery St Suite 1, San Francisco, CA 94105","la":37.78667,"ln":-122.39967,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Ula Restaurant & Tapas Bar","a":"450 Post St, San Francisco, CA 94102","la":37.78834,"ln":-122.40936,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Tadaima Inner Sunset","a":"1248 9th Ave, San Francisco, CA 94122","la":37.76503,"ln":-122.46616,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Aji Kiji","a":"359 Kearny St, San Francisco, CA 94108","la":37.79154,"ln":-122.4044,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Trestle Restaurant","a":"531 Jackson St, San Francisco, CA 94133","la":37.7962,"ln":-122.40454,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Hinodeya Ramen & Bar 680 Clay Downtown","a":"680 Clay St, San Francisco, CA 94111","la":37.79461,"ln":-122.40448,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"The Bud Stop","a":"2206 Union St, San Francisco, CA 94123","la":37.79715,"ln":-122.43587,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Golden Gate Overlook","a":"Langdon Ct, San Francisco, CA 94129","la":37.80397,"ln":-122.47668,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Wela Thai Massage and Spa","a":"2343 Market St, San Francisco, CA 94114","la":37.76334,"ln":-122.43394,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Dandelion Chocolate Fillmore Street","a":"2115 Fillmore St, San Francisco, CA 94115","la":37.78921,"ln":-122.43406,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Muracci's Japanese Curry & Grill","a":"307 Kearny St, San Francisco, CA 94108","la":37.79101,"ln":-122.40426,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Rice Roll Express","a":"1131 Stockton St, San Francisco, CA 94133","la":37.79623,"ln":-122.40848,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Ha Mini Mart","a":"803 Grant Ave, San Francisco, CA 94108","la":37.79442,"ln":-122.40644,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"ODETOKYO Reservation Only","a":"431 Tehama St, San Francisco, CA 94103","la":37.78042,"ln":-122.40514,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Round House Cafe","a":"Golden Gate Bridge Plaza, San Francisco, CA 94129","la":37.8078,"ln":-122.47569,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Exploratorium","a":"Pier 15 Embarcadero at, Green St, San Francisco, CA 94111","la":37.80166,"ln":-122.39735,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"The Coffee Movement","a":"1030 Washington St, San Francisco, CA 94108","la":37.79476,"ln":-122.41029,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Home Coffee Roasters","a":"455 Grant Ave, San Francisco, CA 94108","la":37.79127,"ln":-122.4058,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Golden Gate Fortune Cookie Factory","a":"56 Ross Alley, San Francisco, CA 94108","la":37.79572,"ln":-122.40734,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Vital Tea Leaf","a":"905 Grant Ave, San Francisco, CA 94133","la":37.79531,"ln":-122.40662,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Pixlcat Coffee","a":"519 Clement St, San Francisco, CA 94118","la":37.78276,"ln":-122.46485,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Unco Frank's","a":"443 Clement St, San Francisco, CA 94118","la":37.78272,"ln":-122.46411,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Oishinbo Sushi","a":"202 Clement St, San Francisco, CA 94118","la":37.78321,"ln":-122.46141,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Le Soleil Stonestown","a":"3251 20th Ave 221 (2nd Floor, San Francisco, CA 94132","la":37.72773,"ln":-122.47697,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"House of Nanking","a":"919 Kearny St, San Francisco, CA 94133","la":37.79648,"ln":-122.40536,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Good Mong Kok Bakery","a":"1039 Stockton St, San Francisco, CA 94108","la":37.79545,"ln":-122.40833,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Breakfast Little","a":"3275 22nd St, San Francisco, CA 94110","la":37.75525,"ln":-122.42039,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Katsuo + Kombu","a":"559 Divisadero St, San Francisco, CA 94117","la":37.77477,"ln":-122.43794,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Anomaly SF","a":"2600 Sutter St, San Francisco, CA 94109","la":37.78496,"ln":-122.44336,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"BANSANG","a":"1560 Fillmore St, San Francisco, CA 94115","la":37.78411,"ln":-122.43276,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Angler","a":"132 The Embarcadero, San Francisco, CA 94105","la":37.79308,"ln":-122.39219,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Blue Whale Restaurant & Lounge","a":"2033 Union St, San Francisco, CA 94123","la":37.79725,"ln":-122.43282,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Verjus","a":"550 Washington St, San Francisco, CA 94111","la":37.79571,"ln":-122.40267,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"With Love Vintage","a":"1600 Haight St, San Francisco, CA 94117","la":37.76989,"ln":-122.44878,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Bodega SF","a":"138 Mason St, San Francisco, CA 94102","la":37.78483,"ln":-122.4093,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Mureta & Co","a":"2418 Fillmore St, San Francisco, CA 94115","la":37.79191,"ln":-122.43435,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"MuuKaTa6395","a":"4217 Geary Blvd, San Francisco, CA 94118","la":37.78071,"ln":-122.46465,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Mister Jiu's","a":"28 Waverly Pl, San Francisco, CA 94108","la":37.79371,"ln":-122.40666,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Indigo","a":"3321 Steiner St, San Francisco, CA 94123","la":37.80003,"ln":-122.43812,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Song Tea & Ceramics","a":"2120 Sutter St, San Francisco, CA 94115","la":37.78594,"ln":-122.43548,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Moriwa Matcha","a":"1143 Taraval St, San Francisco, CA 94116","la":37.7428,"ln":-122.47862,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"SOHN","a":"2535 3rd St, San Francisco, CA 94107","la":37.75732,"ln":-122.38794,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"The Anchovy Bar","a":"1740 O'Farrell St, San Francisco, CA 94115, United States","la":37.7834,"ln":-122.43321,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Out There Coffee Roasters","a":"254 Fillmore St, San Francisco, CA 94117, United States","la":37.7719,"ln":-122.43031,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Rainbow Grocery Cooperative","a":"1745 Folsom St, San Francisco, CA 94103","la":37.76928,"ln":-122.41478,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Mamahuhu","a":"3991 24th St, San Francisco, CA 94114","la":37.75136,"ln":-122.4316,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Back to Back","a":"1257 Taylor St, San Francisco, CA 94108","la":37.79416,"ln":-122.41326,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Moody Goose Vintage","a":"2036 Polk St, San Francisco, CA 94109","la":37.7956,"ln":-122.42159,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"NINNIKU RAMEN IZAKAYA","a":"1730 Fillmore St, San Francisco, CA 94115","la":37.78569,"ln":-122.43304,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"KitTea Cat Lounge","a":"1266 Valencia St, San Francisco, CA 94110","la":37.75263,"ln":-122.42092,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Whole Cakes - Potrero Hill","a":"1000 16th St, San Francisco, CA 94107","la":37.76655,"ln":-122.39703,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Horsefeather SF","a":"528 Divisadero St, San Francisco, CA 94117","la":37.7745,"ln":-122.43746,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Outta Sight Pizza","a":"422 Larkin St, San Francisco, CA 94102","la":37.78182,"ln":-122.41713,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Muttville","a":"750 Florida St, San Francisco, CA 94110","la":37.75976,"ln":-122.41108,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"True Laurel","a":"753 Alabama St, San Francisco, CA 94110","la":37.75952,"ln":-122.41153,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Saru Sushi Bar","a":"3856 24th St, San Francisco, CA 94114","la":37.75171,"ln":-122.42885,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Tenroku Sushi","a":"1825 Post St #215, San Francisco, CA 94115","la":37.78515,"ln":-122.43164,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"The Laundromat SF","a":"3725 Balboa St, San Francisco, CA 94121","la":37.77554,"ln":-122.49891,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Butter Love Bakeshop","a":"3717 Balboa St, San Francisco, CA 94121","la":37.77554,"ln":-122.49878,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Nintendo SAN FRANCISCO","a":"331 Powell St, San Francisco, CA 94102","la":37.78749,"ln":-122.40856,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Kopiku Indonesian Coffee","a":"1443 Lombard St, San Francisco, CA 94123","la":37.80088,"ln":-122.42534,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Sons & Daughters","a":"708 Bush St, San Francisco, CA 94108","la":37.76163,"ln":-122.41085,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"OISHII MATCHA","a":"2299 Market St Suite A, San Francisco, CA 94114","la":37.76407,"ln":-122.43281,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Musée Mécanique","a":"Pier 45, San Francisco, CA 94133","la":37.8093,"ln":-122.41597,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Jane The Bakery","a":"1881 Geary Blvd, San Francisco, CA 94115","la":37.78379,"ln":-122.43429,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Woot Bear","a":"1512 Haight St, San Francisco, CA 94117","la":37.77007,"ln":-122.44736,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Welcome Haight & Ashbury","a":"1500 Haight St, San Francisco, CA 94117","la":37.77014,"ln":-122.44713,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Dog Eared Books","a":"900 Valencia St, San Francisco, CA 94110","la":37.75837,"ln":-122.42143,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Needles & Pens","a":"1173 Valencia St, San Francisco, CA 94110","la":37.75421,"ln":-122.42071,"t":"","l":"sf-shared","source":"friends","been":false},{"n":"Old Sacramento Waterfront","a":"","la":38.5833,"ln":-121.5047,"t":"","l":"sacramento-picks","source":"mine","been":true}],"shows":[{"when":"Tue: Nov 24 (8pm-12am)","title":"Wtf: Jessika, Green Butterflies, Puppet, Finishher","venue":"The STUD","city":"San Francisco","genres":"breaks, dubstep, drum and bass","price_age":"notaflof","date":"2026/11/24"},{"when":"Tue: Nov 24 (9pm-2am)","title":"House/Not House - Huffy","venue":"Makeout Room","city":"San Francisco","genres":"house","price_age":"free | 21+","date":"2026/11/24"},{"when":"Tue: Nov 24 (9pm-2am)","title":"Interzone - Darkwave Tuesdays","venue":"F8 1192 Folsom","city":"San Francisco","genres":"darkwave, goth, post-punk, industrial, EBM","price_age":"free b4 10 / $5 | 21+","date":"2026/11/24"},{"when":"Wed: Nov 25 (6pm-1am)","title":"Give Thanks Wednesday: Zeds Dead, Levity, Of The Trees, Clozee, Peekaboo, Cyclops, Avello, Capochino, AG","venue":"San Jose Convention Center","city":"San Jose","genres":"dubstep, bass music, riddim, melodic dubstep, future bass, EDM","price_age":"$120+ | 18+","date":"2026/11/25"},{"when":"Wed: Nov 25 (7pm)","title":"Blackout Wednesday w/ DJ Sardine","venue":"Atrium at The Catalyst","city":"Santa Cruz","genres":"pop EDM","price_age":"$20-29 | 18+","date":"2026/11/25"},{"when":"Wed: Nov 25 (8pm)","title":"Catalyst: Black w/ Dimez, +ktiv","venue":"Reunion Underground","city":"Sacramento","genres":"hard techno, hardstyle, hard dance","price_age":"21+","date":"2026/11/25"},{"when":"Wed: Nov 25 (8pm)","title":"Club 8teen Turntgiving: Jayoh, DJ Guero, Ezi Pezi, Audivo","venue":"705 Lounge","city":"Sacramento","genres":"EDM, latin","price_age":"$20 pre / $25 | 18+","date":"2026/11/25"},{"when":"Wed: Nov 25 (8pm)","title":"Ovrkast. - Still Striking Tour","venue":"Brick & Mortar Music Hall","city":"San Francisco","genres":"hip-hop, future beats","price_age":"$36 | All ages","date":"2026/11/25"},{"when":"Wed: Nov 25 (8pm-2am)","title":"House Legends","venue":"Salinas Armory Hall","city":"Salinas","genres":"house, hard house, tech house","price_age":"$18-30 | 16+","date":"2026/11/25"},{"when":"Wed: Nov 25 (8pm-2am)","title":"Thanksgiving Blackout Wednesday: DJ Carmaa, DJ Dree","venue":"The District Theater","city":"Gilroy","genres":"funky house, disco, hip-hop, r&b, reggae, latin house","price_age":"21+","date":"2026/11/25"},{"when":"Wed: Nov 25 (9pm)","title":"Better Off Alone: 90s/00S Dance Rave at The Starlet Room","venue":"The Starlet Room","city":"Sacramento","genres":"house, big beat, pop EDM, eurodance, trance","price_age":"$21-28 | 21+","date":"2026/11/25"},{"when":"Wed: Nov 25 (9pm)","title":"Egg! w/ Matt, Nfs, Imminent Burial, Hen House, Aetatis Suae","venue":"Thee Stork Club","city":"Oakland","genres":"industrial, noise, experimental electronic","price_age":"$10","date":"2026/11/25"},{"when":"Wed: Nov 25 (9pm)","title":"Turn Up The Baste: Scandinasian, Mayday, Tommy Echelon","venue":"Hopmonk Tavern","city":"Sebastopol","genres":"tech house, bass house","price_age":"$10 | 21+","date":"2026/11/25"},{"when":"Wed: Nov 25 (9pm-1:30am)","title":"Call & Response Season Closer w/ Rachel Torro & 93fm","venue":"The Press Club","city":"Sacramento","genres":"deep house, techno, tech house, electro","price_age":"$23-28.75 | 21+","date":"2026/11/25"},{"when":"Wed: Nov 25 (9pm-2am)","title":"Andy C","venue":"1015 Folsom","city":"San Francisco","genres":"drum and bass","price_age":"$22.25-32 | 21+","date":"2026/11/25"},{"when":"Wed: Nov 25 (9pm-2am)","title":"Eve - Pre Thanksgiving Event","venue":"1028 Lounge","city":"Sacramento","genres":"house, tech house, indie dance, bass house","price_age":"free w/rsvp / $6-10 | 21+","date":"2026/11/25"},{"when":"Wed: Nov 25 (9pm-3am)","title":"Ardalan","venue":"F8 1192 Folsom","city":"San Francisco","genres":"tech house, g-house, bass house","price_age":"free w/rsvp b4 11pm / $10+ | 21+","date":"2026/11/25"},{"when":"Wed: Nov 25 (9:30pm-2am)","title":"Goth Holiday Ball","venue":"375 11th St","city":"San Francisco","genres":"goth, industrial, EBM, darkwave, emo","price_age":"$15-20 pre / $30 | 18+","date":"2026/11/25"},{"when":"Wed: Nov 25 (10pm-1am)","title":"Bassgiving: Sampphire, Powell Ranger, Swade","venue":"Lock And Key","city":"Sacramento","genres":"dubstep, bass music, hardstyle","price_age":"$16+ | 21+","date":"2026/11/25"},{"when":"Wed: Nov 25 (10pm-2am)","title":"Calitalo Disco: Nino Msk & Friends","venue":"Make Out Room","city":"San Francisco","genres":"afrobeats, italo disco, funk, tropical disco, house","price_age":"free | 21+","date":"2026/11/25"},{"when":"Thu: Nov 26 (8pm-2am)","title":"Stay In The House","venue":"Continental Club","city":"Oakland","genres":"deep house, tech house, afro house","price_age":"$10 | 21+","date":"2026/11/26"},{"when":"Thu: Nov 26 (9pm-2am)","title":"Gothsgiving w/80085, Alice Stribling","venue":"Underground","city":"San Francisco","genres":"synthpop, goth, new wavwe","price_age":"$8 pre / $10 | 21+","date":"2026/11/26"},{"when":"Thu: Nov 26 (9pm-2am)","title":"The Annual Thanksgiving Night Party - Nile, Hidra, Navii, Alex Goodcat, Mode Leeloo, Jdirra, Hnydew","venue":"F8 1192 Folsom","city":"San Francisco","genres":"afro house","price_age":"free w/rsvp b4 11pm / $10-15 | 21+","date":"2026/11/26"},{"when":"Fri: Nov 27 (6pm-12am)","title":"Friendsgiving Bowl: Zorg.Fm, Normis, Kkassiio, DJ Keef, Padplay, Rushing","venue":"130 Northwood Dr","city":"South San Francisco","genres":"house","price_age":"free","date":"2026/11/27"},{"when":"Fri: Nov 27 (6pm-1am)","title":"Give Thanks Friday: Slander, Seven Lions, Said The Sky, Trivecta, Jason Ross, Nurko, Fairlane, Hoang","venue":"San Jose Convention Center","city":"San Jose","genres":"dubstep, bass music, riddim, melodic dubstep, future bass, EDM","price_age":"$160+ | 18+","date":"2026/11/27"},{"when":"Fri: Nov 27 (7pm-10pm)","title":"Fraxiom, Can Of Bliss and Lil Bebe Cyborg","venue":"Kilowatt","city":"San Francisco","genres":"hyperpop","price_age":"$13.39 | 21+","date":"2026/11/27"},{"when":"Fri: Nov 27 (7pm-11pm)","title":"[Esc]Avation - Alice Stribling","venue":"El Rio","city":"San Francisco","genres":"house","price_age":"free | 21+","date":"2026/11/27"},{"when":"Fri: Nov 27 (7pm-11pm)","title":"Nukumori b2b Tripleset, Impreza, Princesa and Cali Cartier","venue":"The Faight Collective","city":"San Francisco","genres":"uk garage, breaks","price_age":"$23.64 | 21+","date":"2026/11/27"},{"when":"Fri: Nov 27 (7pm-2am)","title":"Groove: Goma, Atang (BW), Momo","venue":"Bella","city":"San Francisco","genres":"afro house, amapiano, gqom, deep house, 3-step","price_age":"free w/rsvp | 21+","date":"2026/11/27"},{"when":"Fri: Nov 27 (8pm)","title":"Amtrac","venue":"The Regency Ballroom","city":"San Francisco","genres":"house","price_age":"$37-60 | All ages","date":"2026/11/27"},{"when":"Fri: Nov 27 (8pm-1am)","title":"Salty Residency - Friendsgiving: Tamer, Mark G, Deepmilk","venue":"Napa Music Hall","city":"Napa","genres":"house","price_age":"free | 21+","date":"2026/11/27"},{"when":"Fri: Nov 27 (8:30pm-1:30am)","title":"Mindwarp: Punch Fungus, 222, Kosmikonic, Kode Static","venue":"Reunion Underground","city":"Sacramento","genres":"dubstep, bass music, glitch-hop","price_age":"$5-20 | 21+","date":"2026/11/27"},{"when":"Fri: Nov 27 (9pm)","title":"El Caballo De Fuego: James Houdini","venue":"Underground","city":"San Francisco","genres":"house, uk garage, techno","price_age":"21+","date":"2026/11/27"},{"when":"Fri: Nov 27 (9pm)","title":"Itai X Cello Joe","venue":"Elixart","city":"Nevada City","genres":"house","price_age":"$17.79-23.11 | 21+","date":"2026/11/27"},{"when":"Fri: Nov 27 (9pm)","title":"O'flynn","venue":"The Independent","city":"San Francisco","genres":"house, uk garage, breaks, techno","price_age":"$31.55 | 21+","date":"2026/11/27"},{"when":"Fri: Nov 27 (9pm)","title":"Satori Vs Cyb3r","venue":"The Ritz","city":"San Jose","genres":"goth, industrial, darkwave","price_age":"$14+ | 21+","date":"2026/11/27"},{"when":"Fri: Nov 27 (9pm)","title":"Water Spirit, Brizzy, Chapas, Damented, Desorden, Detonatorz, Dito, Frijol, Justintime, Kndrta, Nemesis","venue":"F8 1192 Folsom","city":"San Francisco","genres":"hard dance, hard techno","price_age":"$17-28 | 21+","date":"2026/11/27"},{"when":"Fri: Nov 27 (9pm-1:30am)","title":"Fusion, Soulfunky","venue":"Phonobar","city":"San Francisco","genres":"boogie, disco, acid house, soul, funky house","price_age":"free | 21+","date":"2026/11/27"},{"when":"Fri: Nov 27 (9pm-1:30am)","title":"Jus Dance Feat. Mr. V & Rated R","venue":"Cardiff Lounge","city":"Campbell","genres":"nu-disco, deep house, soulful house, funky house","price_age":"free w/rsvp | 21+","date":"2026/11/27"},{"when":"Fri: Nov 27 (9pm-1:30am)","title":"Spader: Discnogirl, DJ Juanny, Bored Lord, Finish Her","venue":"There/There Bar","city":"Oakland","genres":"techno, jungle, footwork, club, industrial, juke, dub, baile funk","price_age":"$11.2 | 21+","date":"2026/11/27"},{"when":"Fri: Nov 27 (9pm-1:30am)","title":"SutroFM","venue":"Bar Part Time","city":"San Francisco","genres":"house, techno, dub, electro, club, ambient, EBM","price_age":"free | 21+","date":"2026/11/27"},{"when":"Fri: Nov 27 (9pm-2am)","title":"Black Friday - Back Out: Makle, FS","venue":"Fulton 55","city":"Fresno","genres":"house","price_age":"$10+ | 21+","date":"2026/11/27"},{"when":"Fri: Nov 27 (9pm-2am)","title":"Darren Davis","venue":"Monarch - Upstairs Lounge","city":"San Francisco","genres":"house, club","price_age":"$5 | 21+","date":"2026/11/27"},{"when":"Fri: Nov 27 (9pm-2am)","title":"Escape - Cherry, Walker Brooks, Passel","venue":"TBA","city":"West Oakland","genres":"progressive house, tech house, deep house, melodic house, uk garage","price_age":"$15-25 | All Ages","date":"2026/11/27"},{"when":"Fri: Nov 27 (9pm-2am)","title":"Escape: Cherry, Passel","venue":"TBA","city":"West Oakland","genres":"house, club","price_age":"$17.5","date":"2026/11/27"},{"when":"Fri: Nov 27 (9pm-2am)","title":"Skream Presented By Goldenvoice","venue":"Public Works","city":"San Francisco","genres":"tech house, progressive house, techno","price_age":"$39-45 | 21+","date":"2026/11/27"},{"when":"Fri: Nov 27 (9pm-2am)","title":"The Furry Rave: Pinkii, Verplex, Sammphire, Spinetruck, Crossmelodies, Dr1ft, Augg1e, Hypertears, Sampphire","venue":"Continental Club","city":"Oakland","genres":"happy hardcore, house, dubstep, bass music, hard techno","price_age":"$19.25-30.25 | 18+","date":"2026/11/27"},{"when":"Fri: Nov 27 (9:30pm-2am)","title":"Rinzen (Open To Close)","venue":"Audio","city":"San Francisco","genres":"tech house","price_age":"$21.07 | 21+","date":"2026/11/27"},{"when":"Fri: Nov 27 (10pm)","title":"Vertigo: Kandikweer69, iHaveaBomb, Damu, Kumbaya, Helian, Calling All Freaks","venue":"TBA","city":"San Francisco","genres":"breakbeat, hard house, acid, hard groove, techno, juke, hard techno","price_age":"free | 18+","date":"2026/11/27"},{"when":"Fri: Nov 27 (10pm-1am)","title":"Cinthie","venue":"1015 Folsom","city":"San Francisco","genres":"house","price_age":"$26.05-32.13 | 21+","date":"2026/11/27"},{"when":"Fri: Nov 27 (10pm-2am)","title":"Blawan, Southstar, Cinthie","venue":"1015 Folsom","city":"San Francisco","genres":"house, breaks, techno","price_age":"$26.05-44.30 | 21+","date":"2026/11/27"},{"when":"Fri: Nov 27 (10pm-2am)","title":"Dang! - A Soulful Electronic Dance Night","venue":"The Midway","city":"San Francisco","genres":"house, r&b, synthpop","price_age":"$15-31 | 21+","date":"2026/11/27"},{"when":"Fri: Nov 27 (10pm-2am)","title":"Delinquent: Cutdwn, Starfvcd, Xerinity","venue":"Era Lounge","city":"San Jose","genres":"bounce, hard techno","price_age":"$14-20 | 21+","date":"2026/11/27"},{"when":"Fri: Nov 27 (10pm-2am)","title":"Disco-Plastique - DJ 2Shy-Shy + DJ Melt w/U","venue":"Make-Out Room","city":"San Francisco","genres":"new wave, italo disco, electro cumbia, hip-hop, reggaeton","price_age":"$10 | 21+","date":"2026/11/27"},{"when":"Fri: Nov 27 (10pm-2am)","title":"Recreation 13. Feat. Cambot, Jacques Whiite, Krakinov, B. Wiley","venue":"7th West","city":"Oakland","genres":"dubstep, bass music, drum and bass","price_age":"$5-35 | 21+","date":"2026/11/27"},{"when":"Fri: Nov 27 (10pm-4am)","title":"Bensy, Justin Duke, Lefty","venue":"Halcyon","city":"San Francisco","genres":"afro house, progressive house","price_age":"$12 b4 11 / $19-30 | 21+","date":"2026/11/27"},{"when":"Sat: Nov 28 (2am-6am)","title":"Late Night Clubbing #096 w/Mike Nervous, Mandiz","venue":"TBA","city":"San Francisco","genres":"house, EDM","price_age":"","date":"2026/11/28"},{"when":"Sat: Nov 28 (11am-5pm)","title":"No One, Combover, Caley","venue":"Hedge Coffee","city":"San Francisco","genres":"house, deep house","price_age":"free | All Ages","date":"2026/11/28"},{"when":"Sat: Nov 28 (6pm-1am)","title":"Give Thanks Saturday: Wankdat, Skull Machine, Richard Finger, Nikita, The Wicked, KLO, Automhate, Beastboi","venue":"San Jose Convention Center","city":"San Jose","genres":"dubstep, bass music, riddim, melodic dubstep, future bass, EDM","price_age":"$150+ | 18+","date":"2026/11/28"}]};const TB=(()=>{
+const NS='http://www.w3.org/2000/svg';
+const GCOL={'Food':'g1','Drinks and Nightlife':'g2','Shopping':'g3','Sightseeing and Culture':'g4','Outdoors':'g5','Activities and Recreation':'g6','Travel Logistics':'g7','Curated':'g6'};
+const FCOL={'sf-shared':'g4','sac-shared':'g3','bay-area-shared':'g5','nyc-shared':'g2'};
+const LMAP={};DATA.lists.forEach(l=>{l.col=l.source==='friends'?FCOL[l.id]:GCOL[l.group];LMAP[l.id]=l});
+const PL=DATA.places;PL.forEach((p,i)=>{p.i=i;p.reg=(p.la>38.3&&p.ln>-121.7)?'Sacramento':(p.la<37.0&&p.la>0?'Other':'Bay Area');p.col=LMAP[p.l].col;});
+const BYID={};PL.forEach(p=>BYID[p.i]=p);
+const GROUPS=['Food','Drinks and Nightlife','Shopping','Sightseeing and Culture','Outdoors','Activities and Recreation','Travel Logistics'];
+const GLABEL={'Food':'Food','Drinks and Nightlife':'Drinks and nightlife','Shopping':'Shopping','Sightseeing and Culture':'Sights and culture','Outdoors':'Outdoors','Activities and Recreation':'Activities','Travel Logistics':'Travel logistics'};
+const S={picks:[],sel:new Set(),mine:true,friends:false,hideBeen:false,region:'all',group:'all',fresh:null};
+const subs=[];function on(f){subs.push(f)}function emit(){subs.forEach(f=>f())}
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+function h(tag,attrs={},...kids){const e=document.createElement(tag);for(const k in attrs){if(k==='class')e.className=attrs[k];else if(k==='html')e.innerHTML=attrs[k];else if(k.startsWith('on'))e.addEventListener(k.slice(2),attrs[k]);else if(k.startsWith('aria-')&&attrs[k]!=null)e.setAttribute(k,String(attrs[k]));else if(attrs[k]!==false&&attrs[k]!=null)e.setAttribute(k,attrs[k])}kids.flat().forEach(c=>c!=null&&e.append(c.nodeType?c:document.createTextNode(c)));return e}
+function svg(tag,attrs={}){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);return e}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}
+
+/* ---------- cross stitch bitmaps ---------- */
+const HEART=['.XXX...XXX.','XXXXX.XXXXX','XXXXXXXXXXX','XXXXXXXXXXX','.XXXXXXXXX.','..XXXXXXX..','...XXXXX...','....XXX....','.....X.....'];
+const FONT={
+L:['X....','X....','X....','X....','X....','X....','XXXXX'],
+T:['XXXXX','..X..','..X..','..X..','..X..','..X..','..X..'],
+B:['XXXX.','X...X','X...X','XXXX.','X...X','X...X','XXXX.'],
+i:['.X.','...','XX.','.X.','.X.','.X.','XXX'],
+t:['.X..','.X..','XXXX','.X..','.X..','.X.X','..XX'],
+l:['XX.','.X.','.X.','.X.','.X.','.X.','XXX'],
+e:['.....','.....','.XXX.','X...X','XXXXX','X....','.XXXX'],
+r:['.....','.....','X.XX.','XX..X','X....','X....','X....'],
+a:['.....','.....','.XXX.','....X','.XXXX','X...X','.XXXX'],
+v:['.....','.....','X...X','X...X','X...X','.X.X.','..X..'],
+o:['.....','.....','.XXX.','X...X','X...X','X...X','.XXX.'],
+k:['X....','X....','X..X.','X.X..','XX...','X.X..','X..X.']};
+function cellsOf(pat){const o=[];pat.forEach((row,r)=>[...row].forEach((ch,c)=>{if(ch==='X')o.push([c,r])}));return o}
+const f=n=>Math.round(n*100)/100;
+function titleSVG(cell){
+  const lines=[['Little','g1'],['Travel','g3'],['Book','g5']];
+  const parts={};
+  const add=(k,sl,bk,sh)=>{(parts[k]=parts[k]||{sl:'',bk:'',sh:''});parts[k].sl+=sl;parts[k].bk+=bk;parts[k].sh+=sh};
+  const ins=.14*cell;
+  const cellX=(k,x,y)=>{add(k,`M${f(x+ins)} ${f(y+cell-ins)}L${f(x+cell-ins)} ${f(y+ins)}`,`M${f(x+ins)} ${f(y+ins)}L${f(x+cell-ins)} ${f(y+cell-ins)}`,`M${f(x+ins+cell*.1)} ${f(y+ins)}L${f(x+cell-ins+cell*.02)} ${f(y+cell-ins-cell*.08)}`)};
+  let maxc=0;
+  lines.forEach(([word,col],li)=>{
+    const y0=li*7.6*cell;let cx=0;
+    [...word].forEach(ch=>{const g=FONT[ch];let mn=9,mx=0;g.forEach(r=>{for(let c=0;c<r.length;c++)if(r[c]==='X'){mn=Math.min(mn,c);mx=Math.max(mx,c)}});
+      cellsOf(g).forEach(([c,r])=>cellX(col,(cx+c-mn)*cell,y0+r*cell));cx+=mx-mn+2});
+    cx-=1;
+    if(li===2){const hx=cx+1.5;cellsOf(HEART).forEach(([c,r])=>cellX('heart',(hx+c)*cell,y0+(r-.1)*cell));cx=hx+11}
+    maxc=Math.max(maxc,cx)});
+  const W=maxc*cell,H=(21+1.2+2)*cell;
+  let g='';
+  for(const k in parts){const col=k==='heart'?'--heart':'--'+k;const sw=f(cell*.43);
+    g+=`<path d="${parts[k].sl}" stroke="rgb(var(${col}))" stroke-width="${sw}"/><path d="${parts[k].bk}" stroke="rgb(var(${col}))" stroke-width="${sw}"/><path d="${parts[k].sh}" stroke="rgb(255 255 255/.32)" stroke-width="${f(cell*.1)}"/>`}
+  return `<svg viewBox="0 0 ${f(W)} ${f(H)}" role="img" aria-label="Little Travel Book" fill="none" stroke-linecap="round">${g}</svg>`;
+}
+function heartSVG(cell,sheen){
+  const cells=cellsOf(HEART);const legs=[];cells.forEach(([c,r])=>legs.push([c,r+1,c+1,r]));cells.forEach(([c,r])=>legs.push([c,r,c+1,r+1]));
+  const n=legs.length,W=11*cell,H=9*cell,ins=.1*cell,L=f(cell*1.414*.82+cell*.2);
+  let gh='';cells.forEach(([c,r])=>{const x=c*cell,y=r*cell;gh+=`M${f(x+ins)} ${f(y+ins)}L${f(x+cell-ins)} ${f(y+cell-ins)}M${f(x+ins)} ${f(y+cell-ins)}L${f(x+cell-ins)} ${f(y+ins)}`});
+  const sw=f(cell*.36);
+  let lg='';legs.forEach(([a,b,c,d],i)=>{const q=(v)=>f(v*cell);const x1=a*cell+(c>a&&d<b?ins:ins),mk=(x1,y1,x2,y2,cls,w)=>`<line class="${cls||''}" x1="${f(x1)}" y1="${f(y1)}" x2="${f(x2)}" y2="${f(y2)}" stroke-width="${w}"/>`;
+    const up=d<b;const X1=a*cell+ins,X2=c*cell-ins,Y1=up?b*cell-ins:b*cell+ins,Y2=up?d*cell+ins:d*cell-ins;
+    lg+=`<g class="leg" style="--i:${i}">${mk(X1,Y1,X2,Y2,'',sw)}${sheen?mk(X1+cell*.12,Y1,X2+cell*.12,Y2,'sheen',f(cell*.1)):''}</g>`});
+  return `<svg width="${f(W)}" height="${f(H)}" viewBox="0 0 ${f(W)} ${f(H)}" aria-hidden="true" style="--l:${L};--n:${n}"><path class="ghost" d="${gh}" stroke-width="${f(Math.max(.55,cell*.12))}"/>${lg}</svg>`;
+}
+function heartBtn(p,cell=4.7,sheen=false){
+  const on=S.picks.includes(p.i);
+  const b=h('button',{class:'heart'+(on?' on':''),type:'button','aria-pressed':on,'aria-label':'Heart '+p.n,'data-id':p.i,html:heartSVG(cell,sheen)});
+  b.addEventListener('click',()=>togglePick(p.i));return b;
+}
+function togglePick(i){const k=S.picks.indexOf(i);if(k>=0){S.picks.splice(k,1);S.fresh=null}else{S.picks.push(i);S.fresh=i}syncHearts();emit()}
+function syncHearts(){$$('.heart[data-id]').forEach(b=>{const on=S.picks.includes(+b.dataset.id);b.classList.toggle('on',on);b.setAttribute('aria-pressed',on)});}
+
+/* ---------- filters ---------- */
+function visible(){return PL.filter(p=>{const L=LMAP[p.l];
+  if(L.source==='friends'&&!S.friends)return false;
+  if(L.source==='mine'&&!S.mine)return false;
+  if(S.sel.size&&!S.sel.has(p.l))return false;
+  if(S.group!=='all'&&L.group!==S.group)return false;
+  if(S.region!=='all'&&p.reg!==S.region)return false;
+  if(S.hideBeen&&p.been)return false;return true})}
+function sortPl(a){return a.slice().sort((x,y)=>(!!y.t-!!x.t)||(x.source===y.source?0:x.source==='friends'?1:-1)||x.i-y.i)}
+function spool(l){
+  const b=h('button',{class:'spool'+(l.source==='friends'?' friend':''),type:'button','aria-pressed':S.sel.has(l.id),'data-list':l.id,style:`--th:var(--${l.col})`,'aria-label':l.name+', '+l.count+' places'+(l.source==='friends'?', a friend\'s list':'')},
+    h('span',{class:'sp-cap t'}),h('span',{class:'sp-body'}),h('span',{class:'sp-cap b'}),h('span',{class:'sp-band'},l.name.replace('/','/\u200b')),h('span',{class:'sp-n'},String(l.count)));
+  b.addEventListener('click',()=>{if(S.sel.has(l.id))S.sel.delete(l.id);else{S.sel.add(l.id);if(l.source==='friends')S.friends=true}emit()});return b}
+function racks(){
+  const w=h('div',{class:'racks'});
+  const mine=DATA.lists.filter(l=>l.source==='mine'&&!l.curated),fr=DATA.lists.filter(l=>l.source==='friends');
+  const mk=(name,arr,aria)=>h('div',{class:'rack-wrap'},h('span',{class:'label rail'},name),h('div',{class:'rack',role:'group','aria-label':aria},arr.map(spool)));
+  w.append(mk("Zach's lists",mine,"Zach's lists, "+mine.length+' spools'),mk('From friends',fr,"From friends' lists"));
+  return w}
+function filterRow(){const w=h('div',{class:'chips',role:'group','aria-label':'Filter by group, area, friends'});const a=groupChips(),b=chips();w.append(...a.children,h('span',{class:'chip-sep'}),...[...b.children].filter(k=>!k.classList.contains('chip-sep')&&k.textContent!=='Everywhere'));return w}
+function landRow(onAll){
+  const w=h('div',{class:'chips land',role:'group','aria-label':'Which lists to show'});
+  const mk=(txt,fn)=>{const b=h('button',{class:'chip',type:'button','aria-pressed':'true'},h('span',{class:'label'},txt));b.addEventListener('click',fn);return b};
+  const a=mk("Zach's lists",()=>{S.mine=!S.mine;emit()}),f2=mk('From friends',()=>{S.friends=!S.friends;emit()});f2.setAttribute('aria-pressed',S.friends);
+  const all=h('button',{class:'linkbtn',type:'button'},'All 28 lists');all.addEventListener('click',onAll);
+  w.append(a,f2,all);return w}
+function chips(){
+  const w=h('div',{class:'chips',role:'group','aria-label':'More filters'});
+  const mk=(txt,pressed,fn)=>{const b=h('button',{class:'chip',type:'button','aria-pressed':pressed},h('span',{class:'label'},txt));b.addEventListener('click',fn);return b};
+  w.append(mk('Everywhere',S.region==='all',()=>{S.region='all';emit()}),mk('Bay Area',S.region==='Bay Area',()=>{S.region=S.region==='Bay Area'?'all':'Bay Area';emit()}),mk('Sacramento',S.region==='Sacramento',()=>{S.region=S.region==='Sacramento'?'all':'Sacramento';emit()}),h('span',{class:'chip-sep'}),
+   mk('Friends on',S.friends,()=>{S.friends=!S.friends;emit()}),mk('Hide places Zach has been',S.hideBeen,()=>{S.hideBeen=!S.hideBeen;emit()}));
+  return w}
+function groupChips(){
+  const w=h('div',{class:'chips',role:'group','aria-label':'Groups'});
+  const mk=(txt,g)=>{const b=h('button',{class:'chip',type:'button','aria-pressed':S.group===g},h('span',{class:'label'},txt));b.addEventListener('click',()=>{S.group=g;emit()});return b};
+  w.append(mk('All groups','all'),...GROUPS.map(g=>mk(GLABEL[g],g)));return w}
+function syncFilters(){
+  $$('.spool').forEach(b=>b.setAttribute('aria-pressed',S.sel.has(b.dataset.list)));
+  $$('.chips').forEach(c=>{const kids=$$('.chip',c);kids.forEach(k=>{const t=k.textContent;let p=null;
+    if(t==='Everywhere')p=S.region==='all';else if(t==='Bay Area')p=S.region==='Bay Area';else if(t==='Sacramento')p=S.region==='Sacramento';else if(t==='Friends on'||t==='From friends')p=S.friends;else if(t==='Zach\'s lists')p=S.mine;else if(t.startsWith('Hide places'))p=S.hideBeen;
+    else if(t==='All groups')p=S.group==='all';else{const g=GROUPS.find(x=>GLABEL[x]===t);if(g)p=S.group===g}
+    if(p!==null)k.setAttribute('aria-pressed',p)})})}
+
+/* ---------- rows ---------- */
+function listSub(p){const L=LMAP[p.l];const mark=L.source==='friends'?`<i class="knot" style="--th:var(--${L.col})"></i>`:`<i class="xmark" style="--th:var(--${L.col})"></i>`;
+  return h('span',{html:mark+esc(L.source==='friends'?"Friend's list: "+L.name:L.name)})}
+function row(p){
+  const sub=h('div',{class:'r-sub'},listSub(p));
+  if(p.t)sub.append(h('span',{class:'tag','aria-label':(LMAP[p.l].source==='friends'?'Note on the list: ':"Zach's note: ")+p.t},p.t));
+  if(p.been)sub.append(h('span',{class:'tag'},"Zach's been here"));
+  const nm=h('button',{class:'r-name',type:'button'},p.n);nm.addEventListener('click',()=>openPlace(p.i,nm.closest('.app')));
+  return h('li',{class:'row'},heartBtn(p),h('div',{},nm,sub))}
+function rowsInto(el,arr,max=40){el.replaceChildren();arr.slice(0,max).forEach(p=>el.append(row(p)));
+  if(!arr.length)el.append(h('li',{class:'empty'},'No stitches here yet. Try another spool.'));
+  if(arr.length>max){const m=h('li',{},h('button',{class:'btn alt more',type:'button'},'Show '+Math.min(40,arr.length-max)+' more'));m.firstChild.addEventListener('click',()=>rowsInto(el,arr,max+40));el.append(m)}}
+
+/* ---------- needle ---------- */
+function needleBar(){
+  const bar=h('div',{class:'needle'});
+  const tag=h('button',{class:'pick-tag',type:'button'},h('span',{class:'label'},h('span',{},'Your picks ',h('b',{class:'pc'},'0'))));tag.addEventListener('click',()=>openPicks(bar.closest('.app')));
+  const sv=h('div',{class:'thread',html:`<svg viewBox="0 0 160 60" width="100%" height="60" preserveAspectRatio="xMinYMid meet" aria-hidden="true">
+   <path class="needle-body" d="M1 30 L48 26.4 Q54 26 55 30 Q54 34 48 33.6 Z"/>
+   <ellipse cx="50.5" cy="30" rx="2.4" ry="1.5" fill="rgb(var(--linen))"/>
+   <path class="t" id="tp" d="M50 30 C62 12 74 48 86 30 S110 12 122 30 S146 46 158 30"/>
+   <path class="s" id="sp" d="M50 30 C62 12 74 48 86 30 S110 12 122 30 S146 46 158 30"/>
+   <path class="k" id="kp" d="M50 30 C62 12 74 48 86 30 S110 12 122 30 S146 46 158 30"/></svg>`});
+  const send=h('button',{class:'btn',type:'button'},'Send picks');send.addEventListener('click',()=>openPicks(bar.closest('.app')));
+  bar.append(tag,sv,send);
+  const upd=()=>{const n=S.picks.length;$('.pc',bar).textContent=n;const t=$('#tp',bar);const L=t.getTotalLength();
+    const vis=n?Math.min(L,6+n*Math.min(24,L/8)):0;
+    [['#tp',L],['#sp',L],['#kp',L]].forEach(([s,l])=>{const p=$(s,bar);p.style.strokeDasharray=s==='#kp'?`0.01 ${l+50}`:`${l} ${l}`;p.style.strokeDashoffset=s==='#kp'?(n?-vis:10):(l-vis)});
+    tag.setAttribute('aria-label','Your picks, '+n+'. Open your sampler')};
+  on(upd);requestAnimationFrame(upd);return bar}
+
+/* ---------- overlays ---------- */
+function toast(app,msg){let t=$('.toast',app);if(!t){t=h('div',{class:'toast',role:'status'});app.append(t)}t.textContent=msg;t.hidden=false;clearTimeout(t._t);t._t=setTimeout(()=>t.hidden=true,2600)}
+function overlay(app){let o=$('.sheet-back',app);if(!o){o=h('div',{class:'sheet-back',hidden:''});app.append(o);o.addEventListener('click',e=>{if(e.target===o)closeSheet(app)});app.addEventListener('keydown',e=>{if(e.key==='Escape')closeSheet(app)})}return o}
+function closeSheet(app){const o=$('.sheet-back',app);if(o){o.hidden=true;o.replaceChildren();o._ret&&o._ret.focus&&o._ret.focus()}}
+function edgeSvg(){const s=svg('svg',{class:'edge'});s.innerHTML='<rect/>';return s}
+function patch(o,...kids){o.replaceChildren();const p=h('div',{class:'patch',role:'dialog','aria-modal':'true'},h('div',{class:'cloth-tex2'}),edgeSvg(),...kids);
+  const x=h('button',{class:'x',type:'button','aria-label':'Close, back to the cloth',html:'<svg class="ico" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>'});x.addEventListener('click',()=>closeSheet(o.parentNode));p.append(x);o.append(p);o.hidden=false;return p}
+let CUR=null;function appOf(el){return el?el.closest('.app'):CUR}
+function openPlace(i,app){app=app||CUR;const p=BYID[i];const o=overlay(app);o._ret=document.activeElement;
+  const L=LMAP[p.l];
+  const tagLine=p.t?h('div',{},h('p',{class:'hand'},L.source==='friends'?'Note on the list':"Zach's note"),h('span',{class:'tag'},p.t)):null;
+  const hb=heartBtn(p,8,true);const hint=h('p',{class:'hint'});
+  const sh=()=>hint.textContent=S.picks.includes(p.i)?'Stitched in. Tap to unpick.':'Tap to stitch it in.';sh();hb.addEventListener('click',()=>setTimeout(sh,0));
+  const acts=h('div',{class:'p-actions'});
+  const mb=h('button',{class:'btn alt',type:'button'},'Show on the map');mb.addEventListener('click',()=>{closeSheet(app);if(app._showOnMap)app._showOnMap(p)});acts.append(mb);
+  const pp=patch(o,h('h2',{},p.n),
+    h('div',{class:'p-meta'},listSub(p),L.source==='friends'?h('span',{},'From a friend, not from Zach'):h('span',{},'From Zach\'s lists'),p.a?h('span',{},p.a):null,p.been?h('span',{class:'tag'},"Zach's been here"):null),
+    tagLine,h('div',{class:'aida'},hb),hint,acts);
+  hb.focus&&setTimeout(()=>hb.focus({preventScroll:true}),30)}
+function picksText(){return "My picks from your Little Travel Book:\n"+S.picks.map(i=>'- '+BYID[i].n+' ('+LMAP[BYID[i].l].name+')').join('\n')}
+function shareLink(){return location.href.split('#')[0]+'#picks='+S.picks.join(',')}
+function openPicks(app){app=app||CUR;const o=overlay(app);o._ret=document.activeElement;
+  const draw=()=>{
+   const kids=[h('div',{class:'band h',style:'--th:var(--g1);margin-right:50px'}),h('h2',{},'Your sampler'),h('p',{class:'hand'},S.picks.length?S.picks.length+(S.picks.length===1?' place':' places')+' stitched in. Send them back to me.':'Nothing stitched yet. Heart a place and it lands here.')];
+   const list=h('ul',{});
+   S.picks.forEach(i=>{const p=BYID[i];const mini=h('div',{class:'mini',html:heartSVG(3.2,false)});
+     list.append(h('li',{class:'pk'+(S.fresh===i?' fresh':''),style:`--th:var(--${p.col})`},mini,h('span',{class:'nm'},p.n),h('span',{class:'ls'},LMAP[p.l].name),h('div',{class:'band',style:`--th:var(--${p.col});width:${52+((i*37)%41)}%`})))});
+   if(!S.picks.length){for(let k=0;k<3;k++)list.append(h('li',{class:'pk','aria-hidden':'true',style:'--th:var(--g4);opacity:.35'},(()=>{const m=h('div',{class:'mini ph',html:heartSVG(3.2,false)});return m})(),h('span',{class:'nm'},' '),h('span',{class:'ls'},' '),h('div',{class:'band',style:'--th:var(--g4);opacity:.4;width:'+(55+k*15)+'%'})))}
+   kids.push(list);
+   const send=h('button',{class:'btn',type:'button',disabled:!S.picks.length},'Send to Zach'),cp=h('button',{class:'btn alt',type:'button',disabled:!S.picks.length},'Copy as text');
+   if(!S.picks.length){send.style.opacity=cp.style.opacity=.5}
+   send.addEventListener('click',async()=>{const url=shareLink();try{if(navigator.share){await navigator.share({title:'My picks',text:'My picks from your Little Travel Book',url});return}}catch(e){}
+     try{await navigator.clipboard.writeText(url);toast(app,'Link copied. Text it to me!')}catch(e){toast(app,'Copy this link: '+url)}});
+   cp.addEventListener('click',async()=>{try{await navigator.clipboard.writeText(picksText());toast(app,'Copied. Paste it anywhere.')}catch(e){toast(app,'Copy did not work here')}});
+   kids.push(h('div',{class:'p-actions'},send,cp),h('div',{class:'band h',style:'--th:var(--g3);margin-top:14px'}));
+   return kids};
+  const p=patch(o,...draw());
+  const rd=()=>{if(o.hidden||!p.isConnected)return;const sc=p.scrollTop;const keep=$('.x',p);[...p.children].forEach(c=>{if(!c.matches('.cloth-tex2,svg.edge,.x'))c.remove()});draw().forEach(k=>p.insertBefore(k,keep));p.scrollTop=sc};
+  p._rd=rd;on(rd)}
+
+/* ---------- theme ---------- */
+function themeBtn(scope){
+  const sun='<svg class="ico" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4L7 17M17 7l1.4-1.4"/></svg>',moon='<svg class="ico" viewBox="0 0 24 24"><path d="M20 14.5A8 8 0 019.5 4 8 8 0 1020 14.5z"/></svg>';
+  const b=h('button',{class:'tbtn',type:'button'});
+  const isDark=()=>getComputedStyle(scope).getPropertyValue('--is-dark').trim()==='1';
+  const paint=()=>{const d=isDark();b.innerHTML=d?sun:moon;b.setAttribute('aria-label',d?'Switch to the light linen':'Switch to the dark linen')};
+  b.addEventListener('click',()=>{const t=isDark()?'light':'dark';scope.setAttribute('data-theme',t);try{if(scope===document.documentElement)localStorage.setItem('tb-theme',t)}catch(e){}paint();scope.dispatchEvent(new CustomEvent('tb-theme',{bubbles:true}));window.dispatchEvent(new CustomEvent('tb-theme-any'))});
+  requestAnimationFrame(paint);return b}
+function initTheme(){try{const t=localStorage.getItem('tb-theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}}
+
+/* ---------- shows ---------- */
+function showsList(max=14){
+  const cols=['g1','g2','g3','g4','g5','g6'];
+  const w=h('div',{class:'band-list'});
+  DATA.shows.slice(0,max).forEach((s,i)=>{const m=s.when.match(/^(\w+): (\w+) (\d+) \((.*)\)$/);const day=m?m[1]:'',num=m?m[3]:'',time=m?m[4]:s.when;
+    w.append(h('article',{class:'wrist',style:`--th:var(--${cols[new Date(s.date.replace(/\//g,'-')).getDate()%6]})`},
+     h('div',{class:'wd'},h('div',{},h('span',{},day),h('b',{},num),h('span',{},time))),
+     h('div',{class:'wb'},h('div',{class:'wt'},s.title),h('div',{class:'wv'},s.venue+', '+s.city),h('div',{class:'wg'},s.genres),h('div',{class:'wg'},s.price_age))))});
+  return w}
+function showsView(max){const v=h('div',{});v.append(h('div',{class:'zone'},h('span',{class:'label'},'Shows'),h('span',{class:'meta'},'snapshot, 24 Nov')),
+  h('p',{class:'credit-line',style:'padding-top:2px'},'Listings from ',h('a',{href:'https://19hz.info',target:'_blank',rel:'noopener'},'19hz.info'),'. Music nights around the Bay and Sac.'),showsList(max),h('p',{class:'credit-line'},'Listings from ',h('a',{href:'https://19hz.info',target:'_blank',rel:'noopener'},'19hz.info'),', snapshot taken 24 Nov. Check each venue before you go.'));return v}
+
+/* ---------- map ---------- */
+const BAY=[[-122.52,37.93],[-122.47,37.84],[-122.41,37.81],[-122.37,37.83],[-122.33,37.88],[-122.31,37.95],[-122.26,37.85],[-122.30,37.78],[-122.36,37.72],[-122.38,37.62],[-122.28,37.55],[-122.1,37.46],[-122.05,37.52],[-122.0,37.6],[-122.2,37.7],[-122.25,37.8],[-122.3,37.9],[-122.5,37.94]];
+const SEA=[[-124,38.4],[-122.7,38.0],[-122.52,37.88],[-122.52,37.8],[-122.51,37.76],[-122.5,37.7],[-122.5,37.6],[-122.47,37.5],[-122.4,37.35],[-122.3,37.2],[-124,37.2]];
+function fallbackStyle(){const poly=c=>({type:'Feature',geometry:{type:'Polygon',coordinates:[c.concat([c[0]])]}});
+  return{version:8,sources:{w:{type:'geojson',data:{type:'FeatureCollection',features:[poly(SEA),poly(BAY.slice(0,12).concat([[-122.0,37.38]]))]}}},layers:[{id:'background',type:'background',paint:{'background-color':'#e7dee6'}},{id:'water',type:'fill',source:'w',paint:{'fill-color':'#c4c0de'}}]}}
+function mapColors(el){const cs=getComputedStyle(el);const g=n=>cs.getPropertyValue(n).trim().split(/\s+/).map(Number);const c=n=>`rgb(${g(n).join(',')})`;return{g,c,cs}}
+function drawX(ctx,s,col,ln,sheen){ctx.lineCap='round';
+  const a=s*.2,b=s*.8;
+  ctx.strokeStyle=ln;ctx.lineWidth=s*.4;ctx.beginPath();ctx.moveTo(a,b);ctx.lineTo(b,a);ctx.moveTo(a,a);ctx.lineTo(b,b);ctx.stroke();
+  ctx.strokeStyle=col;ctx.lineWidth=s*.24;ctx.beginPath();ctx.moveTo(a,b);ctx.lineTo(b,a);ctx.stroke();ctx.beginPath();ctx.moveTo(a,a);ctx.lineTo(b,b);ctx.stroke();
+  ctx.strokeStyle='rgba(255,255,255,.4)';ctx.lineWidth=s*.06;ctx.beginPath();ctx.moveTo(a+s*.05,a-s*.02);ctx.lineTo(b+s*.05,b-s*.02);ctx.stroke()}
+function mkImg(w,h,fn,ratio=2){const c=document.createElement('canvas');c.width=w*ratio;c.height=h*ratio;const x=c.getContext('2d');x.scale(ratio,ratio);fn(x);return x.getImageData(0,0,w*ratio,h*ratio)}
+function addImages(map,el){const M=mapColors(el);const linen=M.c('--linen');
+  const set=(id,img)=>{if(map.hasImage(id))map.removeImage(id);map.addImage(id,img,{pixelRatio:2})};
+  for(let k=1;k<=8;k++){const col=M.c('--g'+k);
+    set('x-g'+k,mkImg(24,24,x=>drawX(x,24,col,linen)));
+    set('k-g'+k,mkImg(24,24,x=>{x.fillStyle=linen;x.beginPath();x.arc(12,12,9.5,0,7);x.fill();x.fillStyle=col;x.beginPath();x.arc(12,12,7,0,7);x.fill();x.strokeStyle='rgba(0,0,0,.28)';x.lineWidth=1;x.beginPath();x.arc(12,12,4.3,.4,5);x.stroke();x.strokeStyle='rgba(255,255,255,.5)';x.beginPath();x.arc(12,12,5.4,3.6,5.3);x.stroke()}))}
+  const hc=M.c('--heart'),hd=M.c('--heart-d');
+  set('heart',mkImg(34,30,x=>{x.fillStyle=linen;const cell=2.7;const cs=cellsOf(HEART);x.lineCap='round';
+    cs.forEach(([c,r])=>{x.save();x.translate(2+c*cell*1.0,2+r*cell*1.0);x.fillRect(-1,-1,cell+2,cell+2);x.restore()});
+    cs.forEach(([c,r])=>{x.save();x.translate(2+c*cell,2+r*cell);x.strokeStyle=hc;x.lineWidth=cell*.42;x.beginPath();x.moveTo(.1,cell-.1);x.lineTo(cell-.1,.1);x.moveTo(.1,.1);x.lineTo(cell-.1,cell-.1);x.stroke();x.restore()});
+  }));
+  map._img={linen,btn:M.c('--paper'),ring:M.c('--stitch'),ink:M.c('--paper-ink'),hole:M.c('--linen'),thread:M.c('--heart-d'),font:'700 14px '+getComputedStyle(el).fontFamily};
+  const hc2=document.createElement('canvas');hc2.width=hc2.height=16;const q=hc2.getContext('2d');q.strokeStyle=M.c('--hatch');q.globalAlpha=.55;q.lineWidth=1;q.beginPath();q.moveTo(0,16);q.lineTo(16,0);q.moveTo(-4,4);q.lineTo(4,-4);q.moveTo(12,20);q.lineTo(20,12);q.stroke();q.beginPath();q.moveTo(0,0);q.lineTo(16,16);q.stroke();
+  const hh=q.getImageData(0,0,16,16);set('hatch',hh)}
+function btnImg(map,n){const I=map._img,S2=46;return mkImg(S2,S2,x=>{const c=S2/2;x.fillStyle=I.linen;x.beginPath();x.arc(c,c,c-1,0,7);x.fill();x.fillStyle=I.btn;x.beginPath();x.arc(c,c,c-4,0,7);x.fill();x.strokeStyle=I.ring;x.lineWidth=1.4;x.beginPath();x.arc(c,c,c-4,0,7);x.stroke();x.beginPath();x.arc(c,c,c-9,0,7);x.setLineDash([2.5,2.5]);x.stroke();x.setLineDash([]);
+  [[-9,-10],[9,-10],[-9,10],[9,10]].forEach(([dx,dy])=>{x.fillStyle=I.ring;x.beginPath();x.arc(c+dx,c+dy,2.4,0,7);x.fill()});
+  x.strokeStyle=I.thread;x.lineWidth=2;x.lineCap='round';x.beginPath();x.moveTo(c-9,c-10);x.lineTo(c+9,c-10);x.moveTo(c-9,c+10);x.lineTo(c+9,c+10);x.stroke();
+  x.fillStyle=I.ink;x.font=I.font;x.textAlign='center';x.textBaseline='middle';x.fillText(String(n),c,c+.5)})}
+function toFC(arr){return{type:'FeatureCollection',features:arr.map(p=>({type:'Feature',id:p.i,properties:{i:p.i,col:p.col,fr:LMAP[p.l].source==='friends'?1:0,hr:S.picks.includes(p.i)?1:0},geometry:{type:'Point',coordinates:[p.ln,p.la]}}))}}
+function mountMap(app,el,opts={}){
+  const box=el;box.classList.add('mapbox');
+  const mEl=h('div',{class:'m'});box.append(mEl,h('div',{class:'weave'}),h('div',{class:'credit'},'© OpenStreetMap contributors · OpenFreeMap'));
+  if(opts.label)box.append(h('span',{class:'label corner'},opts.label));
+  const map=new maplibregl.Map({container:mEl,style:'https://tiles.openfreemap.org/styles/positron',center:opts.center||[-122.425,37.783],zoom:opts.zoom||11.6,attributionControl:false,dragRotate:false,pitchWithRotate:false});
+  map.touchZoomRotate.disableRotation();map.addControl(new maplibregl.NavigationControl({showCompass:false}),'top-right');
+  let ready=false,usedFallback=false;
+  const onReady=()=>{if(ready)return;ready=true;restyle();setup();refresh();opts.onReady&&opts.onReady(map)};
+  const restyle=()=>{const M=mapColors(app);const st=map.getStyle();if(!st)return;addImages(map,app);
+    const P=(id,k,v)=>{try{map.setPaintProperty(id,k,v)}catch(e){}};
+    const linen=M.c('--linen'),water=M.c('--water'),land=M.c('--land'),road=M.c('--road'),ink2=M.c('--ink-2');
+    st.layers.forEach(l=>{const id=l.id;
+      if(l.type==='background'){P(id,'background-color',linen);return}
+      if(id==='water'){P(id,'fill-color',water);if(!map.getLayer('water-hatch'))map.addLayer({id:'water-hatch',type:'fill',source:l.source,'source-layer':l['source-layer'],paint:{'fill-pattern':'hatch'}},st.layers[st.layers.indexOf(l)+1].id);return}
+      if(id==='water-hatch')return;
+      if(id==='waterway'){P(id,'line-color',water);return}
+      if(l.type==='fill'){if(/park|wood|landuse|landcover/.test(id)){P(id,'fill-color',land);P(id,'fill-opacity',.55)}else if(/building|aeroway|pier/.test(id)){map.setLayoutProperty(id,'visibility','none')}return}
+      if(l.type==='line'){
+        if(/casing|boundary|aeroway|tunnel|railway|pier|bridge/.test(id)){map.setLayoutProperty(id,'visibility','none');return}
+        if(/highway/.test(id)){P(id,'line-color',road);P(id,'line-opacity',/major|motorway/.test(id)?.8:.6);P(id,'line-width',['interpolate',['linear'],['zoom'],9,.5,13,.9,17,1.8]);P(id,'line-dasharray',[3,2.2]);try{map.setPaintProperty(id,'line-gap-width',0)}catch(e){}return}
+        map.setLayoutProperty(id,'visibility','none');return}
+      if(l.type==='symbol'){
+        if(/^label_(city|town|village|other|state)|^label_city_capital|water_name_point/.test(id)){P(id,'text-color',ink2);P(id,'text-halo-color',linen);P(id,'text-halo-width',1.4);try{map.setLayoutProperty(id,'text-size',['interpolate',['linear'],['zoom'],8,11,14,13])}catch(e){}}
+        else map.setLayoutProperty(id,'visibility','none')}});
+    ['highway-name-major','highway-name-minor','highway-name-path'].forEach(i=>{try{map.setLayoutProperty(i,'visibility','none')}catch(e){}})};
+  const setup=()=>{
+    if(!map.getSource('pl'))map.addSource('pl',{type:'geojson',data:toFC([]),cluster:true,clusterRadius:46,clusterMaxZoom:15});
+    if(!map.getLayer('cl')){
+      map.addLayer({id:'cl',type:'symbol',source:'pl',filter:['has','point_count'],layout:{'icon-image':['concat','btn-',['get','point_count']],'icon-allow-overlap':true,'icon-size':1}});
+      map.addLayer({id:'x',type:'symbol',source:'pl',filter:['all',['!',['has','point_count']],['==',['get','fr'],0]],layout:{'icon-image':['concat','x-',['get','col']],'icon-allow-overlap':true}});
+      map.addLayer({id:'kn',type:'symbol',source:'pl',filter:['all',['!',['has','point_count']],['==',['get','fr'],1]],layout:{'icon-image':['concat','k-',['get','col']],'icon-allow-overlap':true}});
+      map.addLayer({id:'hr',type:'symbol',source:'pl',filter:['all',['!',['has','point_count']],['==',['get','hr'],1]],layout:{'icon-image':'heart','icon-allow-overlap':true,'icon-offset':[0,-14]}});
+      map.on('click','cl',e=>{const f=e.features[0];map.getSource('pl').getClusterExpansionZoom(f.properties.cluster_id).then(z=>map.easeTo({center:f.geometry.coordinates,zoom:z+.2}))});
+      ['x','kn','hr'].forEach(L=>map.on('click',L,e=>openPlace(e.features[0].properties.i,app)));
+      ['cl','x','kn','hr'].forEach(L=>{map.on('mouseenter',L,()=>map.getCanvas().style.cursor='pointer');map.on('mouseleave',L,()=>map.getCanvas().style.cursor='')})}
+    map.on('moveend',peek)};
+  map.on('styleimagemissing',e=>{if(e.id.startsWith('btn-')&&map._img){const n=e.id.slice(4);if(!map.hasImage(e.id))map.addImage(e.id,btnImg(map,n),{pixelRatio:2})}});
+  const refresh=()=>{if(!ready)return;const s=map.getSource('pl');if(s)s.setData(toFC(visible()));peek()};
+  const peek=()=>{if(!opts.onPeek||!ready)return;const b=map.getBounds();opts.onPeek(sortPl(visible().filter(p=>b.contains([p.ln,p.la]))))};
+  map.on('load',onReady);
+  map.on('error',e=>{if(!ready&&!usedFallback&&e&&e.error&&!/tile|pbf|sprite|glyph/i.test(String(e.error.message||e.error))){fallback()}});
+  const fallback=()=>{if(ready||usedFallback)return;usedFallback=true;map.setStyle(fallbackStyle());map.once('idle',()=>{ready=true;restyleFallback();setup();refresh();opts.onReady&&opts.onReady(map)});setTimeout(()=>{if(!ready&&map.isStyleLoaded()){ready=true;restyleFallback();setup();refresh()}},800)};
+  const restyleFallback=()=>{const M=mapColors(app);addImages(map,app);try{map.setPaintProperty('background','background-color',M.c('--linen'));map.setPaintProperty('water','fill-color',M.c('--water'));if(!map.getLayer('wh'))map.addLayer({id:'wh',type:'fill',source:'w',paint:{'fill-pattern':'hatch'}})}catch(e){}};
+  setTimeout(()=>{if(!ready)fallback()},9000);
+  on(()=>{syncDo()});let syncT;function syncDo(){clearTimeout(syncT);syncT=setTimeout(refresh,0)}
+  app.addEventListener('tb-theme',()=>{if(!ready)return;if(usedFallback)restyleFallback();else restyle();refresh()});
+  app._showOnMap=p=>{map.flyTo({center:[p.ln,p.la],zoom:15,speed:1.2})};
+  return {map,refresh,fly:p=>app._showOnMap(p)}}
+
+return{landRow,filterRow,S,on,emit,h,$,$$,PL,LMAP,BYID,racks,chips,groupChips,syncFilters,visible,sortPl,rowsInto,row,needleBar,heartBtn,heartSVG,titleSVG,openPlace,openPicks,themeBtn,initTheme,showsView,mountMap,overlay,toast,setCur:a=>CUR=a,GLABEL,syncHearts,esc,refreshAll:()=>{}}
+})();
+function buildApp(root,o={}){
+  const {h,$}=TB;root.classList.add('app');root.setAttribute('data-theme-scope','');if(o.theme)root.setAttribute('data-theme',o.theme);
+  TB.setCur(root);
+  const scope=o.theme?root:document.documentElement;
+  root.append(h('div',{class:'cloth-tex'}));
+  const views={};
+  const tabs=h('nav',{class:'tabs','aria-label':'Zones'});
+  const names=[['home','Places'],['map','Map'],['shows','Shows'],['picks','Your picks']];
+  const btns={};
+  names.filter(n=>!(o.desktop&&n[0]==='map')).forEach(([k,t])=>{const b=h('button',{class:'tab',type:'button'},h('span',{class:'label'},t));btns[k]=b;b.addEventListener('click',()=>{if(k==='picks'){TB.openPicks(root);return}show(k)});tabs.append(b)});
+  tabs.append(TB.themeBtn(scope));
+  root.append(tabs);
+  const stage=h('div',{class:'scroll'});root.append(stage);
+  // home
+  const home=h('div',{class:'view'});
+  home.append(h('div',{class:'hero'},h('h1',{html:TB.titleSVG(10)}),h('p',{class:'hello'},"Hi! I stitched these for you. Heart whatever sounds fun, then send them back to me.")));
+  if(o.desktop){home.append(TB.racks(),h('div',{class:'zone'},h('span',{class:'label'},'Places'),h('span',{class:'meta',id:'cnt'})),TB.filterRow())}
+  else home.append(TB.landRow(()=>show('map')),h('span',{id:'cnt',class:'sr'}));
+  const rows=h('ul',{class:'rows'});home.append(rows);
+  const mapV=h('div',{class:'view map-app',hidden:''});
+  const showsV=h('div',{class:'view',hidden:''});showsV.append(TB.showsView(o.shows||14));
+  stage.append(home,mapV,showsV);
+  views.home=home;views.map=mapV;views.shows=showsV;
+  let mapInst=null,peekList=null,peekHead=null;
+  const buildMap=()=>{
+    mapV.append(TB.racks(),TB.filterRow());
+    const mb=h('div',{});const seam=h('div',{class:'seam'});
+    peekHead=h('div',{class:'peek-head'},h('span',{class:'label'},'Places in view'),h('span',{class:'pcount'}));
+    peekList=h('ul',{class:'rows'});const peek=h('div',{class:'peek'},peekHead,peekList);
+    mapV.append(mb,seam,peek);
+    mapInst=TB.mountMap(root,mb,{label:'Map',onPeek:arr=>{TB.rowsInto(peekList,arr,12);peekHead.lastChild.textContent=arr.length+' on the cloth'}});
+    TB.syncFilters();
+  };
+  function show(k){Object.entries(views).forEach(([n,v])=>v.hidden=n!==k);Object.entries(btns).forEach(([n,b])=>n==='picks'||(k===n?b.setAttribute('aria-current','page'):b.removeAttribute('aria-current')));
+    root.classList.toggle('map-mode',k==='map');
+    if(k==='map'&&!mapInst){buildMap();}
+    if(k==='map'&&mapInst)setTimeout(()=>mapInst.map.resize(),50);
+    stage.scrollTop=0;root._view=k}
+  const renderHome=()=>{const arr=TB.sortPl(TB.visible());TB.rowsInto(rows,arr,30);$('#cnt',home).textContent=arr.length+' places on the cloth'};
+  TB.on(()=>{TB.syncFilters();renderHome()});
+  renderHome();TB.syncFilters();
+  root.append(TB.needleBar());
+  show(o.view||'home');
+  return {show,root,rows,home,cnt:()=>$('#cnt',home)}
+}
+
+TB.S.region='Bay Area';TB.S.picks=['Golden Gate Bakery','Kiss of Matcha','Z & Y Restaurant','Starlite','Pho Momma'].map(n=>TB.PL.findIndex(p=>p.n===n));TB.S.fresh=TB.S.picks[4];
+TB.S.sel=new Set(['tea-drinks','bakery','sf-shared']);TB.S.friends=true;
+const A=buildApp(document.getElementById('fa'),{view:'map',theme:'light'});
+TB.S.sel=new Set();
+const B=buildApp(document.getElementById('fb'),{view:'home',theme:'dark'});
+TB.openPlace(TB.PL.findIndex(p=>p.n==='Rintaro'),B.root);
+const C=buildApp(document.getElementById('fc'),{view:'home',theme:'light'});
+TB.openPicks(C.root);
+const D=buildApp(document.getElementById('fd'),{view:'shows',theme:'dark',shows:9});
+TB.S.sel=new Set(['tea-drinks','bakery','sf-shared']);TB.emit();
+</script></body></html>

@@ -1,0 +1,5379 @@
+{
+ "_about": "Round-1 design sample. Real entries from the owner's Google Maps export (gmaps.json) and the curated places databases, scrubbed. Personal notes that name people or bookings are blanked. Not for production.",
+ "lists": [
+  {
+   "id": "breakfast-brunch",
+   "name": "Breakfast/Brunch",
+   "group": "Food",
+   "source": "mine",
+   "count": 6
+  },
+  {
+   "id": "casual-food",
+   "name": "Casual Food",
+   "group": "Food",
+   "source": "mine",
+   "count": 136
+  },
+  {
+   "id": "sit-down-restaurants",
+   "name": "Sit Down Restaurants",
+   "group": "Food",
+   "source": "mine",
+   "count": 68
+  },
+  {
+   "id": "fine-dining",
+   "name": "Fine Dining",
+   "group": "Food",
+   "source": "mine",
+   "count": 2
+  },
+  {
+   "id": "bakery",
+   "name": "Bakery",
+   "group": "Food",
+   "source": "mine",
+   "count": 29
+  },
+  {
+   "id": "desserts",
+   "name": "Desserts",
+   "group": "Food",
+   "source": "mine",
+   "count": 21
+  },
+  {
+   "id": "tea-drinks",
+   "name": "Tea/Drinks",
+   "group": "Drinks and Nightlife",
+   "source": "mine",
+   "count": 61
+  },
+  {
+   "id": "bar-club",
+   "name": "Bar/Club",
+   "group": "Drinks and Nightlife",
+   "source": "mine",
+   "count": 1
+  },
+  {
+   "id": "shopping",
+   "name": "Shopping",
+   "group": "Shopping",
+   "source": "mine",
+   "count": 29
+  },
+  {
+   "id": "clothing",
+   "name": "Clothing",
+   "group": "Shopping",
+   "source": "mine",
+   "count": 23
+  },
+  {
+   "id": "grocery",
+   "name": "Grocery",
+   "group": "Shopping",
+   "source": "mine",
+   "count": 25
+  },
+  {
+   "id": "points-of-interest",
+   "name": "Points of Interest",
+   "group": "Sightseeing and Culture",
+   "source": "mine",
+   "count": 8
+  },
+  {
+   "id": "tourist-attractions",
+   "name": "Tourist Attractions",
+   "group": "Sightseeing and Culture",
+   "source": "mine",
+   "count": 33
+  },
+  {
+   "id": "museums",
+   "name": "Museums",
+   "group": "Sightseeing and Culture",
+   "source": "mine",
+   "count": 12
+  },
+  {
+   "id": "venues",
+   "name": "Venues",
+   "group": "Sightseeing and Culture",
+   "source": "mine",
+   "count": 1
+  },
+  {
+   "id": "roadside-destinations",
+   "name": "Roadside Destinations",
+   "group": "Sightseeing and Culture",
+   "source": "mine",
+   "count": 4
+  },
+  {
+   "id": "parks",
+   "name": "Parks",
+   "group": "Outdoors",
+   "source": "mine",
+   "count": 30
+  },
+  {
+   "id": "hiking",
+   "name": "Hiking",
+   "group": "Outdoors",
+   "source": "mine",
+   "count": 5
+  },
+  {
+   "id": "trails",
+   "name": "Trails",
+   "group": "Outdoors",
+   "source": "mine",
+   "count": 2
+  },
+  {
+   "id": "activities",
+   "name": "Activities",
+   "group": "Activities and Recreation",
+   "source": "mine",
+   "count": 11
+  },
+  {
+   "id": "sports",
+   "name": "Sports",
+   "group": "Activities and Recreation",
+   "source": "mine",
+   "count": 35
+  },
+  {
+   "id": "guns",
+   "name": "Guns",
+   "group": "Activities and Recreation",
+   "source": "mine",
+   "count": 9
+  },
+  {
+   "id": "hotels",
+   "name": "Hotels",
+   "group": "Travel Logistics",
+   "source": "mine",
+   "count": 7
+  },
+  {
+   "id": "parking-lots",
+   "name": "Parking Lots",
+   "group": "Travel Logistics",
+   "source": "mine",
+   "count": 17
+  },
+  {
+   "id": "sf-shared",
+   "name": "SF",
+   "group": "Friends' lists",
+   "source": "friends",
+   "count": 388
+  },
+  {
+   "id": "sac-shared",
+   "name": "Sac",
+   "group": "Friends' lists",
+   "source": "friends",
+   "count": 340
+  },
+  {
+   "id": "bay-area-shared",
+   "name": "Bay Area",
+   "group": "Friends' lists",
+   "source": "friends",
+   "count": 317
+  },
+  {
+   "id": "nyc-shared",
+   "name": "NYC",
+   "group": "Friends' lists",
+   "source": "friends",
+   "count": 461
+  }
+ ],
+ "totals": {
+  "places": 2081,
+  "mine": 575,
+  "friends": 1506
+ },
+ "sf_window_mine": [
+  {
+   "name": "Bouche",
+   "address": "603 Bush St, San Francisco, CA 94108",
+   "lat": 37.79025,
+   "lng": -122.40735,
+   "note": "",
+   "list": "breakfast-brunch",
+   "source": "mine"
+  },
+  {
+   "name": "Marugame Udon",
+   "address": "",
+   "lat": 37.72748,
+   "lng": -122.4765,
+   "note": "",
+   "list": "casual-food",
+   "source": "mine"
+  },
+  {
+   "name": "Sobakatsu 03",
+   "address": "1700 Laguna St, San Francisco, CA 94115",
+   "lat": 37.78687,
+   "lng": -122.42821,
+   "note": "",
+   "list": "casual-food",
+   "source": "mine"
+  },
+  {
+   "name": "Taqueria El Farolito",
+   "address": "2950 24th St, San Francisco, CA 94110",
+   "lat": 37.75278,
+   "lng": -122.41114,
+   "note": "Opens late",
+   "list": "casual-food",
+   "source": "mine"
+  },
+  {
+   "name": "Taquería El Farolito",
+   "address": "2779 Mission St, San Francisco, CA 94110",
+   "lat": 37.75264,
+   "lng": -122.41835,
+   "note": "Opens late",
+   "list": "casual-food",
+   "source": "mine"
+  },
+  {
+   "name": "Fog Harbor Fish House",
+   "address": "",
+   "lat": 37.809,
+   "lng": -122.41029,
+   "note": "",
+   "list": "casual-food",
+   "source": "mine"
+  },
+  {
+   "name": "Cafe Okawari",
+   "address": "",
+   "lat": 37.77816,
+   "lng": -122.39388,
+   "note": "",
+   "list": "casual-food",
+   "source": "mine"
+  },
+  {
+   "name": "Dumpling Home",
+   "address": "",
+   "lat": 37.77582,
+   "lng": -122.42264,
+   "note": "8.4",
+   "list": "casual-food",
+   "source": "mine"
+  },
+  {
+   "name": "Deli Board",
+   "address": "1058 Folsom St, San Francisco, CA 94103",
+   "lat": 37.77756,
+   "lng": -122.40703,
+   "note": "",
+   "list": "casual-food",
+   "source": "mine"
+  },
+  {
+   "name": "Barbara Pinseria & Cocktail Bar",
+   "address": "431 Columbus Ave, San Francisco, CA 94133",
+   "lat": 37.79901,
+   "lng": -122.40869,
+   "note": "",
+   "list": "casual-food",
+   "source": "mine"
+  },
+  {
+   "name": "The Italian Homemade Company",
+   "address": "716 Columbus Ave, San Francisco, CA 94133",
+   "lat": 37.8016,
+   "lng": -122.41181,
+   "note": "",
+   "list": "casual-food",
+   "source": "mine"
+  },
+  {
+   "name": "Marcella's Lasagneria",
+   "address": "1099 Tennessee St, San Francisco, CA 94107",
+   "lat": 37.75802,
+   "lng": -122.38914,
+   "note": "",
+   "list": "casual-food",
+   "source": "mine"
+  },
+  {
+   "name": "El Gallo Giro Food Truck",
+   "address": "986-998 Treat Ave, San Francisco, CA 94110",
+   "lat": 37.75434,
+   "lng": -122.41302,
+   "note": "",
+   "list": "casual-food",
+   "source": "mine"
+  },
+  {
+   "name": "Molinari Delicatessen",
+   "address": "373 Columbus Ave, San Francisco, CA 94133",
+   "lat": 37.79849,
+   "lng": -122.40787,
+   "note": "",
+   "list": "casual-food",
+   "source": "mine"
+  },
+  {
+   "name": "Tony's Pizza Napoletana",
+   "address": "1570 Stockton St, San Francisco, CA 94133",
+   "lat": 37.80039,
+   "lng": -122.40905,
+   "note": "",
+   "list": "casual-food",
+   "source": "mine"
+  },
+  {
+   "name": "FUSION DUMPLING",
+   "address": "",
+   "lat": 37.79626,
+   "lng": -122.40607,
+   "note": "",
+   "list": "casual-food",
+   "source": "mine"
+  },
+  {
+   "name": "Tadaima Mission",
+   "address": "3515 20th St B, San Francisco, CA 94110",
+   "lat": 37.75852,
+   "lng": -122.41956,
+   "note": "",
+   "list": "casual-food",
+   "source": "mine"
+  },
+  {
+   "name": "La Taqueria",
+   "address": "2889 Mission St, San Francisco, CA 94110",
+   "lat": 37.75088,
+   "lng": -122.41818,
+   "note": "",
+   "list": "casual-food",
+   "source": "mine"
+  },
+  {
+   "name": "Fish In The Box",
+   "address": "",
+   "lat": 37.77386,
+   "lng": -122.44585,
+   "note": "",
+   "list": "casual-food",
+   "source": "mine"
+  },
+  {
+   "name": "Bread n' Chu",
+   "address": "",
+   "lat": 37.7824,
+   "lng": -122.47969,
+   "note": "",
+   "list": "casual-food",
+   "source": "mine"
+  },
+  {
+   "name": "Rintaro",
+   "address": "",
+   "lat": 37.76888,
+   "lng": -122.41514,
+   "note": "Michelin Bib",
+   "list": "sit-down-restaurants",
+   "source": "mine"
+  },
+  {
+   "name": "Cocobang",
+   "address": "550 Taylor St, San Francisco, CA 94102",
+   "lat": 37.78764,
+   "lng": -122.41156,
+   "note": "Opens late",
+   "list": "sit-down-restaurants",
+   "source": "mine"
+  },
+  {
+   "name": "Ernest",
+   "address": "",
+   "lat": 37.76315,
+   "lng": -122.41099,
+   "note": "",
+   "list": "sit-down-restaurants",
+   "source": "mine"
+  },
+  {
+   "name": "SAN HO WON",
+   "address": "",
+   "lat": 37.7596,
+   "lng": -122.41025,
+   "note": "",
+   "list": "sit-down-restaurants",
+   "source": "mine"
+  },
+  {
+   "name": "Sotto Mare",
+   "address": "",
+   "lat": 37.7997,
+   "lng": -122.40833,
+   "note": "",
+   "list": "sit-down-restaurants",
+   "source": "mine"
+  },
+  {
+   "name": "Waystone",
+   "address": "",
+   "lat": 37.79949,
+   "lng": -122.41083,
+   "note": "",
+   "list": "sit-down-restaurants",
+   "source": "mine"
+  },
+  {
+   "name": "Ganji",
+   "address": "",
+   "lat": 37.78619,
+   "lng": -122.42971,
+   "note": "",
+   "list": "sit-down-restaurants",
+   "source": "mine"
+  },
+  {
+   "name": "Itria",
+   "address": "3266 24th St, San Francisco, CA 94110",
+   "lat": 37.75245,
+   "lng": -122.41783,
+   "note": "",
+   "list": "sit-down-restaurants",
+   "source": "mine"
+  },
+  {
+   "name": "Piccino",
+   "address": "1001 Minnesota St, San Francisco, CA 94107",
+   "lat": 37.75758,
+   "lng": -122.38996,
+   "note": "",
+   "list": "sit-down-restaurants",
+   "source": "mine"
+  },
+  {
+   "name": "Swan Oyster Depot",
+   "address": "1517 Polk St, San Francisco, CA 94109",
+   "lat": 37.79087,
+   "lng": -122.42091,
+   "note": "",
+   "list": "sit-down-restaurants",
+   "source": "mine"
+  },
+  {
+   "name": "Onsen",
+   "address": "466 Eddy St, San Francisco, CA 94109",
+   "lat": 37.7837,
+   "lng": -122.4154,
+   "note": "",
+   "list": "sit-down-restaurants",
+   "source": "mine"
+  },
+  {
+   "name": "Khao Tiew",
+   "address": "272 Claremont Blvd, San Francisco, CA 94127",
+   "lat": 37.74109,
+   "lng": -122.46507,
+   "note": "",
+   "list": "sit-down-restaurants",
+   "source": "mine"
+  },
+  {
+   "name": "Arsicault Bakery",
+   "address": "87 McAllister St, San Francisco, CA 94102",
+   "lat": 37.78081,
+   "lng": -122.41334,
+   "note": "",
+   "list": "bakery",
+   "source": "mine"
+  },
+  {
+   "name": "Butter & Crumble",
+   "address": "271 Francisco St, San Francisco, CA 94133",
+   "lat": 37.80508,
+   "lng": -122.40969,
+   "note": "",
+   "list": "bakery",
+   "source": "mine"
+  },
+  {
+   "name": "Pineapple King Bakery - San Francisco",
+   "address": "1915 Irving St, San Francisco, CA 94122",
+   "lat": 37.76341,
+   "lng": -122.47847,
+   "note": "",
+   "list": "bakery",
+   "source": "mine"
+  },
+  {
+   "name": "AA Bakery & Cafe",
+   "address": "",
+   "lat": 37.79568,
+   "lng": -122.40813,
+   "note": "",
+   "list": "bakery",
+   "source": "mine"
+  },
+  {
+   "name": "Yummy Bakery & Cafe",
+   "address": "",
+   "lat": 37.79609,
+   "lng": -122.40549,
+   "note": "",
+   "list": "bakery",
+   "source": "mine"
+  },
+  {
+   "name": "Golden Gate Bakery",
+   "address": "",
+   "lat": 37.79641,
+   "lng": -122.40684,
+   "note": "8.5 Egg Tart",
+   "list": "bakery",
+   "source": "mine"
+  },
+  {
+   "name": "Stockton Bakery",
+   "address": "",
+   "lat": 37.79561,
+   "lng": -122.40837,
+   "note": "",
+   "list": "bakery",
+   "source": "mine"
+  },
+  {
+   "name": "Philmore Creamery",
+   "address": "1840 Fillmore St, San Francisco, CA 94115",
+   "lat": 37.78654,
+   "lng": -122.43327,
+   "note": "",
+   "list": "desserts",
+   "source": "mine"
+  },
+  {
+   "name": "U :Dessert Story",
+   "address": "",
+   "lat": 37.76429,
+   "lng": -122.43061,
+   "note": "",
+   "list": "desserts",
+   "source": "mine"
+  },
+  {
+   "name": "Na Ya Dessert Cafe",
+   "address": "",
+   "lat": 37.77723,
+   "lng": -122.42489,
+   "note": "",
+   "list": "desserts",
+   "source": "mine"
+  },
+  {
+   "name": "Na Ya Dessert Cafe",
+   "address": "",
+   "lat": 37.78064,
+   "lng": -122.47686,
+   "note": "",
+   "list": "desserts",
+   "source": "mine"
+  },
+  {
+   "name": "Matcha Toko",
+   "address": "",
+   "lat": 37.72775,
+   "lng": -122.47697,
+   "note": "",
+   "list": "tea-drinks",
+   "source": "mine"
+  },
+  {
+   "name": "By Me Boba Tea",
+   "address": "",
+   "lat": 37.79559,
+   "lng": -122.40734,
+   "note": "",
+   "list": "tea-drinks",
+   "source": "mine"
+  },
+  {
+   "name": "Chinatown Taiwan Fruit Tea",
+   "address": "",
+   "lat": 37.79508,
+   "lng": -122.40762,
+   "note": "",
+   "list": "tea-drinks",
+   "source": "mine"
+  },
+  {
+   "name": "Dots Boba",
+   "address": "",
+   "lat": 37.72422,
+   "lng": -122.45704,
+   "note": "",
+   "list": "tea-drinks",
+   "source": "mine"
+  },
+  {
+   "name": "Hi Sweetie Tea and Treats",
+   "address": "",
+   "lat": 37.79578,
+   "lng": -122.4078,
+   "note": "7.6",
+   "list": "tea-drinks",
+   "source": "mine"
+  },
+  {
+   "name": "Momo Tea",
+   "address": "",
+   "lat": 37.76405,
+   "lng": -122.46387,
+   "note": "",
+   "list": "tea-drinks",
+   "source": "mine"
+  },
+  {
+   "name": "Kiss of Matcha",
+   "address": "",
+   "lat": 37.79803,
+   "lng": -122.40736,
+   "note": "7.9 matcha",
+   "list": "tea-drinks",
+   "source": "mine"
+  },
+  {
+   "name": "Matcha Cafe Maiko",
+   "address": "",
+   "lat": 37.79421,
+   "lng": -122.40622,
+   "note": "8.3 matcha",
+   "list": "tea-drinks",
+   "source": "mine"
+  },
+  {
+   "name": "Stonemill Matcha",
+   "address": "",
+   "lat": 37.76397,
+   "lng": -122.42166,
+   "note": "",
+   "list": "tea-drinks",
+   "source": "mine"
+  },
+  {
+   "name": "Asha Tea House",
+   "address": "",
+   "lat": 37.78817,
+   "lng": -122.40371,
+   "note": "",
+   "list": "tea-drinks",
+   "source": "mine"
+  },
+  {
+   "name": "Kiss of Matcha",
+   "address": "",
+   "lat": 37.78293,
+   "lng": -122.46746,
+   "note": "",
+   "list": "tea-drinks",
+   "source": "mine"
+  },
+  {
+   "name": "Maruwu Seicha - SF Japantown",
+   "address": "",
+   "lat": 37.7852,
+   "lng": -122.43031,
+   "note": "",
+   "list": "tea-drinks",
+   "source": "mine"
+  },
+  {
+   "name": "Ceré Tea",
+   "address": "",
+   "lat": 37.75397,
+   "lng": -122.42102,
+   "note": "",
+   "list": "tea-drinks",
+   "source": "mine"
+  },
+  {
+   "name": "Tadaima Marina",
+   "address": "",
+   "lat": 37.79773,
+   "lng": -122.42975,
+   "note": "",
+   "list": "tea-drinks",
+   "source": "mine"
+  },
+  {
+   "name": "Komeya No Bento",
+   "address": "",
+   "lat": 37.80009,
+   "lng": -122.43137,
+   "note": "",
+   "list": "tea-drinks",
+   "source": "mine"
+  },
+  {
+   "name": "Relic Vintage",
+   "address": "1475 Haight St, San Francisco, CA 94117",
+   "lat": 37.76996,
+   "lng": -122.4466,
+   "note": "",
+   "list": "clothing",
+   "source": "mine"
+  },
+  {
+   "name": "Big Time Vintage",
+   "address": "968 Valencia St, San Francisco, CA 94110",
+   "lat": 37.75745,
+   "lng": -122.42134,
+   "note": "",
+   "list": "clothing",
+   "source": "mine"
+  },
+  {
+   "name": "Big Time Vintage",
+   "address": "1630 Haight St, San Francisco, CA 94117",
+   "lat": 37.76984,
+   "lng": -122.44919,
+   "note": "",
+   "list": "clothing",
+   "source": "mine"
+  },
+  {
+   "name": "Indigo Vintage Coopertive",
+   "address": "1649 Haight St, San Francisco, CA 94117",
+   "lat": 37.76958,
+   "lng": -122.44946,
+   "note": "",
+   "list": "clothing",
+   "source": "mine"
+  },
+  {
+   "name": "710 Collective",
+   "address": "1644 Haight St, San Francisco, CA 94117",
+   "lat": 37.76993,
+   "lng": -122.44944,
+   "note": "",
+   "list": "clothing",
+   "source": "mine"
+  },
+  {
+   "name": "Buffalo Exchange",
+   "address": "1210 Valencia St, San Francisco, CA 94110",
+   "lat": 37.75344,
+   "lng": -122.42097,
+   "note": "",
+   "list": "clothing",
+   "source": "mine"
+  },
+  {
+   "name": "Buffalo Exchange",
+   "address": "1555 Haight St, San Francisco, CA 94117",
+   "lat": 37.76979,
+   "lng": -122.44791,
+   "note": "",
+   "list": "clothing",
+   "source": "mine"
+  },
+  {
+   "name": "Wasteland",
+   "address": "1660 Haight St, San Francisco, CA 94117",
+   "lat": 37.76982,
+   "lng": -122.44962,
+   "note": "",
+   "list": "clothing",
+   "source": "mine"
+  },
+  {
+   "name": "Fuzz & Sway",
+   "address": "683 Haight St, San Francisco, CA 94117",
+   "lat": 37.77161,
+   "lng": -122.43342,
+   "note": "",
+   "list": "clothing",
+   "source": "mine"
+  },
+  {
+   "name": "Indigo Vintage",
+   "address": "2266 Chestnut St, San Francisco, CA 94123",
+   "lat": 37.80037,
+   "lng": -122.44066,
+   "note": "",
+   "list": "clothing",
+   "source": "mine"
+  },
+  {
+   "name": "Closet 1951",
+   "address": "1951 Union St, San Francisco, CA 94123",
+   "lat": 37.79752,
+   "lng": -122.43137,
+   "note": "",
+   "list": "clothing",
+   "source": "mine"
+  },
+  {
+   "name": "Lisa Says Gah",
+   "address": "522 Octavia St, San Francisco, CA 94102",
+   "lat": 37.77705,
+   "lng": -122.42461,
+   "note": "",
+   "list": "clothing",
+   "source": "mine"
+  },
+  {
+   "name": "LOVED AGAIN",
+   "address": "4068 24th St, San Francisco, CA 94114",
+   "lat": 37.75144,
+   "lng": -122.43343,
+   "note": "",
+   "list": "clothing",
+   "source": "mine"
+  },
+  {
+   "name": "Blue Bin Vintage",
+   "address": "1525 Haight St, San Francisco, CA 94117",
+   "lat": 37.76974,
+   "lng": -122.44737,
+   "note": "",
+   "list": "clothing",
+   "source": "mine"
+  },
+  {
+   "name": "2nd STREET Haight St",
+   "address": "1560 Haight St, San Francisco, CA 94117",
+   "lat": 37.77013,
+   "lng": -122.44805,
+   "note": "",
+   "list": "clothing",
+   "source": "mine"
+  },
+  {
+   "name": "Out of the Closet - Polk",
+   "address": "1498 Polk St, San Francisco, CA 94109",
+   "lat": 37.79036,
+   "lng": -122.42043,
+   "note": "",
+   "list": "clothing",
+   "source": "mine"
+  },
+  {
+   "name": "Out of the Closet - Folsom",
+   "address": "1295 Folsom St, San Francisco, CA 94103",
+   "lat": 37.77376,
+   "lng": -122.41127,
+   "note": "",
+   "list": "clothing",
+   "source": "mine"
+  },
+  {
+   "name": "Valencia Street Vintage",
+   "address": "714 Valencia St, San Francisco, CA 94110",
+   "lat": 37.76138,
+   "lng": -122.42173,
+   "note": "",
+   "list": "clothing",
+   "source": "mine"
+  },
+  {
+   "name": "Haight Street Vintage",
+   "address": "1519 Haight St, San Francisco, CA 94117",
+   "lat": 37.76986,
+   "lng": -122.44731,
+   "note": "",
+   "list": "clothing",
+   "source": "mine"
+  },
+  {
+   "name": "Rare Vintage Finds",
+   "address": "910 Valencia St, San Francisco, CA 94110",
+   "lat": 37.75823,
+   "lng": -122.42143,
+   "note": "",
+   "list": "clothing",
+   "source": "mine"
+  },
+  {
+   "name": "Community Thrift",
+   "address": "623 Valencia St, San Francisco, CA 94110",
+   "lat": 37.76277,
+   "lng": -122.42149,
+   "note": "",
+   "list": "clothing",
+   "source": "mine"
+  },
+  {
+   "name": "H Mart San Francisco",
+   "address": "",
+   "lat": 37.7103,
+   "lng": -122.46777,
+   "note": "",
+   "list": "grocery",
+   "source": "mine"
+  },
+  {
+   "name": "Nijiya Market",
+   "address": "",
+   "lat": 37.78528,
+   "lng": -122.43111,
+   "note": "",
+   "list": "grocery",
+   "source": "mine"
+  },
+  {
+   "name": "Haight-Ashbury",
+   "address": "San Francisco, CA 94117",
+   "lat": 37.77022,
+   "lng": -122.44536,
+   "note": "",
+   "list": "points-of-interest",
+   "source": "mine"
+  },
+  {
+   "name": "Japantown",
+   "address": "San Francisco, CA 94115",
+   "lat": 37.78632,
+   "lng": -122.43159,
+   "note": "",
+   "list": "points-of-interest",
+   "source": "mine"
+  },
+  {
+   "name": "Chinatown",
+   "address": "San Francisco, CA",
+   "lat": 37.79447,
+   "lng": -122.40481,
+   "note": "",
+   "list": "points-of-interest",
+   "source": "mine"
+  },
+  {
+   "name": "Westlake Shopping Center",
+   "address": "",
+   "lat": 37.70109,
+   "lng": -122.48318,
+   "note": "",
+   "list": "points-of-interest",
+   "source": "mine"
+  },
+  {
+   "name": "Stonestown Galleria",
+   "address": "",
+   "lat": 37.72803,
+   "lng": -122.47709,
+   "note": "",
+   "list": "points-of-interest",
+   "source": "mine"
+  },
+  {
+   "name": "Union Square",
+   "address": "San Francisco, CA",
+   "lat": 37.78755,
+   "lng": -122.40662,
+   "note": "",
+   "list": "points-of-interest",
+   "source": "mine"
+  },
+  {
+   "name": "Hayes Promenade",
+   "address": "",
+   "lat": 37.77684,
+   "lng": -122.42415,
+   "note": "",
+   "list": "points-of-interest",
+   "source": "mine"
+  },
+  {
+   "name": "SFCM Bowes Center",
+   "address": "200 Van Ness Ave, San Francisco, CA 94102",
+   "lat": 37.77752,
+   "lng": -122.41934,
+   "note": "",
+   "list": "tourist-attractions",
+   "source": "mine"
+  },
+  {
+   "name": "PIER 39",
+   "address": "",
+   "lat": 37.80867,
+   "lng": -122.40982,
+   "note": "",
+   "list": "tourist-attractions",
+   "source": "mine"
+  },
+  {
+   "name": "Chinatown San Francisco",
+   "address": "",
+   "lat": 37.79398,
+   "lng": -122.40808,
+   "note": "",
+   "list": "tourist-attractions",
+   "source": "mine"
+  },
+  {
+   "name": "Japantown Peace Plaza",
+   "address": "",
+   "lat": 37.78522,
+   "lng": -122.42973,
+   "note": "",
+   "list": "tourist-attractions",
+   "source": "mine"
+  },
+  {
+   "name": "San Francisco Zoo",
+   "address": "",
+   "lat": 37.73294,
+   "lng": -122.50283,
+   "note": "",
+   "list": "tourist-attractions",
+   "source": "mine"
+  },
+  {
+   "name": "Cow Palace Arena & Event Center",
+   "address": "",
+   "lat": 37.707,
+   "lng": -122.41965,
+   "note": "",
+   "list": "tourist-attractions",
+   "source": "mine"
+  },
+  {
+   "name": "Asian Art Museum",
+   "address": "",
+   "lat": 37.78028,
+   "lng": -122.41616,
+   "note": "",
+   "list": "museums",
+   "source": "mine"
+  },
+  {
+   "name": "San Francisco Museum of Modern Art",
+   "address": "",
+   "lat": 37.78573,
+   "lng": -122.40103,
+   "note": "",
+   "list": "museums",
+   "source": "mine"
+  },
+  {
+   "name": "War Memorial Opera House",
+   "address": "",
+   "lat": 37.77848,
+   "lng": -122.42032,
+   "note": "",
+   "list": "venues",
+   "source": "mine"
+  },
+  {
+   "name": "California Academy of Sciences",
+   "address": "",
+   "lat": 37.76986,
+   "lng": -122.46609,
+   "note": "",
+   "list": "parks",
+   "source": "mine"
+  },
+  {
+   "name": "Twin Peaks",
+   "address": "",
+   "lat": 37.75291,
+   "lng": -122.44741,
+   "note": "",
+   "list": "parks",
+   "source": "mine"
+  },
+  {
+   "name": "Golden Gate Park",
+   "address": "",
+   "lat": 37.76892,
+   "lng": -122.48298,
+   "note": "",
+   "list": "parks",
+   "source": "mine"
+  },
+  {
+   "name": "The Panhandle",
+   "address": "",
+   "lat": 37.77244,
+   "lng": -122.44637,
+   "note": "",
+   "list": "parks",
+   "source": "mine"
+  },
+  {
+   "name": "Transamerica Redwood Park",
+   "address": "",
+   "lat": 37.79517,
+   "lng": -122.40228,
+   "note": "",
+   "list": "parks",
+   "source": "mine"
+  },
+  {
+   "name": "Ina Coolbrith Park",
+   "address": "",
+   "lat": 37.79827,
+   "lng": -122.41346,
+   "note": "",
+   "list": "parks",
+   "source": "mine"
+  },
+  {
+   "name": "San Francisco Main Public Library",
+   "address": "",
+   "lat": 37.77908,
+   "lng": -122.4158,
+   "note": "",
+   "list": "activities",
+   "source": "mine"
+  },
+  {
+   "name": "222 24th St",
+   "address": "222 24th St, San Francisco, CA 94107",
+   "lat": 37.75401,
+   "lng": -122.38451,
+   "note": "",
+   "list": "parking-lots",
+   "source": "mine"
+  },
+  {
+   "name": "SFMTA - Sutter Stockton Garage",
+   "address": "",
+   "lat": 37.79011,
+   "lng": -122.4066,
+   "note": "",
+   "list": "parking-lots",
+   "source": "mine"
+  },
+  {
+   "name": "Trinity Parking Garage",
+   "address": "",
+   "lat": 37.77821,
+   "lng": -122.41381,
+   "note": "",
+   "list": "parking-lots",
+   "source": "mine"
+  },
+  {
+   "name": "1355 Fulton St",
+   "address": "1355 Fulton St, San Francisco, CA 94117",
+   "lat": 37.77647,
+   "lng": -122.43908,
+   "note": "",
+   "list": "parking-lots",
+   "source": "mine"
+  },
+  {
+   "name": "Holiday Inn Express & Suites San Francisco Fishermans Wharf by IHG",
+   "address": "",
+   "lat": 37.8067,
+   "lng": -122.41635,
+   "note": "",
+   "list": "parking-lots",
+   "source": "mine"
+  },
+  {
+   "name": "Impark - Civic Center Garage Lot 200",
+   "address": "355 McAllister St, San Francisco, CA 94102",
+   "lat": 37.78013,
+   "lng": -122.41776,
+   "note": "",
+   "list": "parking-lots",
+   "source": "mine"
+  },
+  {
+   "name": "Impark - Performing Arts Garage Lot 201",
+   "address": "360 Grove St, San Francisco, CA 94102",
+   "lat": 37.77802,
+   "lng": -122.42255,
+   "note": "",
+   "list": "parking-lots",
+   "source": "mine"
+  }
+ ],
+ "sf_window_friends": [
+  {
+   "name": "Swan Oyster Depot",
+   "address": "1517 Polk St, San Francisco, CA 94109",
+   "lat": 37.79087,
+   "lng": -122.42091,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "54 Mint Cucina Romana",
+   "address": "16 Mint Plaza, San Francisco, CA 94103",
+   "lat": 37.78257,
+   "lng": -122.4079,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Sutro Baths",
+   "address": "1004 Point Lobos Ave, San Francisco, CA 94121",
+   "lat": 37.78044,
+   "lng": -122.51365,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Original Joe's \"We've eaten at Original Joe'sand it was…\"",
+   "address": "",
+   "lat": 37.80018,
+   "lng": -122.40931,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Mollie Stone's Markets",
+   "address": "2435 California St, San Francisco, CA 94115",
+   "lat": 37.78871,
+   "lng": -122.43449,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Julius' Castle",
+   "address": "302 Greenwich St, San Francisco, CA 94133",
+   "lat": 37.80299,
+   "lng": -122.40496,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Filbert Steps",
+   "address": "202 Filbert St, San Francisco, CA 94133",
+   "lat": 37.8021,
+   "lng": -122.40337,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Aziza",
+   "address": "5800 Geary Blvd, San Francisco, CA 94121",
+   "lat": 37.78043,
+   "lng": -122.48169,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "La Mar Cocina Peruana San Francisco",
+   "address": "PIER 1 1/2 The Embarcadero N, San Francisco, CA 94111",
+   "lat": 37.79721,
+   "lng": -122.39544,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Ox & Tiger",
+   "address": "552 Jones St, San Francisco, CA 94102",
+   "lat": 37.78652,
+   "lng": -122.41297,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Four Kings 四大天王",
+   "address": "710 Commercial St, San Francisco, CA 94108",
+   "lat": 37.79404,
+   "lng": -122.4051,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Wood Thumb",
+   "address": "968 Mission St, San Francisco, CA 94103",
+   "lat": 37.78181,
+   "lng": -122.40824,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Amarena",
+   "address": "2162 Larkin St, San Francisco, CA 94109",
+   "lat": 37.79795,
+   "lng": -122.42039,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Seven Hills",
+   "address": "1896 Hyde St, San Francisco, CA 94109",
+   "lat": 37.79815,
+   "lng": -122.41874,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Pepperjack Provisions",
+   "address": "1232 9th Ave, San Francisco, CA 94122",
+   "lat": 37.76523,
+   "lng": -122.46629,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Polly Ann Ice Cream",
+   "address": "3138 Noriega St, San Francisco, CA 94122",
+   "lat": 37.75349,
+   "lng": -122.49773,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Britex Fabrics",
+   "address": "117 Post St, San Francisco, CA 94108",
+   "lat": 37.78873,
+   "lng": -122.40425,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Iggy’s Burgers",
+   "address": "4248 18th St, San Francisco, CA 94114",
+   "lat": 37.76094,
+   "lng": -122.43695,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "LOQUAT",
+   "address": "198 Gough St, San Francisco, CA 94102",
+   "lat": 37.77494,
+   "lng": -122.42249,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "TUR",
+   "address": "1 W Portal Ave, San Francisco, CA 94127",
+   "lat": 37.74073,
+   "lng": -122.46573,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Go Duck Yourself 去你鸭的",
+   "address": "439 Cortland Ave, San Francisco, CA 94110",
+   "lat": 37.7393,
+   "lng": -122.41706,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Sergeant Ma",
+   "address": "185 Berry St Ste 1500, San Francisco, CA 94107",
+   "lat": 37.77631,
+   "lng": -122.39168,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Andytown Coffee Roasters",
+   "address": "3655 Lawton St, San Francisco, CA 94122",
+   "lat": 37.75673,
+   "lng": -122.5023,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Andytown Coffee Roasters",
+   "address": "66 Kearny St, San Francisco, CA 94108",
+   "lat": 37.78847,
+   "lng": -122.4033,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Waterbar Restaurant",
+   "address": "399 The Embarcadero, San Francisco, CA 94105",
+   "lat": 37.79049,
+   "lng": -122.38904,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "SAAM",
+   "address": "415 Brannan St, San Francisco, CA 94107",
+   "lat": 37.77968,
+   "lng": -122.39462,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "The View Lounge",
+   "address": "780 Mission St, San Francisco, CA 94103",
+   "lat": 37.78523,
+   "lng": -122.40448,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Norcina",
+   "address": "3251 Pierce St, San Francisco, CA 94123",
+   "lat": 37.80014,
+   "lng": -122.43965,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Buffalo Exchange",
+   "address": "1210 Valencia St, San Francisco, CA 94110",
+   "lat": 37.75344,
+   "lng": -122.42097,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Valencia Street Vintage",
+   "address": "714 Valencia St, San Francisco, CA 94110",
+   "lat": 37.76138,
+   "lng": -122.42173,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Bernal Cutlery",
+   "address": "766 Valencia St, San Francisco, CA 94110",
+   "lat": 37.76068,
+   "lng": -122.42183,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Entropy Creamery",
+   "address": "576 Union St, San Francisco, CA 94133",
+   "lat": 37.80059,
+   "lng": -122.40886,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Stuff",
+   "address": "1545 Pacific Ave, San Francisco, CA 94109",
+   "lat": 37.7949,
+   "lng": -122.42066,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Beit Rima",
+   "address": "138 Church St, San Francisco, CA 94114",
+   "lat": 37.76872,
+   "lng": -122.42925,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Okaeri Japanese Bistro",
+   "address": "3515 20th St, San Francisco, CA 94110",
+   "lat": 37.75852,
+   "lng": -122.41957,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Tano",
+   "address": "303 2nd St N102, San Francisco, CA 94107",
+   "lat": 37.78562,
+   "lng": -122.39638,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "H Mart San Francisco",
+   "address": "3995 Alemany Blvd, San Francisco, CA 94132",
+   "lat": 37.7103,
+   "lng": -122.46777,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Stray Dog Coffee & Bar",
+   "address": "2545 24th St, San Francisco, CA 94110",
+   "lat": 37.75292,
+   "lng": -122.40516,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Patrick & Co",
+   "address": "560 Market St, San Francisco, CA 94104",
+   "lat": 37.78994,
+   "lng": -122.40105,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Kibatsu",
+   "address": "400 Haight St, San Francisco, CA 94117",
+   "lat": 37.77244,
+   "lng": -122.429,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Kawanoya",
+   "address": "1689 Church St, San Francisco, CA 94131",
+   "lat": 37.74392,
+   "lng": -122.42659,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Panoramic view of San Francisco Oakland Bay Bridge",
+   "address": "1000 Vallejo St, San Francisco, CA 94133",
+   "lat": 37.79793,
+   "lng": -122.41432,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "2nd STREET Haight St",
+   "address": "1560 Haight St, San Francisco, CA 94117",
+   "lat": 37.77013,
+   "lng": -122.44805,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Binge Coffee House",
+   "address": "530 Valencia St, San Francisco, CA 94110",
+   "lat": 37.76437,
+   "lng": -122.42202,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Holy Crepe",
+   "address": "715 Irving St, San Francisco, CA 94122",
+   "lat": 37.76396,
+   "lng": -122.46554,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Z Touch Salon",
+   "address": "1930 Ocean Ave, San Francisco, CA 94127",
+   "lat": 37.7258,
+   "lng": -122.46327,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Wolfsbane",
+   "address": "2495 3rd St, San Francisco, CA 94107",
+   "lat": 37.75806,
+   "lng": -122.38815,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Omnivore Books on Food",
+   "address": "3885 Cesar Chavez St, San Francisco, CA 94131",
+   "lat": 37.74763,
+   "lng": -122.42676,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "post.script.",
+   "address": "2413 California St, San Francisco, CA 94115",
+   "lat": 37.78876,
+   "lng": -122.4342,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Liholiho Yacht Club",
+   "address": "871 Sutter St, San Francisco, CA 94109",
+   "lat": 37.78823,
+   "lng": -122.41461,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Honey and Stardust",
+   "address": "2070 Union St, San Francisco, CA 94123",
+   "lat": 37.79757,
+   "lng": -122.43347,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Palm House Less busy than usual",
+   "address": "",
+   "lat": 37.79764,
+   "lng": -122.43289,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Udon Mugizo - SF",
+   "address": "1581 Webster St #217, San Francisco, CA 94115",
+   "lat": 37.78496,
+   "lng": -122.43213,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "BANGKOK STREET Thai Street Food",
+   "address": "1826 Buchanan St, San Francisco, CA 94115",
+   "lat": 37.78694,
+   "lng": -122.42984,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Taksim",
+   "address": "564 4th St, San Francisco, CA 94107",
+   "lat": 37.77865,
+   "lng": -122.39734,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Pàng",
+   "address": "1309 9th Ave, San Francisco, CA 94122",
+   "lat": 37.76377,
+   "lng": -122.46646,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Dartealing Lounge",
+   "address": "470 3rd St, San Francisco, CA 94107",
+   "lat": 37.78158,
+   "lng": -122.3964,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "HINODEYA Ramen & Bar Chestnut",
+   "address": "3340 Steiner St, San Francisco, CA 94123",
+   "lat": 37.80024,
+   "lng": -122.43755,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Wako Japanese Restaurant",
+   "address": "211 Clement St, San Francisco, CA 94118",
+   "lat": 37.78297,
+   "lng": -122.46156,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Izakaya mayumi",
+   "address": "2221 Clement St, San Francisco, CA 94121",
+   "lat": 37.78199,
+   "lng": -122.48318,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Amelie San Francisco",
+   "address": "1754 Polk St, San Francisco, CA 94109",
+   "lat": 37.79311,
+   "lng": -122.42097,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Fish In The Box",
+   "address": "800 Masonic Ave, San Francisco, CA 94117",
+   "lat": 37.77386,
+   "lng": -122.44585,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Osha Thai Restaurant and Bar (Embarcadero)",
+   "address": "4 Embarcadero Ctr, San Francisco, CA 94111",
+   "lat": 37.79481,
+   "lng": -122.39565,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "The Happy Crane",
+   "address": "451 Gough St, San Francisco, CA 94102",
+   "lat": 37.77749,
+   "lng": -122.4233,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "NEW PEOPLE",
+   "address": "1746 Post St, San Francisco, CA 94115",
+   "lat": 37.78562,
+   "lng": -122.4306,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "SAN FRANCISCO SOU・SOU",
+   "address": "1746 Post St 2nd floor, San Francisco, CA 94115",
+   "lat": 37.78576,
+   "lng": -122.4306,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Owl Tree",
+   "address": "601 Post St, San Francisco, CA 94109",
+   "lat": 37.78777,
+   "lng": -122.41186,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "The Wild Fox",
+   "address": "123 Battery St, San Francisco, CA 94111",
+   "lat": 37.79272,
+   "lng": -122.40008,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Caffe Capriccio",
+   "address": "2200 Mason St, San Francisco, CA 94133",
+   "lat": 37.80389,
+   "lng": -122.41313,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Cocobang",
+   "address": "550 Taylor St, San Francisco, CA 94102",
+   "lat": 37.78764,
+   "lng": -122.41156,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "SHOWA Le Gourmet Tonkatsu",
+   "address": "1550 Howard St, San Francisco, CA 94103",
+   "lat": 37.77244,
+   "lng": -122.41654,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "The ThongLor SF - Thai Restaurant",
+   "address": "420 Geary St, San Francisco, CA 94102",
+   "lat": 37.7872,
+   "lng": -122.41034,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Bello Coffee & Tea",
+   "address": "2885 Diamond St, San Francisco, CA 94131",
+   "lat": 37.73381,
+   "lng": -122.43398,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Propagation",
+   "address": "895 Post St, San Francisco, CA 94109",
+   "lat": 37.78719,
+   "lng": -122.41644,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "San Remo Hotel",
+   "address": "2237 Mason St, San Francisco, CA 94133",
+   "lat": 37.8043,
+   "lng": -122.4135,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Sobakatsu",
+   "address": "1700 Laguna St, San Francisco, CA 94115",
+   "lat": 37.78687,
+   "lng": -122.42821,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Hikari Bullet Train Sushi & Bar",
+   "address": "1734 Post St, San Francisco, CA 94115",
+   "lat": 37.78561,
+   "lng": -122.43049,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "U :Dessert Story",
+   "address": "3489 16th St, San Francisco, CA 94114",
+   "lat": 37.76429,
+   "lng": -122.43061,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Kindred Studio",
+   "address": "1910 Bryant St, San Francisco, CA 94107",
+   "lat": 37.76281,
+   "lng": -122.41054,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Lily",
+   "address": "225 Clement St, San Francisco, CA 94118",
+   "lat": 37.78297,
+   "lng": -122.46173,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Lore Speakeasy and Escape Room",
+   "address": "3065 16th St, San Francisco, CA 94103",
+   "lat": 37.76486,
+   "lng": -122.42104,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Bituin Studio",
+   "address": "445 Natoma St, San Francisco, CA 94103",
+   "lat": 37.78091,
+   "lng": -122.40653,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Shoji",
+   "address": "140 New Montgomery St Suite 1, San Francisco, CA 94105",
+   "lat": 37.78667,
+   "lng": -122.39967,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Ula Restaurant & Tapas Bar",
+   "address": "450 Post St, San Francisco, CA 94102",
+   "lat": 37.78834,
+   "lng": -122.40936,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Tadaima Inner Sunset",
+   "address": "1248 9th Ave, San Francisco, CA 94122",
+   "lat": 37.76503,
+   "lng": -122.46616,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Tadaima Marina",
+   "address": "1849 Union St, San Francisco, CA 94123",
+   "lat": 37.79773,
+   "lng": -122.42975,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Aji Kiji",
+   "address": "359 Kearny St, San Francisco, CA 94108",
+   "lat": 37.79154,
+   "lng": -122.4044,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Trestle Restaurant",
+   "address": "531 Jackson St, San Francisco, CA 94133",
+   "lat": 37.7962,
+   "lng": -122.40454,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Hinodeya Ramen & Bar 680 Clay Downtown",
+   "address": "680 Clay St, San Francisco, CA 94111",
+   "lat": 37.79461,
+   "lng": -122.40448,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "The Bud Stop",
+   "address": "2206 Union St, San Francisco, CA 94123",
+   "lat": 37.79715,
+   "lng": -122.43587,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Golden Gate Overlook",
+   "address": "Langdon Ct, San Francisco, CA 94129",
+   "lat": 37.80397,
+   "lng": -122.47668,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Wela Thai Massage and Spa",
+   "address": "2343 Market St, San Francisco, CA 94114",
+   "lat": 37.76334,
+   "lng": -122.43394,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Arsicault Bakery",
+   "address": "87 McAllister St, San Francisco, CA 94102",
+   "lat": 37.78081,
+   "lng": -122.41334,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Dandelion Chocolate Fillmore Street",
+   "address": "2115 Fillmore St, San Francisco, CA 94115",
+   "lat": 37.78921,
+   "lng": -122.43406,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Muracci's Japanese Curry & Grill",
+   "address": "307 Kearny St, San Francisco, CA 94108",
+   "lat": 37.79101,
+   "lng": -122.40426,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Rice Roll Express",
+   "address": "1131 Stockton St, San Francisco, CA 94133",
+   "lat": 37.79623,
+   "lng": -122.40848,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Ha Mini Mart",
+   "address": "803 Grant Ave, San Francisco, CA 94108",
+   "lat": 37.79442,
+   "lng": -122.40644,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "ODETOKYO Reservation Only",
+   "address": "431 Tehama St, San Francisco, CA 94103",
+   "lat": 37.78042,
+   "lng": -122.40514,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Round House Cafe",
+   "address": "Golden Gate Bridge Plaza, San Francisco, CA 94129",
+   "lat": 37.8078,
+   "lng": -122.47569,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Exploratorium",
+   "address": "Pier 15 Embarcadero at, Green St, San Francisco, CA 94111",
+   "lat": 37.80166,
+   "lng": -122.39735,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "The Coffee Movement",
+   "address": "1030 Washington St, San Francisco, CA 94108",
+   "lat": 37.79476,
+   "lng": -122.41029,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Home Coffee Roasters",
+   "address": "455 Grant Ave, San Francisco, CA 94108",
+   "lat": 37.79127,
+   "lng": -122.4058,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Golden Gate Fortune Cookie Factory",
+   "address": "56 Ross Alley, San Francisco, CA 94108",
+   "lat": 37.79572,
+   "lng": -122.40734,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Vital Tea Leaf",
+   "address": "905 Grant Ave, San Francisco, CA 94133",
+   "lat": 37.79531,
+   "lng": -122.40662,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Pixlcat Coffee",
+   "address": "519 Clement St, San Francisco, CA 94118",
+   "lat": 37.78276,
+   "lng": -122.46485,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Unco Frank's",
+   "address": "443 Clement St, San Francisco, CA 94118",
+   "lat": 37.78272,
+   "lng": -122.46411,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Oishinbo Sushi",
+   "address": "202 Clement St, San Francisco, CA 94118",
+   "lat": 37.78321,
+   "lng": -122.46141,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Le Soleil Stonestown",
+   "address": "3251 20th Ave 221 (2nd Floor, San Francisco, CA 94132",
+   "lat": 37.72773,
+   "lng": -122.47697,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "La Taqueria",
+   "address": "2889 Mission St, San Francisco, CA 94110",
+   "lat": 37.75088,
+   "lng": -122.41818,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "House of Nanking",
+   "address": "919 Kearny St, San Francisco, CA 94133",
+   "lat": 37.79648,
+   "lng": -122.40536,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Good Mong Kok Bakery",
+   "address": "1039 Stockton St, San Francisco, CA 94108",
+   "lat": 37.79545,
+   "lng": -122.40833,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Breakfast Little",
+   "address": "3275 22nd St, San Francisco, CA 94110",
+   "lat": 37.75525,
+   "lng": -122.42039,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Katsuo + Kombu",
+   "address": "559 Divisadero St, San Francisco, CA 94117",
+   "lat": 37.77477,
+   "lng": -122.43794,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Anomaly SF",
+   "address": "2600 Sutter St, San Francisco, CA 94109",
+   "lat": 37.78496,
+   "lng": -122.44336,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Ernest",
+   "address": "1890 Bryant St Suite 100, San Francisco, CA 94110",
+   "lat": 37.76315,
+   "lng": -122.41099,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "BANSANG",
+   "address": "1560 Fillmore St, San Francisco, CA 94115",
+   "lat": 37.78411,
+   "lng": -122.43276,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Angler",
+   "address": "132 The Embarcadero, San Francisco, CA 94105",
+   "lat": 37.79308,
+   "lng": -122.39219,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Blue Whale Restaurant & Lounge",
+   "address": "2033 Union St, San Francisco, CA 94123",
+   "lat": 37.79725,
+   "lng": -122.43282,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Verjus",
+   "address": "550 Washington St, San Francisco, CA 94111",
+   "lat": 37.79571,
+   "lng": -122.40267,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Blue Bin Vintage",
+   "address": "1525 Haight St, San Francisco, CA 94117",
+   "lat": 37.76974,
+   "lng": -122.44737,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "With Love Vintage",
+   "address": "1600 Haight St, San Francisco, CA 94117",
+   "lat": 37.76989,
+   "lng": -122.44878,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Bodega SF",
+   "address": "138 Mason St, San Francisco, CA 94102",
+   "lat": 37.78483,
+   "lng": -122.4093,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Mureta & Co",
+   "address": "2418 Fillmore St, San Francisco, CA 94115",
+   "lat": 37.79191,
+   "lng": -122.43435,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "MuuKaTa6395",
+   "address": "4217 Geary Blvd, San Francisco, CA 94118",
+   "lat": 37.78071,
+   "lng": -122.46465,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Mister Jiu's",
+   "address": "28 Waverly Pl, San Francisco, CA 94108",
+   "lat": 37.79371,
+   "lng": -122.40666,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Z & Y Restaurant",
+   "address": "655 Jackson St, San Francisco, CA 94133",
+   "lat": 37.79603,
+   "lng": -122.40606,
+   "note": "Duck!",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Indigo",
+   "address": "3321 Steiner St, San Francisco, CA 94123",
+   "lat": 37.80003,
+   "lng": -122.43812,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Song Tea & Ceramics",
+   "address": "2120 Sutter St, San Francisco, CA 94115",
+   "lat": 37.78594,
+   "lng": -122.43548,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Starlite",
+   "address": "450 Powell St, San Francisco, CA 94102",
+   "lat": 37.78897,
+   "lng": -122.40841,
+   "note": "Mocktails!",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Moriwa Matcha",
+   "address": "1143 Taraval St, San Francisco, CA 94116",
+   "lat": 37.7428,
+   "lng": -122.47862,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "SOHN",
+   "address": "2535 3rd St, San Francisco, CA 94107",
+   "lat": 37.75732,
+   "lng": -122.38794,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "The Anchovy Bar",
+   "address": "1740 O'Farrell St, San Francisco, CA 94115, United States",
+   "lat": 37.7834,
+   "lng": -122.43321,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Out There Coffee Roasters",
+   "address": "254 Fillmore St, San Francisco, CA 94117, United States",
+   "lat": 37.7719,
+   "lng": -122.43031,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Rainbow Grocery Cooperative",
+   "address": "1745 Folsom St, San Francisco, CA 94103",
+   "lat": 37.76928,
+   "lng": -122.41478,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Mamahuhu",
+   "address": "3991 24th St, San Francisco, CA 94114",
+   "lat": 37.75136,
+   "lng": -122.4316,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Back to Back",
+   "address": "1257 Taylor St, San Francisco, CA 94108",
+   "lat": 37.79416,
+   "lng": -122.41326,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Moody Goose Vintage",
+   "address": "2036 Polk St, San Francisco, CA 94109",
+   "lat": 37.7956,
+   "lng": -122.42159,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Indigo Vintage",
+   "address": "2266 Chestnut St, San Francisco, CA 94123",
+   "lat": 37.80037,
+   "lng": -122.44066,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "NINNIKU RAMEN IZAKAYA",
+   "address": "1730 Fillmore St, San Francisco, CA 94115",
+   "lat": 37.78569,
+   "lng": -122.43304,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "KitTea Cat Lounge",
+   "address": "1266 Valencia St, San Francisco, CA 94110",
+   "lat": 37.75263,
+   "lng": -122.42092,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Whole Cakes - Potrero Hill",
+   "address": "1000 16th St, San Francisco, CA 94107",
+   "lat": 37.76655,
+   "lng": -122.39703,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Horsefeather SF",
+   "address": "528 Divisadero St, San Francisco, CA 94117",
+   "lat": 37.7745,
+   "lng": -122.43746,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Outta Sight Pizza",
+   "address": "422 Larkin St, San Francisco, CA 94102",
+   "lat": 37.78182,
+   "lng": -122.41713,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Muttville",
+   "address": "750 Florida St, San Francisco, CA 94110",
+   "lat": 37.75976,
+   "lng": -122.41108,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "True Laurel",
+   "address": "753 Alabama St, San Francisco, CA 94110",
+   "lat": 37.75952,
+   "lng": -122.41153,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Saru Sushi Bar",
+   "address": "3856 24th St, San Francisco, CA 94114",
+   "lat": 37.75171,
+   "lng": -122.42885,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Tenroku Sushi",
+   "address": "1825 Post St #215, San Francisco, CA 94115",
+   "lat": 37.78515,
+   "lng": -122.43164,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "The Laundromat SF",
+   "address": "3725 Balboa St, San Francisco, CA 94121",
+   "lat": 37.77554,
+   "lng": -122.49891,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Butter Love Bakeshop",
+   "address": "3717 Balboa St, San Francisco, CA 94121",
+   "lat": 37.77554,
+   "lng": -122.49878,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Nintendo SAN FRANCISCO",
+   "address": "331 Powell St, San Francisco, CA 94102",
+   "lat": 37.78749,
+   "lng": -122.40856,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Onsen",
+   "address": "466 Eddy St, San Francisco, CA 94109",
+   "lat": 37.7837,
+   "lng": -122.4154,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Kopiku Indonesian Coffee",
+   "address": "1443 Lombard St, San Francisco, CA 94123",
+   "lat": 37.80088,
+   "lng": -122.42534,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Sons & Daughters",
+   "address": "708 Bush St, San Francisco, CA 94108",
+   "lat": 37.76163,
+   "lng": -122.41085,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "OISHII MATCHA",
+   "address": "2299 Market St Suite A, San Francisco, CA 94114",
+   "lat": 37.76407,
+   "lng": -122.43281,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Musée Mécanique",
+   "address": "Pier 45, San Francisco, CA 94133",
+   "lat": 37.8093,
+   "lng": -122.41597,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Jane The Bakery",
+   "address": "1881 Geary Blvd, San Francisco, CA 94115",
+   "lat": 37.78379,
+   "lng": -122.43429,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Woot Bear",
+   "address": "1512 Haight St, San Francisco, CA 94117",
+   "lat": 37.77007,
+   "lng": -122.44736,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Welcome Haight & Ashbury",
+   "address": "1500 Haight St, San Francisco, CA 94117",
+   "lat": 37.77014,
+   "lng": -122.44713,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Dog Eared Books",
+   "address": "900 Valencia St, San Francisco, CA 94110",
+   "lat": 37.75837,
+   "lng": -122.42143,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Needles & Pens",
+   "address": "1173 Valencia St, San Francisco, CA 94110",
+   "lat": 37.75421,
+   "lng": -122.42071,
+   "note": "",
+   "list": "sf-shared",
+   "source": "friends"
+  }
+ ],
+ "places_with_notes": [
+  {
+   "name": "Tacos 65",
+   "address": "6498 Broadway, Sacramento, CA 95820",
+   "lat": 38.54663,
+   "lng": -121.42804,
+   "note": "Highly rated on beli",
+   "list": "casual-food",
+   "source": "mine"
+  },
+  {
+   "name": "Taqueria El Farolito",
+   "address": "2950 24th St, San Francisco, CA 94110",
+   "lat": 37.75278,
+   "lng": -122.41114,
+   "note": "Opens late",
+   "list": "casual-food",
+   "source": "mine"
+  },
+  {
+   "name": "Taquería El Farolito",
+   "address": "2779 Mission St, San Francisco, CA 94110",
+   "lat": 37.75264,
+   "lng": -122.41835,
+   "note": "Opens late",
+   "list": "casual-food",
+   "source": "mine"
+  },
+  {
+   "name": "Spartan Taco Truck",
+   "address": "447 E William St, San Jose, CA 95112",
+   "lat": 37.33313,
+   "lng": -121.87579,
+   "note": "Opens late",
+   "list": "casual-food",
+   "source": "mine"
+  },
+  {
+   "name": "Pho Momma",
+   "address": "9555 Folsom Blvd Ste A, Sacramento, CA 95827",
+   "lat": 38.57129,
+   "lng": -121.33957,
+   "note": "Michelin Gourmand Bib 2025",
+   "list": "casual-food",
+   "source": "mine"
+  },
+  {
+   "name": "Dumpling Home",
+   "address": "",
+   "lat": 37.77582,
+   "lng": -122.42264,
+   "note": "8.4",
+   "list": "casual-food",
+   "source": "mine"
+  },
+  {
+   "name": "Rintaro",
+   "address": "",
+   "lat": 37.76888,
+   "lng": -122.41514,
+   "note": "Michelin Bib",
+   "list": "sit-down-restaurants",
+   "source": "mine"
+  },
+  {
+   "name": "Cajun Bistro 7",
+   "address": "3005 Silver Creek Rd Ste 116, San Jose, CA 95121",
+   "lat": 37.30886,
+   "lng": -121.8132,
+   "note": "Opens late",
+   "list": "sit-down-restaurants",
+   "source": "mine"
+  },
+  {
+   "name": "Cocobang",
+   "address": "550 Taylor St, San Francisco, CA 94102",
+   "lat": 37.78764,
+   "lng": -122.41156,
+   "note": "Opens late",
+   "list": "sit-down-restaurants",
+   "source": "mine"
+  },
+  {
+   "name": "Golden Gate Bakery",
+   "address": "",
+   "lat": 37.79641,
+   "lng": -122.40684,
+   "note": "8.5 Egg Tart",
+   "list": "bakery",
+   "source": "mine"
+  },
+  {
+   "name": "Hi Sweetie Tea and Treats",
+   "address": "",
+   "lat": 37.79578,
+   "lng": -122.4078,
+   "note": "7.6",
+   "list": "tea-drinks",
+   "source": "mine"
+  },
+  {
+   "name": "Kiss of Matcha",
+   "address": "",
+   "lat": 37.79803,
+   "lng": -122.40736,
+   "note": "7.9 matcha",
+   "list": "tea-drinks",
+   "source": "mine"
+  },
+  {
+   "name": "Matcha Cafe Maiko",
+   "address": "",
+   "lat": 37.79421,
+   "lng": -122.40622,
+   "note": "8.3 matcha",
+   "list": "tea-drinks",
+   "source": "mine"
+  },
+  {
+   "name": "6th/8th Street Lot W/X Freeway",
+   "address": "",
+   "lat": 38.56627,
+   "lng": -121.50274,
+   "note": "Sunday Farmer Market",
+   "list": "grocery",
+   "source": "mine"
+  },
+  {
+   "name": "THIÊN LONG SƠN - THE DRAGON MOUNTAIN",
+   "address": "",
+   "lat": 37.45242,
+   "lng": -121.85045,
+   "note": "Moderate 1 Mile, 1 Hour",
+   "list": "trails",
+   "source": "mine"
+  },
+  {
+   "name": "Don and Brenda Nottoli Community Park",
+   "address": "",
+   "lat": 38.48771,
+   "lng": -121.34758,
+   "note": "Tennis Courts",
+   "list": "sports",
+   "source": "mine"
+  },
+  {
+   "name": "Z & Y Restaurant",
+   "address": "655 Jackson St, San Francisco, CA 94133",
+   "lat": 37.79603,
+   "lng": -122.40606,
+   "note": "Duck!",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Starlite",
+   "address": "450 Powell St, San Francisco, CA 94102",
+   "lat": 37.78897,
+   "lng": -122.40841,
+   "note": "Mocktails!",
+   "list": "sf-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Krazy marys boutique",
+   "address": "3230 Folsom Blvd, Sacramento, CA 95816",
+   "lat": 38.56757,
+   "lng": -121.46467,
+   "note": "Cute clothing store",
+   "list": "sac-shared",
+   "source": "friends"
+  },
+  {
+   "name": "Cake Expressions",
+   "address": "2325 De La Cruz Blvd, Santa Clara, CA 95050",
+   "lat": 37.36395,
+   "lng": -121.94111,
+   "note": "Guava cake",
+   "list": "bay-area-shared",
+   "source": "friends"
+  }
+ ],
+ "curated": [
+  {
+   "region": "Bay Area",
+   "section": "Museums and galleries",
+   "group": "",
+   "name": "Asian Art Museum",
+   "area": "Civic Center",
+   "note": "top pick; the anchor museum for you.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Museums and galleries",
+   "group": "",
+   "name": "SFMOMA",
+   "area": "SoMa",
+   "note": "big modern shows, plus the photography galleries.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Museums and galleries",
+   "group": "",
+   "name": "de Young",
+   "area": "Golden Gate Park",
+   "note": "touring blockbusters, plus a free observation tower with a park view.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Museums and galleries",
+   "group": "",
+   "name": "Legion of Honor",
+   "area": "Lincoln Park",
+   "note": "European art with a Golden Gate view; pair it with Lands End.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Parks, viewpoints, photo spots, sights",
+   "group": "",
+   "name": "Lands End + Sutro Baths ruins",
+   "area": "Outer Richmond",
+   "note": "coastal trail, Golden Gate views, ruins. Best daylight photo walk.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Parks, viewpoints, photo spots, sights",
+   "group": "",
+   "name": "Presidio Tunnel Tops",
+   "area": "Presidio",
+   "note": "park on the freeway lid with bridge views.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Parks, viewpoints, photo spots, sights",
+   "group": "",
+   "name": "Palace of Fine Arts",
+   "area": "Marina",
+   "note": "classic photo spot, especially at golden hour.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Parks, viewpoints, photo spots, sights",
+   "group": "",
+   "name": "Baker Beach",
+   "area": "Presidio",
+   "note": "Golden Gate from beach level; sunrise.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hikes (easy-moderate, daylight, not remote)",
+   "group": "",
+   "name": "Lands End Trail",
+   "area": "SF, ~3.4 mi, easy",
+   "note": "coastal, busy, very safe solo.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hikes (easy-moderate, daylight, not remote)",
+   "group": "",
+   "name": "Fort Funston",
+   "area": "SF, easy",
+   "note": "cliffs, hang gliders, beach.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hikes (easy-moderate, daylight, not remote)",
+   "group": "",
+   "name": "Mori Point",
+   "area": "Pacifica, easy-moderate",
+   "note": "coastal bluffs and stairs; green in spring.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hikes (easy-moderate, daylight, not remote)",
+   "group": "",
+   "name": "Devil's Slide Trail",
+   "area": "Pacifica/Montara, easy, paved",
+   "note": "coast-over-mountains pick.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Neighborhoods to wander and shop",
+   "group": "",
+   "name": "Inner Richmond / Clement St",
+   "area": "",
+   "note": "Chinese, Burmese and Korean food, bakeries, boba, Green Apple Books. Top pick.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Neighborhoods to wander and shop",
+   "group": "",
+   "name": "Inner Sunset / Irving St",
+   "area": "",
+   "note": "Asian food strip by Golden Gate Park.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Neighborhoods to wander and shop",
+   "group": "",
+   "name": "Outer Sunset / Noriega & Taraval",
+   "area": "",
+   "note": "dumplings, Taiwanese, Andytown, the beach.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Neighborhoods to wander and shop",
+   "group": "",
+   "name": "Mission / Valencia",
+   "area": "",
+   "note": "murals (Clarion and Balmy alleys), boutiques, Alamo Drafthouse, Taishoken.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Asian food (deep cuts; side quests)",
+   "group": "",
+   "name": "San Tung",
+   "area": "Inner Sunset",
+   "note": "cult dry-fried chicken wings and hand-made noodles; expect a wait.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Asian food (deep cuts; side quests)",
+   "group": "",
+   "name": "Kingdom of Dumpling",
+   "area": "Parkside",
+   "note": "no-frills northern dumplings.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Asian food (deep cuts; side quests)",
+   "group": "",
+   "name": "Yuanbao Jiaozi",
+   "area": "Inner Sunset",
+   "note": "Shandong-style dumplings (try the seafood ones).",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Asian food (deep cuts; side quests)",
+   "group": "",
+   "name": "Old Mandarin Islamic",
+   "area": "Outer Sunset",
+   "note": "Beijing halal; lamb hot pot and spicy lamb. Ask about the sauce bar if you get hot pot.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Boba and tea",
+   "group": "",
+   "name": "Song Tea & Ceramics",
+   "area": "Hayes Valley, SF",
+   "note": "seated Taiwanese oolong tastings; tea over coffee, done right.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Boba and tea",
+   "group": "",
+   "name": "Asha Tea House",
+   "area": "FiDi, SF + Berkeley",
+   "note": "Taiwanese-style milk tea.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Boba and tea",
+   "group": "",
+   "name": "Boba Guys",
+   "area": "Mission, SF + others",
+   "note": ".",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Boba and tea",
+   "group": "",
+   "name": "Purple Kow",
+   "area": "Inner Richmond, SF",
+   "note": "organic milk teas.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Bakeries",
+   "group": "",
+   "name": "Breadbelly",
+   "area": "Inner Richmond, SF",
+   "note": "Asian-inflected pastries (kaya toast, mochi). ask about specials.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Bakeries",
+   "group": "",
+   "name": "Wing Lee Bakery",
+   "area": "Inner Richmond, SF",
+   "note": "cheap dim sum to go and buns.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Bakeries",
+   "group": "",
+   "name": "Pineapple King Bakery",
+   "area": "Inner Sunset, SF",
+   "note": "Hong Kong pineapple buns.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Bakeries",
+   "group": "",
+   "name": "b. patisserie",
+   "area": "Lower Pac Heights, SF",
+   "note": "kouign-amann.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Cafes",
+   "group": "",
+   "name": "The Coffee Movement",
+   "area": "Nob Hill / Mission, SF",
+   "note": "top specialty coffee.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Cafes",
+   "group": "",
+   "name": "Sightglass",
+   "area": "SoMa, SF",
+   "note": "big roastery space.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Cafes",
+   "group": "",
+   "name": "Saint Frank",
+   "area": "Russian Hill, SF",
+   "note": ".",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Cafes",
+   "group": "",
+   "name": "Andytown",
+   "area": "Outer Sunset, SF",
+   "note": "snowy plover drink; near the beach.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Night markets and Asian cultural festivals (recurring)",
+   "group": "",
+   "name": "SF Chinese New Year Festival & Parade",
+   "area": "Chinatown/Union Square, Feb-Mar",
+   "note": "Lunar New Year 2027 is Feb 6; the parade usually comes about 2 weeks later.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Night markets and Asian cultural festivals (recurring)",
+   "group": "",
+   "name": "Northern California Cherry Blossom Festival",
+   "area": "SF Japantown",
+   "note": "2027 dates Apr 10-11 & 17-18 (60th anniversary); parade likely Apr 18.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Night markets and Asian cultural festivals (recurring)",
+   "group": "",
+   "name": "Cupertino Cherry Blossom Festival",
+   "area": "Memorial Park, April",
+   "note": ".",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Night markets and Asian cultural festivals (recurring)",
+   "group": "",
+   "name": "San Jose Obon Festival",
+   "area": "SJ Japantown, mid-July",
+   "note": "taiko plus 1,000+ bon odori dancers.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "Tennis",
+   "name": "Lisa & Douglas Goldman Tennis Center",
+   "area": "Golden Gate Park, SF",
+   "note": "public courts you can reserve.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "Tennis",
+   "name": "SF Rec & Park courts",
+   "area": "",
+   "note": "reserve public courts citywide.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "Golf",
+   "name": "Topgolf San Jose",
+   "area": "Alviso, North SJ",
+   "note": ".",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "Golf",
+   "name": "Topgolf Burlingame",
+   "area": "Burlingame, bay views",
+   "note": ".",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "Golf",
+   "name": "Golden Gate Park Golf Course",
+   "area": "SF, 9 holes, cheap",
+   "note": ".",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "Golf",
+   "name": "Lincoln Park Golf Course",
+   "area": "SF",
+   "note": "Golden Gate views.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "Shooting",
+   "name": "Blackstone Shooting Sports",
+   "area": "Bay Area",
+   "note": "walk-in ~$34/hr, 75+ rental guns, safety officer at each bay.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "Shooting",
+   "name": "San Leandro Rifle & Pistol Range",
+   "area": "San Leandro",
+   "note": "public indoor/outdoor range, 14 lanes.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "DJ, records, music",
+   "name": "Originals Vinyl",
+   "area": "SF",
+   "note": "used vinyl; a local DJ pick.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "DJ, records, music",
+   "name": "Amoeba Music Berkeley",
+   "area": "Telegraph Ave",
+   "note": ".",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "DJ, records, music",
+   "name": "Rasputin Music",
+   "area": "SJ and others",
+   "note": ".",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "DJ, records, music",
+   "name": "Streetlight Records / Needle to the Groove",
+   "area": "SJ",
+   "note": "see the 2026 SJ record store guide.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "Arcades and gaming",
+   "name": "Round1",
+   "area": "San Jose, Hayward, Concord, SF Stonestown",
+   "note": "Japanese rhythm games, crane games, karaoke rooms.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "Arcades and gaming",
+   "name": "Pacific Pinball Museum",
+   "area": "Alameda",
+   "note": ".",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "Arcades and gaming",
+   "name": "Free Gold Watch",
+   "area": "SF",
+   "note": "pinball and arcade.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "Arcades and gaming",
+   "name": "GameWorks",
+   "area": "Bay Area",
+   "note": ".",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "Karaoke",
+   "name": "Pandora Karaoke",
+   "area": "SF",
+   "note": "themed private rooms, half off Mon-Tue.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "Karaoke",
+   "name": "Round1",
+   "area": "above",
+   "note": "karaoke rooms next to the arcade.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "Pokemon / card shops",
+   "name": "Degen Collectibles",
+   "area": "Senter Rd, SJ",
+   "note": "official Pokemon League store.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "Pokemon / card shops",
+   "name": "Tofu's Trading",
+   "area": "Story Rd, SJ",
+   "note": "good prices on singles, plus One Piece.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "Pokemon / card shops",
+   "name": "Heroes & Champions",
+   "area": "Willow Glen, SJ",
+   "note": "Pokemon, Magic, comics.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "Pokemon / card shops",
+   "name": "Santa Clara Convention Center card show",
+   "area": "Jan 9-10, 2027",
+   "note": ".",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "Anime, figures, Japanese goods",
+   "name": "Kinokuniya San Jose",
+   "area": "Mitsuwa plaza, Saratoga Ave",
+   "note": "manga, art books, stationery.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "Anime, figures, Japanese goods",
+   "name": "Mitsuwa Marketplace",
+   "area": "Saratoga Ave, SJ",
+   "note": "Japanese market and food court.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "Anime, figures, Japanese goods",
+   "name": "Nikaku Animart",
+   "area": "SJ Japantown, N 6th St",
+   "note": "one of the oldest anime shops in the US. Seen area, new shop.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "Anime, figures, Japanese goods",
+   "name": "Gashapon",
+   "area": "675 Saratoga Ave, SJ",
+   "note": "capsule toys.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "K-beauty / skincare",
+   "name": "Candy Doll Beauty",
+   "area": "SF, 2 locations",
+   "note": "Korean/Japanese beauty.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "K-beauty / skincare",
+   "name": "Sukoshi",
+   "area": "Westfield Valley Fair, opened Apr 2026",
+   "note": "Asian beauty. Valley Fair is seen, but this store is new.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "K-beauty / skincare",
+   "name": "Tokyo Beauty",
+   "area": "Oakridge Mall, SJ",
+   "note": "CLIO, COSRX, Laneige.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "Fashion and jewelry",
+   "name": "Gentle Monster",
+   "area": "Bay Area",
+   "note": "Korean eyewear with art-installation stores.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "Fashion and jewelry",
+   "name": "Fillmore St, Fourth Street Berkeley, Downtown Palo Alto",
+   "area": "",
+   "note": "boutique streets (see section 5).",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "Art supplies and art buying",
+   "name": "FLAX art & design",
+   "area": "SF",
+   "note": "art supplies.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "Art supplies and art buying",
+   "name": "Blick Art Materials",
+   "area": "Bay Area stores",
+   "note": ".",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "Art supplies and art buying",
+   "name": "Silicon Valley Open Studios",
+   "area": "spring",
+   "note": "buy directly from artists, like Sac Open Studios.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "Art supplies and art buying",
+   "name": "ArtSpan SF Open Studios",
+   "area": "fall",
+   "note": ".",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "Cars",
+   "name": "Blackhawk Museum",
+   "area": "Danville",
+   "note": ".",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "Cars",
+   "name": "Silicon Valley Auto Show",
+   "area": "Santa Clara Convention Center, January",
+   "note": ".",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "Photography",
+   "name": "SF Camerawork",
+   "area": "Dogpatch",
+   "note": "exhibits and workshops.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Hobby spots",
+   "group": "Photography",
+   "name": "Pier 24 Photography",
+   "area": "Embarcadero",
+   "note": ".",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Skill classes (drop-in, no monthly commitment)",
+   "group": "",
+   "name": "Sharon Art Studio",
+   "area": "Golden Gate Park",
+   "note": "ceramics and art workshops.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Skill classes (drop-in, no monthly commitment)",
+   "group": "",
+   "name": "ClassBento pottery",
+   "area": "SF/Bay",
+   "note": "one-time wheel classes, ~$89-125 (e.g. Seize the Clay intro).",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Skill classes (drop-in, no monthly commitment)",
+   "group": "",
+   "name": "The Crucible",
+   "area": "Oakland",
+   "note": "one-off jewelry, welding, glass and blacksmithing workshops. Jewelry fits your interests.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Skill classes (drop-in, no monthly commitment)",
+   "group": "",
+   "name": "Cozymeal Asian cooking classes",
+   "area": "SF",
+   "note": "dumpling and sushi one-offs.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Sports (cheap seats)",
+   "group": "",
+   "name": "Golden State Warriors",
+   "area": "Chase Center",
+   "note": "pricey; resale upper deck on weeknights is cheapest.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Sports (cheap seats)",
+   "group": "",
+   "name": "Golden State Valkyries",
+   "area": "Chase Center, WNBA, May-Sep",
+   "note": "cheaper than the Warriors.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Sports (cheap seats)",
+   "group": "",
+   "name": "San Francisco Giants",
+   "area": "Oracle Park",
+   "note": "bleachers and weekday games are cheap; bay views.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Bay Area",
+   "section": "Sports (cheap seats)",
+   "group": "",
+   "name": "San Jose Sharks",
+   "area": "SAP Center",
+   "note": "upper bowl is cheap; walk to SJ food after.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Museums and galleries",
+   "group": "",
+   "name": "Crocker Art Museum",
+   "area": "Downtown",
+   "note": "the anchor museum, with a big Asian art collection plus rotating exhibitions.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Museums and galleries",
+   "group": "",
+   "name": "Manetti Shrem Museum",
+   "area": "UC Davis",
+   "note": "free, architecturally striking, contemporary art.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Museums and galleries",
+   "group": "",
+   "name": "California State Railroad Museum",
+   "area": "Old Sac",
+   "note": "huge restored locomotives, and very photogenic.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Museums and galleries",
+   "group": "",
+   "name": "California Automobile Museum",
+   "area": "Front St",
+   "note": "150+ cars, for the cars hobby.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Parks, viewpoints, photo spots, local sights",
+   "group": "",
+   "name": "Tower Bridge",
+   "area": "Old Sac / West Sac",
+   "note": "gold lift bridge, best at sunrise from the West Sac riverwalk.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Parks, viewpoints, photo spots, local sights",
+   "group": "",
+   "name": "Old Sacramento Waterfront",
+   "area": "",
+   "note": "been. Return only for events.",
+   "been": true,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Parks, viewpoints, photo spots, local sights",
+   "group": "",
+   "name": "Capitol Park",
+   "area": "Downtown",
+   "note": "40 acres of trees, a camellia grove and memorials. Good for a golden-hour walk.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Parks, viewpoints, photo spots, local sights",
+   "group": "",
+   "name": "McKinley Park Rose Garden",
+   "area": "East Sac",
+   "note": "peak bloom in April-May, with free public tennis courts next door.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Hikes and outdoors (easy-moderate, daylight)",
+   "group": "",
+   "name": "American River Parkway / Jedediah Smith Trail",
+   "area": "Discovery Park to Folsom",
+   "note": "32 paved miles. Walk or bike any segment.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Hikes and outdoors (easy-moderate, daylight)",
+   "group": "",
+   "name": "Effie Yeaw Nature Center / Ancil Hoffman Park",
+   "area": "Carmichael",
+   "note": "short flat loops with deer. Very beginner-safe.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Hikes and outdoors (easy-moderate, daylight)",
+   "group": "",
+   "name": "Lake Natoma loop",
+   "area": "Folsom / Rancho Cordova",
+   "note": "paved loop with bluffs and Nimbus Flat. Busy, so safe solo.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Hikes and outdoors (easy-moderate, daylight)",
+   "group": "",
+   "name": "Folsom Lake SRA, Beals Point",
+   "area": "Granite Bay",
+   "note": "sunrise over the lake, easy shoreline trail.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Neighborhoods to wander and shop",
+   "group": "",
+   "name": "Midtown",
+   "area": "J/K St grid, 16th-28th",
+   "note": "boutiques, cafes, galleries. Second Saturday each month.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Neighborhoods to wander and shop",
+   "group": "",
+   "name": "R Street Corridor",
+   "area": "10th-16th",
+   "note": "warehouse district with Ace of Spades, food halls and the night market.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Neighborhoods to wander and shop",
+   "group": "",
+   "name": "Downtown Commons (DOCO)",
+   "area": "around Golden 1",
+   "note": "pre-show food and shops.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Neighborhoods to wander and shop",
+   "group": "",
+   "name": "Land Park / Broadway",
+   "area": "Tower District",
+   "note": "Tower Theatre, Freeport Blvd food.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Asian food (deep cuts first)",
+   "group": "",
+   "name": "Kru Contemporary Japanese",
+   "area": "Sacramento",
+   "note": "the area's top sit-down Japanese and omakase. Splurge pick.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Asian food (deep cuts first)",
+   "group": "",
+   "name": "Binchoyaki",
+   "area": "Sacramento",
+   "note": "binchotan yakitori izakaya. A sit-down solo counter.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Asian food (deep cuts first)",
+   "group": "",
+   "name": "Ramen House Ryujin",
+   "area": "Downtown",
+   "note": "consistently rated Sac's best ramen. Ramen beats dim sum for solo.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Asian food (deep cuts first)",
+   "group": "",
+   "name": "Umami Ramen",
+   "area": "Folsom",
+   "note": "No. 9 on Yelp's California ramen list.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Boba and tea",
+   "group": "",
+   "name": "Ume Tea",
+   "area": "Davis",
+   "note": "top-rated by local boba reviewers.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Boba and tea",
+   "group": "",
+   "name": "Teaspoon",
+   "area": "Arden and others",
+   "note": "reliable chain.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Boba and tea",
+   "group": "",
+   "name": "Teddy Boba",
+   "area": "Sacramento",
+   "note": ".",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Boba and tea",
+   "group": "",
+   "name": "QTea Boba",
+   "area": "Sacramento",
+   "note": ".",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Bakeries",
+   "group": "",
+   "name": "Paris Baguette",
+   "area": "1229 Howe Ave; also Roseville, Natomas",
+   "note": "Korean bakery-cafe with cakes and cream breads.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Bakeries",
+   "group": "",
+   "name": "Tous les Jours",
+   "area": "Roseville",
+   "note": "Korean-French bakery.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Bakeries",
+   "group": "",
+   "name": "99 Ranch bakery counter",
+   "area": "Florin Rd",
+   "note": "Chinese buns and egg tarts while grocery shopping.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Cafes",
+   "group": "",
+   "name": "Temple Coffee Roasters",
+   "area": "Midtown/Downtown",
+   "note": "flagship local roaster, also good tea.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Cafes",
+   "group": "",
+   "name": "Chocolate Fish Coffee",
+   "area": "East Sac/Downtown",
+   "note": "local roaster.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Cafes",
+   "group": "",
+   "name": "Sun House Cafe",
+   "area": "",
+   "note": "and Seasons Coffee: matcha picks (see Boba and tea).",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Night markets and Asian festivals (typical months)",
+   "group": "",
+   "name": "Lunar New Year: Elk Grove Tet Festival",
+   "area": "mid-Feb, Elk Grove Regional Park",
+   "note": "Vietnamese New Year festival.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Night markets and Asian festivals (typical months)",
+   "group": "",
+   "name": "Chinese New Year in Locke",
+   "area": "mid-Feb",
+   "note": "in the last rural Chinatown in the US. Photogenic.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Night markets and Asian festivals (typical months)",
+   "group": "",
+   "name": "AAPI Night Market",
+   "area": "May, Capitol Mall",
+   "note": "40+ vendors, performances, a headliner (UMI in 2026).",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Night markets and Asian festivals (typical months)",
+   "group": "",
+   "name": "FoodieLand Night Market",
+   "area": "spring and/or late summer, Cal Expo",
+   "note": ".",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Hobby spots",
+   "group": "",
+   "name": "McKinley Park tennis courts",
+   "area": "601 Alhambra Blvd",
+   "note": "about 8 lighted public courts. Free, no reservations.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Hobby spots",
+   "group": "",
+   "name": "Southside Park courts",
+   "area": "2115 6th St",
+   "note": "free city courts.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Hobby spots",
+   "group": "",
+   "name": "Topgolf Roseville",
+   "area": "",
+   "note": "driving range bays. The bar is optional.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Hobby spots",
+   "group": "",
+   "name": "Haggin Oaks Golf Complex",
+   "area": "North Sac",
+   "note": "big municipal range plus Golf Super Shop.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Skill classes (drop-in)",
+   "group": "",
+   "name": "Verge Center for the Arts",
+   "area": "",
+   "note": "one-time \"Beginner Wheel Throw Down\" pottery workshop (3 hr) and drop-in Clay Lab ($15/hr).",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Skill classes (drop-in)",
+   "group": "",
+   "name": "Sac Dance Lab",
+   "area": "Sacramento, 18+",
+   "note": "commercial and hip-hop drop-ins.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Skill classes (drop-in)",
+   "group": "",
+   "name": "Sol Collective",
+   "area": "",
+   "note": "DJ, music production and art workshops.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Skill classes (drop-in)",
+   "group": "",
+   "name": "Crocker Art Museum classes",
+   "area": "",
+   "note": "studio art and drawing workshops.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Sports",
+   "group": "",
+   "name": "Sacramento Kings",
+   "area": "NBA, Golden 1 Center",
+   "note": "Oct-Apr.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Sports",
+   "group": "",
+   "name": "Athletics",
+   "area": "MLB, Sutter Health Park, West Sac",
+   "note": "MLB in a minor-league park while Las Vegas is built. A limited window, so it's rare-ish.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Sports",
+   "group": "",
+   "name": "Sacramento River Cats",
+   "area": "AAA, Sutter Health Park",
+   "note": "cheap summer nights.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Sports",
+   "group": "",
+   "name": "Sacramento Republic FC",
+   "area": "USL Championship",
+   "note": "just won its second USL title (Nov 2026).",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Day trips (2.5 hr max, no Bay Area)",
+   "group": "",
+   "name": "Sonoma Coast",
+   "area": "Bodega Bay to Jenner, ~2 hr",
+   "note": "beach plus coastal drive, which you prefer over a lake. Best in spring (green hills) and at sunrise.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Day trips (2.5 hr max, no Bay Area)",
+   "group": "",
+   "name": "Armstrong Redwoods + Russian River",
+   "area": "Guerneville, ~2 hr",
+   "note": "flat redwood loop. Pairs with the Sonoma Coast. Any season.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Sacramento",
+   "section": "Day trips (2.5 hr max, no Bay Area)",
+   "group": "",
+   "name": "Napa, no wine",
+   "area": "~1 hr",
+   "note": "Oxbow Public Market food hall plus downtown riverfront. Spring is best.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Museums and galleries",
+   "group": "",
+   "name": "Museum of Flight",
+   "area": "Tukwila",
+   "note": "open daily 10-5, so it's the best Monday pick. Big hangars, Concorde, a space shuttle trainer you can book a crew compartment tour of, plus a \"Runway to Runway\" flight attendant fashion exhibit.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Museums and galleries",
+   "group": "",
+   "name": "LeMay - America's Car Museum",
+   "area": "Tacoma",
+   "note": "open Thu-Mon 10-5 (closed Tue/Wed), so it also works Mon 12/7. Four floors of cars plus a new British bikes exhibit (you just did the MSF course). No JDM-specific exhibit right now.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Museums and galleries",
+   "group": "",
+   "name": "Tacoma Art Museum",
+   "area": "Tacoma",
+   "note": "\"Finding Home: The Chinese American West\" (through 9/5/27) is a standout. Also Kent Monkman (through 1/3/27). Thu-Sun only; it closes at 5 on Fri 12/4.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Parks, viewpoints, photo spots, tourist destinations",
+   "group": "",
+   "name": "Kerry Park",
+   "area": "Queen Anne",
+   "note": "the classic skyline and Space Needle shot. Rainier only shows on clear days. Already in the plan.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Parks, viewpoints, photo spots, tourist destinations",
+   "group": "",
+   "name": "Gas Works Park",
+   "area": "Wallingford/Fremont",
+   "note": "rusted industrial towers with the skyline across Lake Union. Moody rain photos work here.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Parks, viewpoints, photo spots, tourist destinations",
+   "group": "",
+   "name": "Pike Place Market",
+   "area": "downtown",
+   "note": "fish toss, the gum wall, and the lower levels of collectibles and comic shops. Go early before crowds.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Parks, viewpoints, photo spots, tourist destinations",
+   "group": "",
+   "name": "Space Needle",
+   "area": "Seattle Center",
+   "note": "rotating glass floor and an open-air deck. Worth it only on a clear day; check the weather first.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Easy daylight hikes (no snow, December-safe)",
+   "group": "",
+   "name": "Green River Trail",
+   "area": "Kent/Tukwila, nearby",
+   "note": "flat paved river trail for a quick walk on any free morning.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Easy daylight hikes (no snow, December-safe)",
+   "group": "",
+   "name": "Interurban Trail South",
+   "area": "Kent/Tukwila",
+   "note": "flat paved path nearby, good for a jog.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Easy daylight hikes (no snow, December-safe)",
+   "group": "",
+   "name": "Cedar River Trail",
+   "area": "Renton",
+   "note": "flat river path. Pair it with Renton Asian food.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Neighborhoods to wander and shop",
+   "group": "",
+   "name": "Chinatown-International District",
+   "area": "",
+   "note": "Uwajimaya, Kinokuniya, Daiso, Asian bakeries, Hing Hay Park. Your home base for food and shopping.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Neighborhoods to wander and shop",
+   "group": "",
+   "name": "Capitol Hill / Pike-Pine",
+   "area": "",
+   "note": "vintage and streetwear shops, record stores, Elliott Bay Book Co., boba and cafes. Busy and walkable in daylight.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Neighborhoods to wander and shop",
+   "group": "",
+   "name": "Fremont / Wallingford",
+   "area": "",
+   "note": "Fremont Troll, quirky shops, a Sunday market, and Gas Works Park nearby. Good for photos.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Neighborhoods to wander and shop",
+   "group": "",
+   "name": "Ballard",
+   "area": "",
+   "note": "indie boutiques on Ballard Ave and the Ballard Locks (watch the boats lock through).",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Asian food",
+   "group": "Chinatown-International District (Seattle)",
+   "name": "Fort St. George",
+   "area": "CID, 2nd floor, 601 S King St",
+   "note": "Japanese yoshoku diner for omurice, katsudon, cod roe udon and Japanese-style spaghetti. A real local favorite and cheap.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Asian food",
+   "group": "Chinatown-International District (Seattle)",
+   "name": "Maneki",
+   "area": "CID",
+   "note": "one of Seattle's oldest restaurants (since 1904), with sushi and Japanese homestyle plates in tatami rooms. Book ahead; dinner only.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Asian food",
+   "group": "Chinatown-International District (Seattle)",
+   "name": "Onibaba",
+   "area": "CID",
+   "note": "onigiri specialist from the old Tsukushinbo team. A quick, good solo lunch between Wing Luke and Kinokuniya.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Asian food",
+   "group": "Capitol Hill / Fremont / Belltown / Pike Place",
+   "name": "Ramen Danbo",
+   "area": "Capitol Hill",
+   "note": "Fukuoka-style tonkotsu with custom firmness and richness. Expect a line, so go at an off hour.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Asian food",
+   "group": "Capitol Hill / Fremont / Belltown / Pike Place",
+   "name": "Midnite Ramen",
+   "area": "Fremont, inside Figurehead Brewing",
+   "note": "The Infatuation's #1 ramen in town (shoyu, wontonmen). It sits inside a brewery taproom, so go at lunch.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Asian food",
+   "group": "Bellevue / Redmond (Eastside)",
+   "name": "Dan Gui",
+   "area": "Bellevue",
+   "note": "solid Sichuan, set up for a solo lunch. Sichuan means.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Asian food",
+   "group": "Bellevue / Redmond (Eastside)",
+   "name": "Sun Sui Wah",
+   "area": "Bellevue, Bel-Red",
+   "note": "Vancouver's famous Cantonese seafood and dim sum house, opened in Bellevue in 2024.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Asian food",
+   "group": "Bellevue / Redmond (Eastside)",
+   "name": "Henry's Taiwan Kitchen",
+   "area": "Bellevue",
+   "note": "Taiwanese homestyle food (beef noodle soup, three-cup chicken).",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Boba and tea",
+   "group": "",
+   "name": "TP TEA",
+   "area": "Tukwila",
+   "note": "Taiwan brand (from the Chun Shui Tang lineage) with a long menu and toppings. A pre-show stop near base.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Boba and tea",
+   "group": "",
+   "name": "Neighborhood Cafe",
+   "area": "Tukwila; also at SEA airport",
+   "note": "Filipino-inspired boba (flan, pandan, banana), so you can grab one on the way out Monday.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Bakeries",
+   "group": "",
+   "name": "Fuji Bakery",
+   "area": "CID 526 S King St; Interbay; Bellevue",
+   "note": "Japanese bakery with matcha danishes, curry pan and ube or crunchy-cream malasadas. The CID shop fits a Wing Luke day.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Bakeries",
+   "group": "",
+   "name": "Hood Famous Cafe",
+   "area": "CID, 504 5th Ave S",
+   "note": "Filipino bakery famous for ube cheesecake and pan de ube. Daytime cafe Tue-Sun (bar paused, which suits you). One review site marks it closed, so call (206) 261-2066 first.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Bakeries",
+   "group": "",
+   "name": "Tous les Jours",
+   "area": "CID 625 5th Ave S; Bellevue 100 108th Ave NE",
+   "note": "Korean-French bakery for cream breads and cakes.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Cafes (specialty coffee)",
+   "group": "",
+   "name": "Phin",
+   "area": "Little Saigon/CID",
+   "note": "Vietnamese coffee brewed one cup at a time with housemade condensed milk, plus waffles. The Infatuation calls it \"extremely special.\".",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Cafes (specialty coffee)",
+   "group": "",
+   "name": "Hello Em",
+   "area": "Little Saigon/CID",
+   "note": "Vietnamese robusta and salted egg cream coffee, a Seattle Met 2026 pick.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Cafes (specialty coffee)",
+   "group": "",
+   "name": "Cardoon",
+   "area": "Ballard",
+   "note": "blue-tiled Chinese-German cafe with specialty coffee and food. Very photogenic.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Cafes (specialty coffee)",
+   "group": "",
+   "name": "Analog Coffee",
+   "area": "Capitol Hill",
+   "note": "dialed-in espresso and a neighborhood favorite, near Danbo and Atulea.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Night markets and Asian festivals (recurring)",
+   "group": "",
+   "name": "Tet in Seattle",
+   "area": "Seattle Center, Festál",
+   "note": "Vietnamese Lunar New Year. 2027: Jan 30-31.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Night markets and Asian festivals (recurring)",
+   "group": "",
+   "name": "CID Lunar New Year Celebration",
+   "area": "Hing Hay Park, Chinatown-ID",
+   "note": "lion dances and food walk. Usually late Feb or early March (2026: Mar 7).",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Night markets and Asian festivals (recurring)",
+   "group": "",
+   "name": "Bellevue Collection Lunar New Year",
+   "area": "Bellevue Square",
+   "note": "lion dance and stage performances. Usually the weekend after LNY (2026: Feb 21; displays mid-Feb to Mar 1).",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Night markets and Asian festivals (recurring)",
+   "group": "",
+   "name": "Seattle Cherry Blossom & Japanese Cultural Festival",
+   "area": "Seattle Center, Festál",
+   "note": "taiko, tea, anime-adjacent culture. 2027: Apr 9-11.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Hobby spots",
+   "group": "Tennis (indoor, rain-proof)",
+   "name": "Amy Yee Tennis Center",
+   "area": "Mount Baker, Seattle",
+   "note": "city-run, 10 indoor courts; same-day indoor bookings by phone (206-684-4764) or walk-in, no membership card needed for same-day.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Hobby spots",
+   "group": "Tennis (indoor, rain-proof)",
+   "name": "Robinswood Tennis Center",
+   "area": "Bellevue",
+   "note": "city-run, 4 indoor courts, no membership; book by phone (425-452-7690) from 8:30 AM, up to 6 days ahead; 24-hr cancellation rule.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Hobby spots",
+   "group": "Golf ranges",
+   "name": "Topgolf Renton",
+   "area": "Renton",
+   "note": "covered, heated bays with ball-tracking games. Bays are priced per hour, so going solo costs more per person. It's also a bar, but non-drinkers are fine.",
+   "been": false,
+   "flags": [
+    "minimum"
+   ]
+  },
+  {
+   "region": "Seattle",
+   "section": "Hobby spots",
+   "group": "Golf ranges",
+   "name": "Interbay Golf Center",
+   "area": "Interbay, Seattle",
+   "note": "80-stall covered, heated range, half with Toptracer; plus mini golf. Rain-proof.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Hobby spots",
+   "group": "Golf ranges",
+   "name": "Bill Wright Golf Complex at Jefferson Park",
+   "area": "Beacon Hill, Seattle",
+   "note": "city range with Toptracer, 15 min from the ID; skyline views from the course.",
+   "been": false,
+   "flags": [
+    "minimum"
+   ]
+  },
+  {
+   "region": "Seattle",
+   "section": "Hobby spots",
+   "group": "Shooting ranges",
+   "name": "Federal Way Discount Guns & Indoor Range",
+   "area": "Federal Way",
+   "note": "indoor range with a big rental fleet (160+ guns), good for trying several models. Call to confirm hours and rental rules: (253) 927-5229.",
+   "been": false,
+   "flags": [
+    "minimum"
+   ]
+  },
+  {
+   "region": "Seattle",
+   "section": "Hobby spots",
+   "group": "Shooting ranges",
+   "name": "Bellevue Indoor Range",
+   "area": "Bellevue",
+   "note": "public indoor range attached to Wade's Eastside Guns; has gun rentals and bay reservations. Open Sun-Fri 10-8, Sat 10-9.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Hobby spots",
+   "group": "Record stores",
+   "name": "Easy Street Records & Cafe",
+   "area": "West Seattle Junction",
+   "note": "the city's best-known record store, with a diner-style cafe attached, so you can make a meal of it.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Hobby spots",
+   "group": "Record stores",
+   "name": "Silver Platters SoDo",
+   "area": "SoDo, Seattle",
+   "note": "big new/used shop with lots of electronic and soundtrack stock; close to the stadiums.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Hobby spots",
+   "group": "Record stores",
+   "name": "Daybreak Records",
+   "area": "Fremont",
+   "note": "used-vinyl dig spot; pairs with a Fremont wander.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Hobby spots",
+   "group": "Record stores",
+   "name": "Georgetown Records",
+   "area": "Georgetown",
+   "note": "rare LPs and 45s in the Georgetown arts strip.",
+   "been": false,
+   "flags": [
+    "minimum"
+   ]
+  },
+  {
+   "region": "Seattle",
+   "section": "Hobby spots",
+   "group": "Arcades and gaming",
+   "name": "Seattle Pinball Museum",
+   "area": "Chinatown-ID",
+   "note": "pay once and play all the machines (~$23 adult); no bar scene; next to the ID food crawl.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Hobby spots",
+   "group": "Arcades and gaming",
+   "name": "The Ice Box Arcade",
+   "area": "Ballard/Fremont border",
+   "note": "retro arcade with ~47 machines.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Hobby spots",
+   "group": "Karaoke",
+   "name": "Rock Box",
+   "area": "Capitol Hill",
+   "note": "Japanese-style private karaoke boxes for 2-15 people. It's a full bar, so check room minimums before booking solo.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Hobby spots",
+   "group": "Card shops (Pokemon)",
+   "name": "Cardceus",
+   "area": "SoDo, Seattle",
+   "note": "top-rated Pokemon shop with English and Japanese sealed product and singles; weekly Pokemon night. Open Thu-Fri 12-8, Sat-Sun 1-9, closed Mon-Tue.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Hobby spots",
+   "group": "Card shops (Pokemon)",
+   "name": "DJ's Sportscards",
+   "area": "Renton",
+   "note": "5,300 sq ft store with a deep stock of Pokemon singles.",
+   "been": false,
+   "flags": [
+    "minimum"
+   ]
+  },
+  {
+   "region": "Seattle",
+   "section": "Hobby spots",
+   "group": "Card shops (Pokemon)",
+   "name": "Mox Boarding House",
+   "area": "Ballard; also Bellevue",
+   "note": "huge TCG and board game store with a tournament hall; it's the Card Kingdom retail flagship, with a restaurant/bar inside.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Hobby spots",
+   "group": "Card shops (Pokemon)",
+   "name": "Blue Highway Games",
+   "area": "Queen Anne, Seattle",
+   "note": "neighborhood game store carrying TCGs; easy to pair with Kerry Park.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Hobby spots",
+   "group": "Anime, figures, Asian lifestyle shops",
+   "name": "Kinokuniya Seattle",
+   "area": "Uwajimaya Village, Chinatown-ID",
+   "note": "biggest Japanese bookstore and manga selection in the Northwest, plus stationery and figures.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Hobby spots",
+   "group": "Anime, figures, Asian lifestyle shops",
+   "name": "Uwajimaya",
+   "area": "Chinatown-ID; also Renton and Bellevue",
+   "note": "Japanese/Asian supermarket with snacks, gifts and beauty aisles; the Renton store is the nearby.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Hobby spots",
+   "group": "K-beauty and skincare",
+   "name": "SUKOSHI",
+   "area": "Bellevue Square, Bellevue",
+   "note": "curated Asian beauty store with 200+ makeup and skincare brands; opened Jan 2026, its first Washington store.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Hobby spots",
+   "group": "Jewelry, fashion, art objects",
+   "name": "KOBO at Higo",
+   "area": "Chinatown-ID",
+   "note": "Japanese and Northwest crafts, ceramics and jewelry in the historic Higo Variety Store building; holds about 6 exhibits a year. Fits the art-collecting hobby.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Hobby spots",
+   "group": "Jewelry, fashion, art objects",
+   "name": "KOBO Capitol Hill",
+   "area": "Capitol Hill",
+   "note": "the original shop/gallery, Japanese-aesthetic gifts and art.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Hobby spots",
+   "group": "Jewelry, fashion, art objects",
+   "name": "Storica Studio",
+   "area": "Pike Place Market",
+   "note": "independent, woman- and minority-owned jewelry store.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Hobby spots",
+   "group": "Jewelry, fashion, art objects",
+   "name": "Valerie Madison",
+   "area": "Fremont",
+   "note": "Seattle-made fine jewelry, ethically sourced stones.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Hobby spots",
+   "group": "Car museums and meets",
+   "name": "America's Car Museum",
+   "area": "Tacoma",
+   "note": "4-floor car museum next to the Tacoma Dome; check its events page for special exhibits. Pairs with the Museum of Glass.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Hobby spots",
+   "group": "Car museums and meets",
+   "name": "LeMay Collections at Marymount",
+   "area": "Spanaway/Tacoma",
+   "note": "huge family car collection in a former military academy, with guided tours year-round.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Skill classes",
+   "group": "",
+   "name": "Seattle Glassblowing Studio & Gallery",
+   "area": "Belltown, by the Monorail",
+   "note": "book-ahead \"blow your own\" session (ornament, paperweight, bowl etc.); pieces cool for 24-48 hrs, so do it Fri/Sat to pick up before leaving Mon. Groupon deals are common.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Skill classes",
+   "group": "",
+   "name": "Glassybaby hot shop",
+   "area": "Madrona, Seattle",
+   "note": "hands-on glassblowing sessions, including a winter ornament session in past years (~$180, 12+). Check the 2026 dates.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Skill classes",
+   "group": "",
+   "name": "Seattle Artist League",
+   "area": "Georgetown",
+   "note": "one-night \"One Shot Pot\" beginner wheel class (~$95 incl. materials) and other drop-in art classes; check the calendar for December dates.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Sports",
+   "group": "",
+   "name": "Seattle Kraken (NHL)",
+   "area": "Climate Pledge Arena",
+   "note": "*home Sun 12/6 at 5 PM vs Buffalo Sabres*, which fits the free Sunday. Other home games are Dec 1, Dec 3 (Dallas) and Dec 10 (Washington).",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Sports",
+   "group": "",
+   "name": "Seattle Seahawks (NFL)",
+   "area": "Lumen Field",
+   "note": "*home Mon 12/7 at 5:15 PM vs Dallas Cowboys* (Monday night). Expensive, but rare. It also means heavy SoDo and light rail traffic Monday evening. Other home games: Dec 13 Giants and Dec 25 Rams.",
+   "been": false,
+   "flags": []
+  },
+  {
+   "region": "Seattle",
+   "section": "Sports",
+   "group": "",
+   "name": "Seattle Thunderbirds (WHL junior hockey)",
+   "area": "accesso ShoWare Center, Kent",
+   "note": "cheap, loud and close. Resale sites list *Sun 12/6 at 4:05 PM vs Victoria Royals*; confirm on the team site.",
+   "been": false,
+   "flags": []
+  }
+ ],
+ "shows_snapshot": {
+  "source": "19hz.info Bay Area listing, fetched 2026-11-24 (credit 19hz.info)",
+  "shows": [
+   {
+    "when": "Tue: Nov 24 (8pm-12am)",
+    "title": "Wtf: Jessika, Green Butterflies, Puppet, Finishher",
+    "venue": "The STUD",
+    "city": "San Francisco",
+    "genres": "breaks, dubstep, drum and bass",
+    "price_age": "notaflof",
+    "date": "2026/11/24"
+   },
+   {
+    "when": "Tue: Nov 24 (9pm-2am)",
+    "title": "House/Not House - Huffy",
+    "venue": "Makeout Room",
+    "city": "San Francisco",
+    "genres": "house",
+    "price_age": "free | 21+",
+    "date": "2026/11/24"
+   },
+   {
+    "when": "Tue: Nov 24 (9pm-2am)",
+    "title": "Interzone - Darkwave Tuesdays",
+    "venue": "F8 1192 Folsom",
+    "city": "San Francisco",
+    "genres": "darkwave, goth, post-punk, industrial, EBM",
+    "price_age": "free b4 10 / $5 | 21+",
+    "date": "2026/11/24"
+   },
+   {
+    "when": "Wed: Nov 25 (6pm-1am)",
+    "title": "Give Thanks Wednesday: Zeds Dead, Levity, Of The Trees, Clozee, Peekaboo, Cyclops, Avello, Capochino, AG",
+    "venue": "San Jose Convention Center",
+    "city": "San Jose",
+    "genres": "dubstep, bass music, riddim, melodic dubstep, future bass, EDM",
+    "price_age": "$120+ | 18+",
+    "date": "2026/11/25"
+   },
+   {
+    "when": "Wed: Nov 25 (7pm)",
+    "title": "Blackout Wednesday w/ DJ Sardine",
+    "venue": "Atrium at The Catalyst",
+    "city": "Santa Cruz",
+    "genres": "pop EDM",
+    "price_age": "$20-29 | 18+",
+    "date": "2026/11/25"
+   },
+   {
+    "when": "Wed: Nov 25 (8pm)",
+    "title": "Catalyst: Black w/ Dimez, +ktiv",
+    "venue": "Reunion Underground",
+    "city": "Sacramento",
+    "genres": "hard techno, hardstyle, hard dance",
+    "price_age": "21+",
+    "date": "2026/11/25"
+   },
+   {
+    "when": "Wed: Nov 25 (8pm)",
+    "title": "Club 8teen Turntgiving: Jayoh, DJ Guero, Ezi Pezi, Audivo",
+    "venue": "705 Lounge",
+    "city": "Sacramento",
+    "genres": "EDM, latin",
+    "price_age": "$20 pre / $25 | 18+",
+    "date": "2026/11/25"
+   },
+   {
+    "when": "Wed: Nov 25 (8pm)",
+    "title": "Ovrkast. - Still Striking Tour",
+    "venue": "Brick & Mortar Music Hall",
+    "city": "San Francisco",
+    "genres": "hip-hop, future beats",
+    "price_age": "$36 | All ages",
+    "date": "2026/11/25"
+   },
+   {
+    "when": "Wed: Nov 25 (8pm-2am)",
+    "title": "House Legends",
+    "venue": "Salinas Armory Hall",
+    "city": "Salinas",
+    "genres": "house, hard house, tech house",
+    "price_age": "$18-30 | 16+",
+    "date": "2026/11/25"
+   },
+   {
+    "when": "Wed: Nov 25 (8pm-2am)",
+    "title": "Thanksgiving Blackout Wednesday: DJ Carmaa, DJ Dree",
+    "venue": "The District Theater",
+    "city": "Gilroy",
+    "genres": "funky house, disco, hip-hop, r&b, reggae, latin house",
+    "price_age": "21+",
+    "date": "2026/11/25"
+   },
+   {
+    "when": "Wed: Nov 25 (9pm)",
+    "title": "Better Off Alone: 90s/00S Dance Rave at The Starlet Room",
+    "venue": "The Starlet Room",
+    "city": "Sacramento",
+    "genres": "house, big beat, pop EDM, eurodance, trance",
+    "price_age": "$21-28 | 21+",
+    "date": "2026/11/25"
+   },
+   {
+    "when": "Wed: Nov 25 (9pm)",
+    "title": "Egg! w/ Matt, Nfs, Imminent Burial, Hen House, Aetatis Suae",
+    "venue": "Thee Stork Club",
+    "city": "Oakland",
+    "genres": "industrial, noise, experimental electronic",
+    "price_age": "$10",
+    "date": "2026/11/25"
+   },
+   {
+    "when": "Wed: Nov 25 (9pm)",
+    "title": "Turn Up The Baste: Scandinasian, Mayday, Tommy Echelon",
+    "venue": "Hopmonk Tavern",
+    "city": "Sebastopol",
+    "genres": "tech house, bass house",
+    "price_age": "$10 | 21+",
+    "date": "2026/11/25"
+   },
+   {
+    "when": "Wed: Nov 25 (9pm-1:30am)",
+    "title": "Call & Response Season Closer w/ Rachel Torro & 93fm",
+    "venue": "The Press Club",
+    "city": "Sacramento",
+    "genres": "deep house, techno, tech house, electro",
+    "price_age": "$23-28.75 | 21+",
+    "date": "2026/11/25"
+   },
+   {
+    "when": "Wed: Nov 25 (9pm-2am)",
+    "title": "Andy C",
+    "venue": "1015 Folsom",
+    "city": "San Francisco",
+    "genres": "drum and bass",
+    "price_age": "$22.25-32 | 21+",
+    "date": "2026/11/25"
+   },
+   {
+    "when": "Wed: Nov 25 (9pm-2am)",
+    "title": "Eve - Pre Thanksgiving Event",
+    "venue": "1028 Lounge",
+    "city": "Sacramento",
+    "genres": "house, tech house, indie dance, bass house",
+    "price_age": "free w/rsvp / $6-10 | 21+",
+    "date": "2026/11/25"
+   },
+   {
+    "when": "Wed: Nov 25 (9pm-3am)",
+    "title": "Ardalan",
+    "venue": "F8 1192 Folsom",
+    "city": "San Francisco",
+    "genres": "tech house, g-house, bass house",
+    "price_age": "free w/rsvp b4 11pm / $10+ | 21+",
+    "date": "2026/11/25"
+   },
+   {
+    "when": "Wed: Nov 25 (9:30pm-2am)",
+    "title": "Goth Holiday Ball",
+    "venue": "375 11th St",
+    "city": "San Francisco",
+    "genres": "goth, industrial, EBM, darkwave, emo",
+    "price_age": "$15-20 pre / $30 | 18+",
+    "date": "2026/11/25"
+   },
+   {
+    "when": "Wed: Nov 25 (10pm-1am)",
+    "title": "Bassgiving: Sampphire, Powell Ranger, Swade",
+    "venue": "Lock And Key",
+    "city": "Sacramento",
+    "genres": "dubstep, bass music, hardstyle",
+    "price_age": "$16+ | 21+",
+    "date": "2026/11/25"
+   },
+   {
+    "when": "Wed: Nov 25 (10pm-2am)",
+    "title": "Calitalo Disco: Nino Msk & Friends",
+    "venue": "Make Out Room",
+    "city": "San Francisco",
+    "genres": "afrobeats, italo disco, funk, tropical disco, house",
+    "price_age": "free | 21+",
+    "date": "2026/11/25"
+   },
+   {
+    "when": "Thu: Nov 26 (8pm-2am)",
+    "title": "Stay In The House",
+    "venue": "Continental Club",
+    "city": "Oakland",
+    "genres": "deep house, tech house, afro house",
+    "price_age": "$10 | 21+",
+    "date": "2026/11/26"
+   },
+   {
+    "when": "Thu: Nov 26 (9pm-2am)",
+    "title": "Gothsgiving w/80085, Alice Stribling",
+    "venue": "Underground",
+    "city": "San Francisco",
+    "genres": "synthpop, goth, new wavwe",
+    "price_age": "$8 pre / $10 | 21+",
+    "date": "2026/11/26"
+   },
+   {
+    "when": "Thu: Nov 26 (9pm-2am)",
+    "title": "The Annual Thanksgiving Night Party - Nile, Hidra, Navii, Alex Goodcat, Mode Leeloo, Jdirra, Hnydew",
+    "venue": "F8 1192 Folsom",
+    "city": "San Francisco",
+    "genres": "afro house",
+    "price_age": "free w/rsvp b4 11pm / $10-15 | 21+",
+    "date": "2026/11/26"
+   },
+   {
+    "when": "Fri: Nov 27 (6pm-12am)",
+    "title": "Friendsgiving Bowl: Zorg.Fm, Normis, Kkassiio, DJ Keef, Padplay, Rushing",
+    "venue": "130 Northwood Dr",
+    "city": "South San Francisco",
+    "genres": "house",
+    "price_age": "free",
+    "date": "2026/11/27"
+   },
+   {
+    "when": "Fri: Nov 27 (6pm-1am)",
+    "title": "Give Thanks Friday: Slander, Seven Lions, Said The Sky, Trivecta, Jason Ross, Nurko, Fairlane, Hoang",
+    "venue": "San Jose Convention Center",
+    "city": "San Jose",
+    "genres": "dubstep, bass music, riddim, melodic dubstep, future bass, EDM",
+    "price_age": "$160+ | 18+",
+    "date": "2026/11/27"
+   },
+   {
+    "when": "Fri: Nov 27 (7pm-10pm)",
+    "title": "Fraxiom, Can Of Bliss and Lil Bebe Cyborg",
+    "venue": "Kilowatt",
+    "city": "San Francisco",
+    "genres": "hyperpop",
+    "price_age": "$13.39 | 21+",
+    "date": "2026/11/27"
+   },
+   {
+    "when": "Fri: Nov 27 (7pm-11pm)",
+    "title": "[Esc]Avation - Alice Stribling",
+    "venue": "El Rio",
+    "city": "San Francisco",
+    "genres": "house",
+    "price_age": "free | 21+",
+    "date": "2026/11/27"
+   },
+   {
+    "when": "Fri: Nov 27 (7pm-11pm)",
+    "title": "Nukumori b2b Tripleset, Impreza, Princesa and Cali Cartier",
+    "venue": "The Faight Collective",
+    "city": "San Francisco",
+    "genres": "uk garage, breaks",
+    "price_age": "$23.64 | 21+",
+    "date": "2026/11/27"
+   },
+   {
+    "when": "Fri: Nov 27 (7pm-2am)",
+    "title": "Groove: Goma, Atang (BW), Momo",
+    "venue": "Bella",
+    "city": "San Francisco",
+    "genres": "afro house, amapiano, gqom, deep house, 3-step",
+    "price_age": "free w/rsvp | 21+",
+    "date": "2026/11/27"
+   },
+   {
+    "when": "Fri: Nov 27 (8pm)",
+    "title": "Amtrac",
+    "venue": "The Regency Ballroom",
+    "city": "San Francisco",
+    "genres": "house",
+    "price_age": "$37-60 | All ages",
+    "date": "2026/11/27"
+   },
+   {
+    "when": "Fri: Nov 27 (8pm-1am)",
+    "title": "Salty Residency - Friendsgiving: Tamer, Mark G, Deepmilk",
+    "venue": "Napa Music Hall",
+    "city": "Napa",
+    "genres": "house",
+    "price_age": "free | 21+",
+    "date": "2026/11/27"
+   },
+   {
+    "when": "Fri: Nov 27 (8:30pm-1:30am)",
+    "title": "Mindwarp: Punch Fungus, 222, Kosmikonic, Kode Static",
+    "venue": "Reunion Underground",
+    "city": "Sacramento",
+    "genres": "dubstep, bass music, glitch-hop",
+    "price_age": "$5-20 | 21+",
+    "date": "2026/11/27"
+   },
+   {
+    "when": "Fri: Nov 27 (9pm)",
+    "title": "El Caballo De Fuego: James Houdini",
+    "venue": "Underground",
+    "city": "San Francisco",
+    "genres": "house, uk garage, techno",
+    "price_age": "21+",
+    "date": "2026/11/27"
+   },
+   {
+    "when": "Fri: Nov 27 (9pm)",
+    "title": "Itai X Cello Joe",
+    "venue": "Elixart",
+    "city": "Nevada City",
+    "genres": "house",
+    "price_age": "$17.79-23.11 | 21+",
+    "date": "2026/11/27"
+   },
+   {
+    "when": "Fri: Nov 27 (9pm)",
+    "title": "O'flynn",
+    "venue": "The Independent",
+    "city": "San Francisco",
+    "genres": "house, uk garage, breaks, techno",
+    "price_age": "$31.55 | 21+",
+    "date": "2026/11/27"
+   },
+   {
+    "when": "Fri: Nov 27 (9pm)",
+    "title": "Satori Vs Cyb3r",
+    "venue": "The Ritz",
+    "city": "San Jose",
+    "genres": "goth, industrial, darkwave",
+    "price_age": "$14+ | 21+",
+    "date": "2026/11/27"
+   },
+   {
+    "when": "Fri: Nov 27 (9pm)",
+    "title": "Water Spirit, Brizzy, Chapas, Damented, Desorden, Detonatorz, Dito, Frijol, Justintime, Kndrta, Nemesis",
+    "venue": "F8 1192 Folsom",
+    "city": "San Francisco",
+    "genres": "hard dance, hard techno",
+    "price_age": "$17-28 | 21+",
+    "date": "2026/11/27"
+   },
+   {
+    "when": "Fri: Nov 27 (9pm-1:30am)",
+    "title": "Fusion, Soulfunky",
+    "venue": "Phonobar",
+    "city": "San Francisco",
+    "genres": "boogie, disco, acid house, soul, funky house",
+    "price_age": "free | 21+",
+    "date": "2026/11/27"
+   },
+   {
+    "when": "Fri: Nov 27 (9pm-1:30am)",
+    "title": "Jus Dance Feat. Mr. V & Rated R",
+    "venue": "Cardiff Lounge",
+    "city": "Campbell",
+    "genres": "nu-disco, deep house, soulful house, funky house",
+    "price_age": "free w/rsvp | 21+",
+    "date": "2026/11/27"
+   },
+   {
+    "when": "Fri: Nov 27 (9pm-1:30am)",
+    "title": "Spader: Discnogirl, DJ Juanny, Bored Lord, Finish Her",
+    "venue": "There/There Bar",
+    "city": "Oakland",
+    "genres": "techno, jungle, footwork, club, industrial, juke, dub, baile funk",
+    "price_age": "$11.2 | 21+",
+    "date": "2026/11/27"
+   },
+   {
+    "when": "Fri: Nov 27 (9pm-1:30am)",
+    "title": "SutroFM",
+    "venue": "Bar Part Time",
+    "city": "San Francisco",
+    "genres": "house, techno, dub, electro, club, ambient, EBM",
+    "price_age": "free | 21+",
+    "date": "2026/11/27"
+   },
+   {
+    "when": "Fri: Nov 27 (9pm-2am)",
+    "title": "Black Friday - Back Out: Makle, FS",
+    "venue": "Fulton 55",
+    "city": "Fresno",
+    "genres": "house",
+    "price_age": "$10+ | 21+",
+    "date": "2026/11/27"
+   },
+   {
+    "when": "Fri: Nov 27 (9pm-2am)",
+    "title": "Darren Davis",
+    "venue": "Monarch - Upstairs Lounge",
+    "city": "San Francisco",
+    "genres": "house, club",
+    "price_age": "$5 | 21+",
+    "date": "2026/11/27"
+   },
+   {
+    "when": "Fri: Nov 27 (9pm-2am)",
+    "title": "Escape - Cherry, Walker Brooks, Passel",
+    "venue": "TBA",
+    "city": "West Oakland",
+    "genres": "progressive house, tech house, deep house, melodic house, uk garage",
+    "price_age": "$15-25 | All Ages",
+    "date": "2026/11/27"
+   },
+   {
+    "when": "Fri: Nov 27 (9pm-2am)",
+    "title": "Escape: Cherry, Passel",
+    "venue": "TBA",
+    "city": "West Oakland",
+    "genres": "house, club",
+    "price_age": "$17.5",
+    "date": "2026/11/27"
+   },
+   {
+    "when": "Fri: Nov 27 (9pm-2am)",
+    "title": "Skream Presented By Goldenvoice",
+    "venue": "Public Works",
+    "city": "San Francisco",
+    "genres": "tech house, progressive house, techno",
+    "price_age": "$39-45 | 21+",
+    "date": "2026/11/27"
+   },
+   {
+    "when": "Fri: Nov 27 (9pm-2am)",
+    "title": "The Furry Rave: Pinkii, Verplex, Sammphire, Spinetruck, Crossmelodies, Dr1ft, Augg1e, Hypertears, Sampphire",
+    "venue": "Continental Club",
+    "city": "Oakland",
+    "genres": "happy hardcore, house, dubstep, bass music, hard techno",
+    "price_age": "$19.25-30.25 | 18+",
+    "date": "2026/11/27"
+   },
+   {
+    "when": "Fri: Nov 27 (9:30pm-2am)",
+    "title": "Rinzen (Open To Close)",
+    "venue": "Audio",
+    "city": "San Francisco",
+    "genres": "tech house",
+    "price_age": "$21.07 | 21+",
+    "date": "2026/11/27"
+   },
+   {
+    "when": "Fri: Nov 27 (10pm)",
+    "title": "Vertigo: Kandikweer69, iHaveaBomb, Damu, Kumbaya, Helian, Calling All Freaks",
+    "venue": "TBA",
+    "city": "San Francisco",
+    "genres": "breakbeat, hard house, acid, hard groove, techno, juke, hard techno",
+    "price_age": "free | 18+",
+    "date": "2026/11/27"
+   },
+   {
+    "when": "Fri: Nov 27 (10pm-1am)",
+    "title": "Cinthie",
+    "venue": "1015 Folsom",
+    "city": "San Francisco",
+    "genres": "house",
+    "price_age": "$26.05-32.13 | 21+",
+    "date": "2026/11/27"
+   },
+   {
+    "when": "Fri: Nov 27 (10pm-2am)",
+    "title": "Blawan, Southstar, Cinthie",
+    "venue": "1015 Folsom",
+    "city": "San Francisco",
+    "genres": "house, breaks, techno",
+    "price_age": "$26.05-44.30 | 21+",
+    "date": "2026/11/27"
+   },
+   {
+    "when": "Fri: Nov 27 (10pm-2am)",
+    "title": "Dang! - A Soulful Electronic Dance Night",
+    "venue": "The Midway",
+    "city": "San Francisco",
+    "genres": "house, r&b, synthpop",
+    "price_age": "$15-31 | 21+",
+    "date": "2026/11/27"
+   },
+   {
+    "when": "Fri: Nov 27 (10pm-2am)",
+    "title": "Delinquent: Cutdwn, Starfvcd, Xerinity",
+    "venue": "Era Lounge",
+    "city": "San Jose",
+    "genres": "bounce, hard techno",
+    "price_age": "$14-20 | 21+",
+    "date": "2026/11/27"
+   },
+   {
+    "when": "Fri: Nov 27 (10pm-2am)",
+    "title": "Disco-Plastique - DJ 2Shy-Shy + DJ Melt w/U",
+    "venue": "Make-Out Room",
+    "city": "San Francisco",
+    "genres": "new wave, italo disco, electro cumbia, hip-hop, reggaeton",
+    "price_age": "$10 | 21+",
+    "date": "2026/11/27"
+   },
+   {
+    "when": "Fri: Nov 27 (10pm-2am)",
+    "title": "Recreation 13. Feat. Cambot, Jacques Whiite, Krakinov, B. Wiley",
+    "venue": "7th West",
+    "city": "Oakland",
+    "genres": "dubstep, bass music, drum and bass",
+    "price_age": "$5-35 | 21+",
+    "date": "2026/11/27"
+   },
+   {
+    "when": "Fri: Nov 27 (10pm-4am)",
+    "title": "Bensy, Justin Duke, Lefty",
+    "venue": "Halcyon",
+    "city": "San Francisco",
+    "genres": "afro house, progressive house",
+    "price_age": "$12 b4 11 / $19-30 | 21+",
+    "date": "2026/11/27"
+   },
+   {
+    "when": "Sat: Nov 28 (2am-6am)",
+    "title": "Late Night Clubbing #096 w/Mike Nervous, Mandiz",
+    "venue": "TBA",
+    "city": "San Francisco",
+    "genres": "house, EDM",
+    "price_age": "",
+    "date": "2026/11/28"
+   },
+   {
+    "when": "Sat: Nov 28 (11am-5pm)",
+    "title": "No One, Combover, Caley",
+    "venue": "Hedge Coffee",
+    "city": "San Francisco",
+    "genres": "house, deep house",
+    "price_age": "free | All Ages",
+    "date": "2026/11/28"
+   },
+   {
+    "when": "Sat: Nov 28 (6pm-1am)",
+    "title": "Give Thanks Saturday: Wankdat, Skull Machine, Richard Finger, Nikita, The Wicked, KLO, Automhate, Beastboi",
+    "venue": "San Jose Convention Center",
+    "city": "San Jose",
+    "genres": "dubstep, bass music, riddim, melodic dubstep, future bass, EDM",
+    "price_age": "$150+ | 18+",
+    "date": "2026/11/28"
+   }
+  ]
+ }
+}

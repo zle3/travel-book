@@ -1,0 +1,139 @@
+{
+  "title": "Little Travel Book: choose the world",
+  "question": "Four artistic directions for the little travel book. Keep one or two to branch in round 2, merge two, or re-roll.",
+  "options": [
+    {
+      "id": "a-sampler",
+      "kind": "assigned",
+      "label": "The Sampler",
+      "kicker": "THE ROLL",
+      "lineage": "cross-stitch samplers on dyed linen",
+      "thesis": "Every saved place is a stitch; her hearts get sewn into a sampler she sends back.",
+      "palette": ["#f8f4f6", "#cdcddb", "#3b2832", "#9b6b84", "#f43f5e", "#a0a0bb"],
+      "materials": ["dyed linen weave", "cross-stitch thread", "running stitch", "sewing buttons"],
+      "viewport": "The title worked large in cross stitch on mauve linen, places as stitched rows with ghost-printed hearts, a needle and thread at the foot that lengthens with each pick.",
+      "risk": "Embroidery can tip into twee or grandmotherly if the scale is timid.",
+      "raised": [
+        {"from": "challenger-seven-segment", "raise": "Unlit is designed too: empty hearts and filters show their printed ghost pattern on the cloth."},
+        {"from": "challenger-ink-basin", "raise": "Motion obeys the material: stitches go in true stitch order and thread pulls taut, never springs."},
+        {"from": "challenger-cassette-deck", "raise": "Every list its own labeled spool: all 28 lists visible in a spool rack, friends' lists on their own rack."},
+        {"from": "challenger-op-art", "raise": "One bolt of cloth: map, list and sheets are the same linen, no boxed white cards."},
+        {"from": "challenger-forge", "raise": "Each heart visibly changes the object in one stroke: the thread lengthens, a row appears on her sampler."},
+        {"from": "challenger-quote-grammar", "raise": "Zones named literally on woven sew-in labels: Places, Map, Shows, Your picks."}
+      ],
+      "html": "/mnt/wsl/work/worktrees/travel-book-design-r1/docs/design/round-1/a-sampler/index.html",
+      "htmlFrame": "390x844",
+      "comp": ".impeccable/mocks/decision/a-sampler.png"
+    },
+    {
+      "id": "b-photobooth",
+      "kind": "pick",
+      "label": "Photo Booth Sticker Sheet",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "purikura sticker-booth prints",
+      "thesis": "The book is a purikura sheet: places are die-cut stickers, her hearts are puffy stickers, her picks print as a photo strip.",
+      "palette": ["#f9f9fb", "#cdcddb", "#3b2832", "#fb7185", "#f43f5e", "#ba99aa"],
+      "materials": ["glossy die-cut stickers", "kiss-cut white borders", "gel-pen doodles", "holographic sheen"],
+      "viewport": "A sticker backing sheet with the title as a bubbly sticker stamp, places stuck askew with doodles, a peeling picks tab.",
+      "risk": "The most familiar cute answer; can read Sanrio-clone or childish, and there are no place photos to fill the frames.",
+      "html": "/mnt/wsl/work/worktrees/travel-book-design-r1/docs/design/round-1/b-photobooth/index.html",
+      "htmlFrame": "390x844",
+      "comp": ".impeccable/mocks/decision/b-photobooth.png"
+    },
+    {
+      "id": "c-airmail",
+      "kind": "grounded",
+      "label": "Par Avion",
+      "lineage": "airmail letters and postage stamps",
+      "thesis": "He mailed her a letter of places; each is a stamp, her heart is a wax seal, and her picks are the letter she writes back.",
+      "palette": ["#f1f0f7", "#cdcddb", "#3b2832", "#9b6b84", "#f43f5e", "#74749b"],
+      "materials": ["onionskin airmail paper", "chevron border", "perforated stamps", "postmarks", "wax seal"],
+      "viewport": "An airmail sheet with a rose-mauve chevron edge, places as perforated stamps, an envelope at the foot that fills with her stamps.",
+      "risk": "Post and letter worlds can read vintage or wedding-invitation if the colour is timid.",
+      "html": "/mnt/wsl/work/worktrees/travel-book-design-r1/docs/design/round-1/c-airmail/index.html",
+      "htmlFrame": "390x844",
+      "comp": ".impeccable/mocks/decision/c-airmail.png"
+    },
+    {
+      "id": "d-riso",
+      "kind": "grounded",
+      "label": "Two-Ink Zine",
+      "lineage": "risograph zines from the zine-fest table",
+      "thesis": "A two-ink riso zine of his places: rose and mauve overprint, hand-numbered listings, a rubber-stamp heart and a tear-off order form for her picks.",
+      "palette": ["#e9e7f2", "#f43f5e", "#84596f", "#2d2d3f", "#fb7185", "#3b2832"],
+      "materials": ["riso grain", "halftone", "two-ink overprint", "misregistration", "staples"],
+      "viewport": "A huge misregistered two-ink title cropped by the page edge, numbered listings with stamp hearts, a circled picks count.",
+      "risk": "Graphic and loud; can read cool-hipster rather than romantic unless the hand-drawn warmth carries it.",
+      "html": "/mnt/wsl/work/worktrees/travel-book-design-r1/docs/design/round-1/d-riso/index.html",
+      "htmlFrame": "390x844",
+      "comp": ".impeccable/mocks/decision/d-riso.png"
+    },
+    {
+      "id": "challenger-seven-segment", "kind": "challenger", "catalogId": "signals-instruments-seven-segment-alarm-clock",
+      "label": "Seven-Segment Clock", "verdict": "declined", "lineage": "bedside clocks and scoreboards",
+      "thesis": "Places and showtimes as lit segments on a night-black panel.",
+      "palette": ["#141016", "#f43f5e", "#3b2832"], "materials": ["LED segments", "ghost cells"],
+      "viewport": "A segment panel counting picks and show dates.", "risk": "Cold and mechanical for a romantic gift.",
+      "case": "Fuses poorly: she does not identify with an appliance display, and a segment mask hurts place names.",
+      "kept": "Unlit states designed as carefully as lit ones."
+    },
+    {
+      "id": "challenger-ink-basin", "kind": "challenger", "catalogId": "medium-native-fluid-ink-basin",
+      "label": "Suminagashi Ink Basin", "verdict": "declined", "lineage": "marbled ink on water",
+      "thesis": "The map as a marbled ink surface she stirs.",
+      "palette": ["#f9f9fb", "#3b2832", "#9b6b84"], "materials": ["marbled ink", "water"],
+      "viewport": "A fluid basin with places as ink drops.", "risk": "Beautiful but blurs locations; heavy on a mid-range phone.",
+      "case": "Loses clarity (places must be findable) and phone performance.",
+      "kept": "Motion that obeys a real material law."
+    },
+    {
+      "id": "challenger-cassette-deck", "kind": "challenger", "catalogId": "pop-culture-shelf-cassette-futurism-deck",
+      "label": "Cassette Deck Fascia", "verdict": "declined", "lineage": "1980s hi-fi tape decks",
+      "thesis": "Filters as chrome toggles on a brushed aluminium deck.",
+      "palette": ["#c9c9cf", "#e8dcc6", "#f59e0b"], "materials": ["brushed aluminium", "LED ladders"],
+      "viewport": "A deck panel of labeled switches.", "risk": "Reads as gear, not a gift.",
+      "case": "Fuses poorly: hi-fi gear is the opposite of warm and cute.",
+      "kept": "Every function gets its own labeled control: all 28 lists visible."
+    },
+    {
+      "id": "challenger-op-art", "kind": "challenger", "catalogId": "design-canon-op-art-textile-repeat",
+      "label": "Op-Art Textile", "verdict": "declined", "lineage": "op-art printed textiles",
+      "thesis": "A seamless black-and-white wave field the site slides across.",
+      "palette": ["#ffffff", "#000000"], "materials": ["printed cloth", "wave repeat"],
+      "viewport": "A continuous wave field with active regions.", "risk": "Dizzying and colourless; drops his palette.",
+      "case": "Loses both: optical stress is the opposite of a cosy browse, and it cannot carry the palette.",
+      "kept": "One continuous surface with no seams or boxed panels."
+    },
+    {
+      "id": "challenger-forge", "kind": "challenger", "catalogId": "metal-forging-patina-blacksmith-scale-shower",
+      "label": "Forge and Hammer", "verdict": "declined", "lineage": "blacksmith forging",
+      "thesis": "Each action struck like a hammer blow on hot iron.",
+      "palette": ["#16110f", "#ff7a1a", "#6b6f75"], "materials": ["hot iron", "scale"],
+      "viewport": "A forge-dark page with glowing work.", "risk": "Violent register; nothing cute survives.",
+      "case": "Loses both: wrong emotional world for a romantic gift.",
+      "kept": "Each action visibly changes the object in one stroke."
+    },
+    {
+      "id": "challenger-quote-grammar", "kind": "challenger", "catalogId": "textiles-weave-drape-fashion-industrial-quote-grammar",
+      "label": "Industrial Quote Labels", "verdict": "declined", "lineage": "industrial streetwear labeling",
+      "thesis": "Every zone named in quoted industrial caps with hazard stripes.",
+      "palette": ["#ffffff", "#111111", "#ff6a13"], "materials": ["cotton", "nylon", "zip ties"],
+      "viewport": "Quoted labels over hazard diagonals.", "risk": "Ironic and cool where the brief asks for warm.",
+      "case": "Loses both: irony and hazard stripes fight romance and the owner's no-caps taste.",
+      "kept": "Wayfinding by literal labels: zones named plainly."
+    }
+  ],
+  "reroll": {"registers": ["safer", "bolder"]},
+  "buildPath": {"value": "code", "toggle": false},
+  "canon": true,
+  "canonCard": {
+    "kind": "canon",
+    "label": "The category standard",
+    "thesis": "A clean map app: full-bleed map, bottom sheet list, pill filters, a pink heart.",
+    "palette": ["#ffffff", "#2d2d3f", "#f43f5e"],
+    "materials": ["clean grid", "bottom sheet", "pill chips"],
+    "viewport": "Map on top, draggable list sheet, chips for lists, heart on each row.",
+    "risk": "Works instantly and looks like every saved-places app; nothing hand-made."
+  },
+  "steer": true
+}
