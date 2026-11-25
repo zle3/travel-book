@@ -2,6 +2,8 @@
 /** Document shell: head metadata, global CSS, theme and device class before first paint. The explorer page uses this directly. */
 import "../styles/global.css";
 import { SITE } from "../lib/site";
+// Icon cache-bust version. Bump when the logo files in public/ change so browsers refetch them.
+const ICON_VER = "2";
 interface Props { title: string; description?: string; path?: string; bodyClass?: string }
 const { title, description = SITE.description, path = Astro.url.pathname, bodyClass } = Astro.props;
 const canonical = new URL(path, SITE.url).href;
@@ -25,10 +27,10 @@ const image = new URL(SITE.previewImage, SITE.url).href;
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" sizes="32x32" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="icon" type="image/svg+xml" href={`/favicon.svg?v=${ICON_VER}`} />
+    <link rel="icon" href={`/favicon.ico?v=${ICON_VER}`} sizes="32x32" />
+    <link rel="apple-touch-icon" href={`/apple-touch-icon.png?v=${ICON_VER}`} />
+    <link rel="manifest" href={`/site.webmanifest?v=${ICON_VER}`} />
     <meta name="theme-color" content="#1e1520" />
     <link rel="preload" href="/fonts/figtree-600.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/figtree-400.woff2" as="font" type="font/woff2" crossorigin />
