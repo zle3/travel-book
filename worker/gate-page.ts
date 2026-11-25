@@ -6,6 +6,9 @@ const esc = (s: string) =>
 import { SITE } from "./site-config.ts";
 import type { SiteConfig } from "./site-config.ts";
 
+// Icon cache-bust version; keep in step with ICON_VER in src/layouts/Base.astro.
+const ICON_VER = "2";
+
 export function gatePage(opts: { next: string; error?: string; origin: string; site?: SiteConfig }): string {
   const site = opts.site ?? SITE;
   const TITLE = site.title, DESC = site.description, IMG_ALT = site.imageAlt;
@@ -27,10 +30,10 @@ export function gatePage(opts: { next: string; error?: string; origin: string; s
     `<meta name="twitter:title" content="${esc(TITLE)}">`,
     `<meta name="twitter:description" content="${esc(DESC)}">`,
     `<meta name="twitter:image" content="${esc(origin)}${esc(site.previewImage)}">`,
-    `<link rel="icon" href="/favicon.svg" type="image/svg+xml">`,
-    `<link rel="icon" href="/favicon.ico" sizes="32x32">`,
-    `<link rel="apple-touch-icon" href="/apple-touch-icon.png">`,
-    `<link rel="manifest" href="/site.webmanifest">`,
+    `<link rel="icon" href="/favicon.svg?v=${ICON_VER}" type="image/svg+xml">`,
+    `<link rel="icon" href="/favicon.ico?v=${ICON_VER}" sizes="32x32">`,
+    `<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=${ICON_VER}">`,
+    `<link rel="manifest" href="/site.webmanifest?v=${ICON_VER}">`,
     `<meta name="theme-color" content="${esc(site.themeColorLight)}" media="(prefers-color-scheme: light)">`,
     `<meta name="theme-color" content="${esc(site.themeColorDark)}" media="(prefers-color-scheme: dark)">`,
   ].join("\n");
