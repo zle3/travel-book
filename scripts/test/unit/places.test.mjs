@@ -43,3 +43,10 @@ test("bad coordinates are dropped; helpers", () => {
   assert.equal(slug("SF list"), "sf-list"); assert.equal(fold("Café & Bar's"), "cafe and bars");
   assert.equal(fmtDistance(10), "50 ft"); assert.equal(fmtDistance(30), "100 ft"); assert.equal(fmtDistance(1609.344), "1.0 mi"); assert.equal(fmtDistance(40000), "25 mi");
 });
+test("extra locations stay separate places with a hint flag, and merge only when truly the same spot", () => {
+  const { places } = buildPlaces([{ name: "Casual Food", source: "mine", places: [P("Marugame Udon", 37.7, -122.4), P("Marugame Udon", 37.75, -122.25, { extra_location: true, branch: "Alameda" }), P("Marugame Udon", 37.70001, -122.40001, { extra_location: true, branch: "Dup" })] }], cats);
+  assert.equal(places.length, 2);
+  const ex = places.find((p) => p.ex);
+  assert.equal(ex.br, "Alameda");
+  assert.equal(places.find((p) => !p.ex).br, undefined);
+});

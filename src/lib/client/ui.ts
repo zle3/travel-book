@@ -22,6 +22,7 @@ export const kindOf = (c: AwardCode) => AWARD_KIND[c];
 
 export function badges(p: Place, edition: number, picked: boolean): string {
   const b: string[] = [];
+  if (p.ex) b.push(`<span class="bd bd-more">Another location of ${esc(p.n)}${p.br ? ` \u00b7 ${esc(p.br)}` : ""}</span>`);
   if (p.been) b.push(`<span class="bd bd-been">${icon("u-check")}Been</span>`);
   if (isNew(p.added)) b.push(`<span class="bd bd-new">New</span>`);
   if (p.live) b.push(`<span class="bd bd-pick">Zach's pick</span>`);

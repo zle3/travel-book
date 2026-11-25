@@ -30,7 +30,7 @@ const geo = {
   features: places.map((p) => ({
     type: "Feature",
     geometry: { type: "Point", coordinates: [p.x, p.y] },
-    properties: { id: p.id, n: p.n, c: p.c, s: p.s, l: p.l, ...(p.note ? { note: p.note } : {}), ...(p.addr ? { addr: p.addr } : {}), ...(p.maps ? { maps: p.maps } : {}), ...(p.mich ? { mich: p.mich } : {}) },
+    properties: { id: p.id, n: p.n, c: p.c, s: p.s, l: p.l, ...(p.note ? { note: p.note } : {}), ...(p.addr ? { addr: p.addr } : {}), ...(p.maps ? { maps: p.maps } : {}), ...(p.mich ? { mich: p.mich } : {}), ...(p.ex ? { ex: 1 } : {}), ...(p.br ? { br: p.br } : {}) },
   })),
 };
 const placesText = JSON.stringify(geo);

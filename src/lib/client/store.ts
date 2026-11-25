@@ -9,6 +9,8 @@ export interface Place {
   id: string; n: string; c: string; s: "m" | "o"; l: string[]; note: string; addr: string; maps: string; x: number; y: number; mich?: string;
   /** live (Discord) items only */
   added?: string; live?: boolean; been?: boolean;
+  /** another branch of a saved chain: ex = 1, br = branch label */
+  ex?: 1; br?: string;
 }
 export interface Cat { id: string; label: string; group: string; icon: string }
 export interface Group { id: string; label: string; chip: string; icon: string; hex: string }

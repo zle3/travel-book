@@ -4,11 +4,11 @@ import { bestOf, codeFromText, formatAwards, parseAwards } from "./michelin.ts";
 import type { AwardCode } from "./michelin.ts";
 import { createHash } from "node:crypto";
 
-export interface RawPlace { name: string; address?: string; lat: number; lng: number; note?: string; maps?: string; category?: string; group?: string }
+export interface RawPlace { name: string; address?: string; lat: number; lng: number; note?: string; maps?: string; category?: string; group?: string; branch?: string; extra_location?: boolean }
 export interface RawList { name: string; source: "mine" | "other"; places: RawPlace[] }
 export interface Category { id: string; label: string; group: string }
 export interface Place {
-  id: string; n: string; c: string; s: "m" | "o"; l: string[]; note: string; addr: string; maps: string; x: number; y: number; mich?: string;
+  id: string; n: string; c: string; s: "m" | "o"; l: string[]; note: string; addr: string; maps: string; x: number; y: number; mich?: string; ex?: 1; br?: string;
 }
 export const slug = (s: string): string => fold(s).replace(/ /g, "-");
 export const MERGE_RADIUS_M = 60;
@@ -42,12 +42,14 @@ export function buildPlaces(lists: RawList[], categories: Category[], matches: M
         if (!near.note && rp.note) near.note = rp.note;
         if (!near.addr && rp.address) near.addr = rp.address;
         if (src === "m") near.s = "m";
+        if (!rp.extra_location) { delete near.ex; delete near.br; }
         if (aw && !awardsOf.has(near.id)) awardsOf.set(near.id, aw.flatMap((a) => { const c = codeFromText(a.award); return c ? [{ year: a.year, code: c }] : []; }));
         continue;
       }
       const p: Place = {
         id: stableId(rp), n: rp.name, c: catByLabel.get(fold(rp.category ?? "")) ?? "other", s: src, l: [lid],
         note: rp.note ?? "", addr: rp.address ?? "", maps: rp.maps ?? "", x: round(rp.lng, 5), y: round(rp.lat, 5),
+        ...(rp.extra_location ? { ex: 1 as const, ...(rp.branch ? { br: rp.branch } : {}) } : {}),
       };
       if (aw) awardsOf.set(p.id, aw.flatMap((a) => { const c = codeFromText(a.award); return c ? [{ year: a.year, code: c }] : []; }));
       out.push(p);

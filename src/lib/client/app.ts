@@ -57,7 +57,7 @@ export async function start(): Promise<void> {
 
   // ---------- data
   const geo = (await fetch(cfg.manifest.places).then((r) => r.json())) as { features: { geometry: { coordinates: [number, number] }; properties: Record<string, unknown> }[] };
-  app.places = geo.features.map((f) => { const p = f.properties as Record<string, unknown>; return { id: String(p.id), n: String(p.n), c: String(p.c), s: p.s === "m" ? "m" : "o", l: (p.l as string[]) ?? [], note: String(p.note ?? ""), addr: String(p.addr ?? ""), maps: String(p.maps ?? ""), x: f.geometry.coordinates[0], y: f.geometry.coordinates[1], mich: p.mich ? String(p.mich) : undefined } as Place; });
+  app.places = geo.features.map((f) => { const p = f.properties as Record<string, unknown>; return { id: String(p.id), n: String(p.n), c: String(p.c), s: p.s === "m" ? "m" : "o", l: (p.l as string[]) ?? [], note: String(p.note ?? ""), addr: String(p.addr ?? ""), maps: String(p.maps ?? ""), x: f.geometry.coordinates[0], y: f.geometry.coordinates[1], mich: p.mich ? String(p.mich) : undefined, ex: p.ex ? 1 : undefined, br: p.br ? String(p.br) : undefined } as Place; });
   app.byId = new Map(app.places.map((p) => [p.id, p]));
   const hash = location.hash;
   if (/picks=/.test(hash)) {

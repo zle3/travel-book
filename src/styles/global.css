@@ -631,3 +631,4 @@ input[type=search]::-webkit-search-cancel-button{display:none}
 .desktop .scrim{background:transparent}
 .desktop .peek{position:absolute;z-index:12;border-radius:26px;overflow:hidden;box-shadow:var(--shadow);background:var(--surface);visibility:hidden;opacity:0;transform:translateY(12px);transition:transform .35s var(--ease),opacity .25s,visibility 0s .35s}
 .desktop .peek.on{visibility:visible;opacity:1;transform:none;transition:transform .35s var(--ease),opacity .25s,visibility 0s}
+.bd-more{background:var(--surface-2);color:var(--ink-2);font-weight:500;white-space:normal;height:auto;min-height:22px;padding-top:1px;padding-bottom:1px}
