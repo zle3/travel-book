@@ -1,4 +1,4 @@
-// Race: pick San Francisco, then a neighborhood: the layer and alphabetical list appear, the feed filters with the right count, clear and exit work.
+// Race: the list is there on its own; pick a neighborhood: the layer and alphabetical list appear, the feed filters with the right count, clear works and focus returns.
 import assert from "node:assert/strict";
 import { devices } from "playwright";
 
@@ -9,8 +9,10 @@ export default async function (page, base) {
     await p.route("**/api/**", (r) => r.fulfill({ status: 503, body: "{}" }));
     await p.goto(base + "/?debug", { waitUntil: "load" });
     await p.waitForFunction(() => !!window.__tbApp?.ctl);
-    await p.locator('#listBody [data-act="sfToggle"]').tap();
-    await p.locator("#listBody .hsec .hrow").first().waitFor();
+    await p.locator("#listBody .sfsec .hrow").first().waitFor({ state: "attached" });
+    await p.waitForFunction(() => window.__tbApp.ctl.map.getLayer("hoods-line") && window.__tbApp.ctl.map.getLayoutProperty("hoods-line", "visibility") === "visible");
+    await p.waitForFunction(() => /DataSF/.test(document.getElementById("credit")?.textContent ?? ""));
+    await p.locator(".htog").tap();
     const names = await p.locator("#listBody .hrow .rn").allTextContents();
     assert.equal(names.length, 41, "all 41 neighborhoods are listed");
     assert.deepEqual(names, [...names].sort((a, b) => a.localeCompare(b)), "alphabetical");
@@ -31,11 +33,8 @@ export default async function (page, base) {
     await p.waitForFunction(() => { const b = window.__tbApp.ctl.bounds(); return b[0] < -122.43 && b[2] > -122.40 && b[2] < -122.30; });
     await p.locator('[data-act="hoodClear"]').tap();
     await p.locator("#hoodTitle").waitFor({ state: "detached" });
+    assert.equal(await p.locator("#listBody .sfsec > .gh").textContent(), "San Francisco");
     assert.equal(await p.evaluate(() => document.activeElement?.getAttribute("data-fk")), "h:mission", "focus returns to the neighborhood's row");
     await p.waitForFunction(() => window.__tbApp.ctl.map.getSource("places")._data.features.length > 500);
-    await p.locator('#listBody [data-act="sfOff"]').tap();
-    await p.waitForFunction(() => window.__tbApp.ctl.map.getLayoutProperty("hoods-line", "visibility") === "none");
-    assert.equal(await p.locator("#listBody .hsec").count(), 0, "list gone after exit");
-    assert.ok(!/DataSF/.test((await p.locator("#credit").textContent()) ?? ""), "credit drops DataSF after exit");
   } finally { await ctx.close(); }
 }
