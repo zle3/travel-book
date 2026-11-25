@@ -44,7 +44,7 @@ export function rowHtml(cfg: Config, p: Place, dist: number | null, picked: bool
   const cat = catOf(cfg, p.c);
   const area = cityOf(p.addr);
   const meta = [cat.label, area].filter(Boolean).join(" · ");
-  return `<div class="row" data-id="${esc(p.id)}"><button class="rmain" data-act="open" data-id="${esc(p.id)}" type="button"><span class="ico g-${cat.group}">${icon(cat.icon)}</span><span class="rtx"><span class="rn">${esc(p.n)}</span><span class="rm">${exMark(p)}${esc(meta)}${showSrc && p.s === "o" ? '<span class="tag">Other list</span>' : ""}</span>${p.note ? `<span class="rq">${esc(p.note)}</span>` : ""}${badges(p, edition, picked, false)}</span>${dist === null ? "" : `<span class="dst">${esc(fmtDistance(dist))}</span>`}</button>${heartBtn(p, picked)}</div>`;
+  return `<div class="row" data-id="${esc(p.id)}"><button class="rmain" data-act="open" data-id="${esc(p.id)}" type="button"><span class="ico g-${cat.group}">${icon(cat.icon)}</span><span class="rtx"><span class="rn">${esc(p.n)}</span><span class="rm">${esc(meta)}${showSrc && p.s === "o" ? '<span class="tag">Other list</span>' : ""}${exMark(p)}</span>${p.note ? `<span class="rq">${esc(p.note)}</span>` : ""}${badges(p, edition, picked, false)}</span>${dist === null ? "" : `<span class="dst">${esc(fmtDistance(dist))}</span>`}</button>${heartBtn(p, picked)}</div>`;
 }
 export const heartBtn = (p: Place, picked: boolean): string => `<button class="heart" data-act="heart" data-id="${esc(p.id)}" aria-pressed="${picked}" aria-label="${picked ? "Remove" : "Save"} ${esc(p.n)} ${picked ? "from" : "to"} my picks" type="button">${icon("u-heart")}<i></i><i></i><i></i></button>`;
 

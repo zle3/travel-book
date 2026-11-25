@@ -14,9 +14,8 @@ export default async function (page, base) {
     await p.locator("#listBody .ghead").waitFor();
     const n = await p.locator("#listBody .row").count();
     await p.waitForFunction((n) => { const s = window.__tbApp.ctl.map.getSource("places"); const d = s && (s._data || s.serialize?.().data); return d && d.features && d.features.length > 0 && d.features.length <= n + 1; }, n);
-    const inView = await p.evaluate(() => { const b = window.__tbApp.ctl.bounds(); return [b[0] < -122.5137 && b[2] > -122.47, b[1] < 37.7804 && b[3] > 37.7715]; });
-    await p.waitForTimeout(500);
-    assert.ok(inView.every(Boolean) || true);
+    // The map fits the guide: its far points (Sutro Baths west, Mountain Lake north, de Young south) are all on screen.
+    await p.waitForFunction(() => { const b = window.__tbApp.ctl.bounds(); return b[0] < -122.5137 && b[2] > -122.4687 && b[1] < 37.7715 && b[3] > 37.7865; });
     await p.locator('#listBody [data-act="guideBack"]').tap();
     await p.waitForFunction(() => { const d = window.__tbApp.ctl.map.getSource("places")._data; return d.features.length > 500; });
   } finally {
