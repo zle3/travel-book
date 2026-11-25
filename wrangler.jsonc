@@ -15,9 +15,13 @@
     "run_worker_first": true,
     "not_found_handling": "404-page"
   },
-  // Non-secret vars only. SITE_PASSWORD and GATE_SECRET are set with `wrangler secret put`.
+  // Non-secret vars only. PROXY_SECRET (shared with the home backend) is set with `wrangler secret put PROXY_SECRET`.
   // GATE_ALLOW_SEARCH "0": no search engine bypasses the gate (also the code default when unset).
   "vars": {
-    "GATE_ALLOW_SEARCH": "0"
+    "GATE_ALLOW_SEARCH": "0",
+    // Public site (owner decision 2026-11-24): the password gate is off. Bot blocking, robots.txt and noindex stay on.
+    "GATE_DISABLED": "1",
+    // Owner's home backend (live Discord adds). Unreachable or unset = the site shows its offline note and keeps working.
+    "BACKEND_BASE": "https://api.travel.zachle.info"
   }
 }

@@ -9,6 +9,7 @@ How work moves from request to production without duplicated effort or conflicts
   - Live address: **https://travel.zachle.info** (custom domain route in `wrangler.jsonc`; `workers_dev` is off). The Worker and the domain's zone must be in the **same Cloudflare account**.
   - `public/robots.txt` matches what the Worker serves for `/robots.txt` (a gate test checks this). It disallows every crawler and has no Sitemap line.
   - Search indexing is OFF by default: `GATE_ALLOW_SEARCH` is `"0"` in `wrangler.jsonc` (and the code default when unset), and every Worker response carries `X-Robots-Tag: noindex`. Do not turn indexing on without an owner decision.
+  - **Owner decision 2026-11-24: the site is public.** `GATE_DISABLED=1` is set in `wrangler.jsonc`; bot blocking, `robots.txt` and noindex (`GATE_ALLOW_SEARCH` "0") stay on. The text below describes the default for other projects.
   - Password gate: **permanent by default**. Do not add tasks to turn it off at launch; `GATE_DISABLED=1` removes the gate and is an owner-only decision. Owner how-to (set, change, sign out): `docs/PASSWORD.md`.
   - Link previews: the gate page's title, description, credit and preview image come from `worker/site-config.ts`; the 1200x630 `public/assets/preview-card.png` is on the exact-match public allow-list.
 - **CI:** all local (`scripts/check.sh`). GitHub Actions is never used (zero runner minutes). A pre-push hook runs the fast check and blocks direct pushes to `main`.

@@ -1,0 +1,195 @@
+{
+ "places": "/data/places.6ca7ba4e23.json",
+ "areas": "/search/areas.a754b93df3.json",
+ "counts": {
+  "places": 2298,
+  "michelin": 24364
+ },
+ "lists": [
+  {
+   "id": "breakfast-brunch",
+   "name": "Breakfast/Brunch",
+   "source": "m",
+   "count": 6
+  },
+  {
+   "id": "casual-food",
+   "name": "Casual Food",
+   "source": "m",
+   "count": 161
+  },
+  {
+   "id": "sit-down-restaurants",
+   "name": "Sit Down Restaurants",
+   "source": "m",
+   "count": 70
+  },
+  {
+   "id": "fine-dining",
+   "name": "Fine Dining",
+   "source": "m",
+   "count": 2
+  },
+  {
+   "id": "bakery",
+   "name": "Bakery",
+   "source": "m",
+   "count": 32
+  },
+  {
+   "id": "desserts",
+   "name": "Desserts",
+   "source": "m",
+   "count": 20
+  },
+  {
+   "id": "tea-drinks",
+   "name": "Tea/Drinks",
+   "source": "m",
+   "count": 83
+  },
+  {
+   "id": "bar-club",
+   "name": "Bar/Club",
+   "source": "m",
+   "count": 1
+  },
+  {
+   "id": "shopping",
+   "name": "Shopping",
+   "source": "m",
+   "count": 42
+  },
+  {
+   "id": "clothing",
+   "name": "Clothing",
+   "source": "m",
+   "count": 23
+  },
+  {
+   "id": "grocery",
+   "name": "Grocery",
+   "source": "m",
+   "count": 45
+  },
+  {
+   "id": "points-of-interest",
+   "name": "Points of Interest",
+   "source": "m",
+   "count": 8
+  },
+  {
+   "id": "tourist-attractions",
+   "name": "Tourist Attractions",
+   "source": "m",
+   "count": 35
+  },
+  {
+   "id": "museums",
+   "name": "Museums",
+   "source": "m",
+   "count": 12
+  },
+  {
+   "id": "venues",
+   "name": "Venues",
+   "source": "m",
+   "count": 1
+  },
+  {
+   "id": "roadside-destinations",
+   "name": "Roadside Destinations",
+   "source": "m",
+   "count": 4
+  },
+  {
+   "id": "parks",
+   "name": "Parks",
+   "source": "m",
+   "count": 34
+  },
+  {
+   "id": "hiking",
+   "name": "Hiking",
+   "source": "m",
+   "count": 5
+  },
+  {
+   "id": "trails",
+   "name": "Trails",
+   "source": "m",
+   "count": 2
+  },
+  {
+   "id": "activities",
+   "name": "Activities",
+   "source": "m",
+   "count": 11
+  },
+  {
+   "id": "sports",
+   "name": "Sports",
+   "source": "m",
+   "count": 35
+  },
+  {
+   "id": "guns",
+   "name": "Guns",
+   "source": "m",
+   "count": 13
+  },
+  {
+   "id": "hotels",
+   "name": "Hotels",
+   "source": "m",
+   "count": 7
+  },
+  {
+   "id": "parking-lots",
+   "name": "Parking Lots",
+   "source": "m",
+   "count": 17
+  },
+  {
+   "id": "sf-list",
+   "name": "SF list",
+   "source": "o",
+   "count": 454
+  },
+  {
+   "id": "sac-list",
+   "name": "Sac list",
+   "source": "o",
+   "count": 355
+  },
+  {
+   "id": "bay-area-list",
+   "name": "Bay Area list",
+   "source": "o",
+   "count": 367
+  },
+  {
+   "id": "nyc-list",
+   "name": "NYC list",
+   "source": "o",
+   "count": 560
+  }
+ ],
+ "michelinYears": [
+  2022,
+  2023,
+  2024,
+  2025,
+  2026
+ ],
+ "currentEdition": 2026,
+ "awardLabels": {
+  "S1": "1 Star",
+  "S2": "2 Stars",
+  "S3": "3 Stars",
+  "B": "Bib Gourmand",
+  "G": "Green Star",
+  "L": "Selected"
+ },
+ "hasBeen": false
+}

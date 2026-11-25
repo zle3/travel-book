@@ -1,24 +1,116 @@
 ---
-import Page from "../layouts/Page.astro";
+/** The explorer: one route. The shell (top bar, quick chips, first rows of the sheet) is static HTML so LCP does not wait for WebGL. */
+import fs from "node:fs";
+import Base from "../layouts/Base.astro";
 import Icon from "../components/Icon.astro";
+import sprite from "../assets/icons.svg?raw";
+import cats from "../assets/design/categories.json";
+import manifest from "../generated/manifest.json";
 import { SITE } from "../lib/site";
+import { distanceM, fmtDistance } from "../lib/data/geo";
+import { QUICK } from "../lib/quick";
+import { cityOf } from "../lib/picks";
+
+const placesFile = `public${manifest.places}`;
+const features = JSON.parse(fs.readFileSync(placesFile, "utf8")).features as { geometry: { coordinates: [number, number] }; properties: { id: string; n: string; c: string; s: string; note?: string; addr?: string } }[];
+const SF: [number, number] = [-122.4194, 37.7749];
+const catById = new Map(cats.categories.map((c) => [c.id, c]));
+const first = features
+  .map((f) => ({ p: f.properties, d: distanceM(SF[0], SF[1], f.geometry.coordinates[0], f.geometry.coordinates[1]) }))
+  .sort((a, b) => a.d - b.d)
+  .slice(0, 12);
 ---
-<Page title={SITE.name}>
-  <section class="hero">
-    <div class="wrap stack">
-      <h1>{SITE.name}</h1>
-      <p class="lead">Starter page. Replace this with the real home page once PRODUCT.md and the design direction are approved.</p>
-      <p class="actions"><a class="btn btn--primary" href="/about">About<Icon name="arrow-right" /></a><a class="btn btn--secondary" href="/about#contact">Contact</a></p>
+<Base title={SITE.name}>
+  <Fragment set:html={`<svg width="0" height="0" class="sprite" aria-hidden="true">${sprite.replace(/<svg[^>]*>|<\/svg>|<!--[\s\S]*?-->/g, "")}</svg>`} />
+  <a class="skip" href="#listBody">Skip to the list of places</a>
+  <main id="app">
+    <h1 class="vh">Little Travel Book</h1>
+    <div id="map" role="region" aria-label="Map of saved places. Every place is also in the list."></div>
+    <p class="mapnote" id="mapnote" hidden>The map could not start here. The list still shows every place.</p>
+
+    <div class="panel" id="panel">
+      <header class="top" id="top">
+        <div class="search" role="search">
+          <Icon name="u-search" />
+          <input id="q" type="search" placeholder="Search saved places, Michelin, cities, ZIPs" aria-label="Search saved places, Michelin restaurants, cities, neighborhoods and ZIP codes" role="combobox" aria-expanded="false" aria-controls="sugg" aria-autocomplete="list" autocomplete="off" enterkeyhint="search" />
+          <button class="xq" data-act="xq" aria-label="Clear search" type="button"><Icon name="u-close" /></button>
+          <button class="fbtn" data-act="openF" aria-label="Filters" type="button"><Icon name="u-filter" />Filters<span class="badge" data-fcount hidden>0</span></button>
+        </div>
+        <div class="sugg" id="sugg" role="listbox" aria-label="Suggestions"></div>
+        <div class="quick" id="chips" role="group" aria-label="Quick filters">
+          <div class="qr1" id="qr1"></div>
+          <div class="qr2" id="qr2">
+            {QUICK.map((q) => q.shows
+              ? <button class="chip" data-act="tab" data-tab="shows" type="button"><span class="ico sm g-sights"><Icon name="u-shows" /></span>{q.label}</button>
+              : <button class="chip" data-chip={q.id} aria-pressed="false" type="button"><span class={`ico sm g-${q.group}`}><Icon name={q.icon} /></span>{q.label}</button>)}
+          </div>
+        </div>
+      </header>
+
+      <section class="sheet" id="sheet" aria-label="Places">
+        <div class="credit-map" id="credit"></div>
+        <button class="grab" id="grab" aria-label="Resize the list" type="button"><i></i></button>
+        <div class="shead">
+          <div class="seg" role="group" aria-label="View">
+            <button data-act="seg" data-seg="map" aria-pressed="true" type="button"><Icon name="u-map" />Map</button>
+            <button data-act="seg" data-seg="list" aria-pressed="false" type="button"><Icon name="u-list" />List</button>
+          </div>
+        </div>
+        <div class="crow">
+          <p class="cnt" data-cnt aria-live="polite">{features.length} places</p>
+          <button class="sortb" data-act="sort" aria-haspopup="menu" aria-expanded="false" aria-label="Change sort order" type="button"><Icon name="u-sort" />Sort: <span data-sort>Nearest</span></button>
+          <div class="sortmenu" id="sortmenu" role="menu"></div>
+        </div>
+        <p class="hello" id="hello">Places in view, nearest to the middle of the map first.</p>
+        <div class="sbody" id="listBody" tabindex="-1">
+          {first.map(({ p, d }) => {
+            const cat = catById.get(p.c) ?? cats.uncategorized;
+            const g = cats.categories.find((c) => c.id === p.c)?.group ?? "other";
+            return (
+              <div class="row" data-id={p.id}>
+                <button class="rmain" data-act="open" data-id={p.id} type="button">
+                  <span class={`ico g-${g}`}><Icon name={cat.icon} /></span>
+                  <span class="rtx"><span class="rn">{p.n}</span><span class="rm">{cat.label}{cityOf(p.addr ?? "") ? ` · ${cityOf(p.addr ?? "")}` : ""} · {fmtDistance(d)}</span>{p.note && <span class="rq">{p.note}</span>}</span>
+                </button>
+                <button class="heart" data-act="heart" data-id={p.id} aria-pressed="false" aria-label={`Save ${p.n} to my picks`} type="button"><Icon name="u-heart" /><i></i><i></i><i></i></button>
+              </div>
+            );
+          })}
+        </div>
+      </section>
     </div>
-  </section>
-  <section class="section">
-    <div class="wrap">
-      <h2>What the starter gives you</h2>
-      <ul class="grid">
-        <li class="card"><h3>Light and dark</h3><p>Tokens for both themes, applied before first paint, with a header toggle.</p></li>
-        <li class="card"><h3>Accessible navigation</h3><p>Dropdown and phone menu driven by a small state machine; closed menus are not tappable.</p></li>
-        <li class="card"><h3>Honest samples</h3><p>Anything not supplied by the owner is tagged <span class="badge badge--sample">Sample</span> and blocks production deploys.</p></li>
-      </ul>
+
+    <div class="ctl" id="ctl">
+      <button class="cb2 wxchip" id="wxchip" data-act="weather" aria-label="Weather for the middle of the map" hidden type="button"><svg class="ic"><use href="#w-cloud"></use></svg><b></b></button>
+      <button class="cb2" data-act="locate" id="locateBtn" aria-label="Locate me" type="button"><Icon name="u-locate" /></button>
+      <button class="cb2 keyb" data-act="key" type="button"><Icon name="u-key" />Key</button>
     </div>
-  </section>
-</Page>
+    <div class="topr" id="topr">
+      <button class="tb" data-act="tab" data-tab="shows" type="button"><Icon name="u-shows" />Shows</button>
+      <button class="tb" data-act="tab" data-tab="picks" type="button"><Icon name="u-heart" />Picks<span class="pill" data-picks-pill>0</span></button>
+      <button class="tb round" data-act="theme" id="themeBtn" aria-label="Switch to light theme" type="button"><Icon name="u-sun" /></button>
+    </div>
+    <div class="loccard" id="loccard" role="dialog" aria-label="Location"></div>
+    <div class="spin" id="spin" role="status"></div>
+    <div class="offline" id="offline" role="status"><span>Some live bits are offline. Saved places still work.</span><button data-act="offX" aria-label="Dismiss" type="button"><Icon name="u-close" /></button></div>
+    <div class="dense" id="dense" role="status"><button class="dtx" data-act="dense" type="button">Lots here.&nbsp;<span>Filter or zoom in to see icons</span></button><button class="dx" data-act="denseX" aria-label="Dismiss" type="button"><Icon name="u-close" /></button></div>
+    <div class="peek" id="peek" role="dialog" aria-label="Place" aria-hidden="true"><div class="pk-track" id="pkTrack"></div></div>
+    <section class="page side" id="shows" aria-label="Shows" aria-hidden="true"></section>
+    <nav class="bar" id="bar" aria-label="Main">
+      <button data-act="tab" data-tab="places" aria-current="true" type="button"><Icon name="u-map" />Places</button>
+      <button data-act="tab" data-tab="shows" type="button"><Icon name="u-shows" />Shows</button>
+      <button data-act="tab" data-tab="picks" aria-label="Picks" type="button"><span class="counter"><span class="pill" data-picks-pill>0</span></span><Icon name="u-heart" />Picks</button>
+    </nav>
+  </main>
+  <div class="scrim" id="scrim"></div>
+  <section class="msheet tall" id="filtersSheet" role="dialog" aria-modal="true" aria-label="Filters" aria-hidden="true" tabindex="-1"><div class="gr"><i></i></div><div class="mhost" id="filtersHost"></div></section>
+  <section class="msheet" id="picksSheet" role="dialog" aria-modal="true" aria-label="Your picks" aria-hidden="true" tabindex="-1"><div class="gr"><i></i></div><div class="mhost" id="picksHost"></div></section>
+  <section class="msheet" id="legendSheet" role="dialog" aria-modal="true" aria-label="Key" aria-hidden="true" tabindex="-1"><div class="gr"><i></i></div><div class="mhost" id="legendHost"></div></section>
+  <section class="msheet tall" id="weatherSheet" role="dialog" aria-modal="true" aria-label="Weather" aria-hidden="true" tabindex="-1"><div class="gr"><i></i></div><div class="mhost" id="weatherHost"></div></section>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script id="tb-config" type="application/json" set:html={JSON.stringify({ manifest, categories: cats })}></script>
+  <script>
+    import { start } from "../lib/client/app";
+    start();
+  </script>
+</Base>

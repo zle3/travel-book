@@ -1,5 +1,5 @@
 ---
-/** Document shell: head metadata, global CSS, theme-before-paint, concept notice, shared client script. Every page goes through this (directly or via Page.astro). */
+/** Document shell: head metadata, global CSS, theme and device class before first paint. The explorer page uses this directly. */
 import "../styles/global.css";
 import { SITE } from "../lib/site";
 interface Props { title: string; description?: string; path?: string; bodyClass?: string }
@@ -11,10 +11,10 @@ const image = new URL(SITE.previewImage, SITE.url).href;
 <html lang="en" class="no-js" data-theme-key={SITE.themeKey}>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <!-- Prerelease: never indexed. Do not loosen without the owner's decision (see LESSONS.md). -->
+    <!-- Public site, but never indexed (owner decision 2026-11-24). Do not loosen without the owner. -->
     <meta name="robots" content="noindex, nofollow, noarchive" />
     <link rel="canonical" href={canonical} />
     <meta property="og:type" content="website" />
@@ -29,22 +29,23 @@ const image = new URL(SITE.previewImage, SITE.url).href;
     <link rel="icon" href="/favicon.ico" sizes="32x32" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <meta name="theme-color" content="#fbfbfd" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#1e1520" />
+    <link rel="preload" href="/fonts/figtree-600.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/figtree-400.woff2" as="font" type="font/woff2" crossorigin />
     <script is:inline>
-      // Apply a saved theme pick before first paint (no flash). No pick = follow the OS.
-      document.documentElement.classList.remove("no-js");
-      try { var t = localStorage.getItem(document.documentElement.dataset.themeKey); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}
+      // Before first paint: dark unless the visitor chose light; phone or desktop layout class (no flash).
+      (function () {
+        var d = document.documentElement;
+        d.classList.remove("no-js");
+        var t = null;
+        try { t = localStorage.getItem(d.dataset.themeKey); } catch (e) {}
+        d.dataset.theme = t === "light" ? "light" : "dark";
+        d.classList.add(innerWidth >= 900 ? "desktop" : "phone");
+      })();
     </script>
     <slot name="head" />
   </head>
   <body class={bodyClass}>
-    {SITE.conceptOf && <div class="concept-notice" role="note">Concept redesign of {SITE.conceptOf} by {SITE.by}. Not affiliated with {SITE.conceptOf}.</div>}
-    <a href="#main" class="skip-link">Skip to main content</a>
     <slot />
-    <script>
-      import { initSite } from "../lib/client/site";
-      initSite();
-    </script>
   </body>
 </html>

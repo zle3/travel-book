@@ -4,11 +4,13 @@
  * See worker/README.md. Dependency-free; unit-tested by scripts/test/gate.test.mjs.
  */
 import { isBlockedUA, robotsTxt } from "./bots.ts";
+import { assetCacheControl, handleApi } from "./api.ts";
+import type { ApiDeps, ApiEnv } from "./api.ts";
 import { gatePage } from "./gate-page.ts";
 import { defaultCache, dohResolver, verifyCrawler } from "./verify.ts";
 import type { CacheLike, Resolver } from "./verify.ts";
 
-export interface Env {
+export interface Env extends ApiEnv {
   ASSETS: { fetch(request: Request): Promise<Response> };
   /** Required while the gate is on; unset = fail closed. */
   SITE_PASSWORD?: string;
@@ -27,6 +29,7 @@ export interface Deps {
   delay?: (ms: number) => Promise<void>;
   /** Max IPs tracked by the rate limiter (tests lower it). */
   maxTracked?: number;
+  api?: ApiDeps;
 }
 
 export type GateMode = "on" | "off" | "misconfigured";
@@ -114,6 +117,18 @@ function evictAttempts(t: number, cap: number): void {
   }
 }
 
+/** Past the gate: /api/* routes, otherwise the static assets with long cache headers on the bulk data files. */
+async function serve(request: Request, env: Env, deps: Deps): Promise<Response> {
+  const url = new URL(request.url);
+  if (url.pathname.startsWith("/api/")) return handleApi(request, env, deps.api);
+  const res = await env.ASSETS.fetch(request);
+  const cc = res.ok ? assetCacheControl(url.pathname) : null;
+  if (!cc) return res;
+  const headers = new Headers(res.headers);
+  headers.set("cache-control", cc);
+  return new Response(res.body, { status: res.status, statusText: res.statusText, headers });
+}
+
 async function route(request: Request, env: Env, deps: Deps): Promise<Response> {
   const now = deps.now ?? Date.now;
   const url = new URL(request.url);
@@ -154,7 +169,7 @@ async function route(request: Request, env: Env, deps: Deps): Promise<Response> 
     return new Response(null, { status: 303, headers: { location: "/", "set-cookie": clearCookie, "cache-control": "no-store" } });
   }
 
-  if (mode === "off") return env.ASSETS.fetch(request);
+  if (mode === "off") return serve(request, env, deps);
   if (mode === "misconfigured") {
     return gateResponse(url.origin, "/", 401, "The gate is not configured. Please try again later.");
   }
@@ -188,7 +203,7 @@ async function route(request: Request, env: Env, deps: Deps): Promise<Response> 
     return new Response(null, { status: 303, headers: { location: next, "set-cookie": cookie, "cache-control": "no-store" } });
   }
 
-  if (await hasValidSession(request, env, now())) return env.ASSETS.fetch(request);
+  if (await hasValidSession(request, env, now())) return serve(request, env, deps);
   return gateResponse(url.origin, safeNext(url.pathname + url.search), 401);
 }
 
