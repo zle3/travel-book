@@ -28,6 +28,8 @@ export interface App {
   openSheet(id: string): void; closeSheet(): void; refresh(): void; showTab(t: "places" | "shows" | "picks"): void;
   addLive(places: Place[]): void; setBackend(up: boolean): void;
   /** Open San Francisco from a deep link: loads the neighborhoods, selects `hood` and flies there. (The layer otherwise shows by itself whenever the map is on San Francisco.) */
+  /** Resolves once no San Francisco view change is pending (debounce timer or file load). For tests. */
+  sfSettled(): Promise<void>;
   selectCity(opts?: { hood?: string | null; fit?: boolean }): Promise<void>;
   sheetPad(): { top?: number; bottom?: number; left?: number; right?: number };
 }
@@ -48,7 +50,7 @@ export async function start(): Promise<void> {
   const app: App = {
     cfg, places: [], byId: new Map(), filters: loadFilters(), picks: loadPicks(), shared: [], user: null,
     view: loadView() ?? SF_VIEW, bounds: [-180, -85, 180, 85], ctl: null, backendUp: null,
-    focusPoint: () => {}, focusPlace: () => {}, openSheet: () => {}, closeSheet: () => {}, refresh: () => {}, showTab: () => {}, addLive: () => {}, setBackend: () => {}, selectCity: async () => {}, sheetPad: () => ({}),
+    focusPoint: () => {}, focusPlace: () => {}, openSheet: () => {}, closeSheet: () => {}, refresh: () => {}, showTab: () => {}, addLive: () => {}, setBackend: () => {}, selectCity: async () => {}, sfSettled: async () => {}, sheetPad: () => ({}),
   };
   let sort: Sort = loadSort();
   let sheetCtl: SheetCtl | null = null;
@@ -225,17 +227,22 @@ export async function start(): Promise<void> {
     const { lng, lat, zoom } = app.view;
     return hoodFile ? cityInView(lng, lat, zoom, hoodFile.hoods, sfView) : zoom >= SF_ZOOM_IN && inBox(lng, lat, SF_BOX);
   };
+  let sfBusy = 0;
   async function syncSf(): Promise<void> {
-    if (pendingFit) return;
-    if (sfWant() && !hoodFile && !(await loadHoods())) return;
-    const want = sfWant();
-    if (want === sfView) return;
-    sfView = want;
-    if (!want) hood = null;
-    syncCityHash(); pushHoods(); pushMap(); recompute(); renderFeed();
+    sfBusy++;
+    try {
+      if (pendingFit) return;
+      if (sfWant() && !hoodFile && !(await loadHoods())) return;
+      const want = sfWant();
+      if (want === sfView) return;
+      sfView = want;
+      if (!want) hood = null;
+      syncCityHash(); pushHoods(); pushMap(); recompute(); renderFeed();
+    } finally { sfBusy--; }
   }
+  app.sfSettled = () => new Promise<void>((res) => { const t = (): void => { if (sfTimer || sfBusy) window.setTimeout(t, 20); else res(); }; t(); });
   /** Moves settle for 300 ms before the layer and section follow, so a pan along the border does not flicker them. */
-  const syncSfSoon = (): void => { window.clearTimeout(sfTimer); sfTimer = window.setTimeout(() => void syncSf(), 300); };
+  const syncSfSoon = (): void => { window.clearTimeout(sfTimer); sfTimer = window.setTimeout(() => { sfTimer = 0; void syncSf(); }, 300); };
   app.selectCity = async (opts = {}) => {
     if (!(await loadHoods()) || !hoodFile) { toast("Could not load the San Francisco neighborhoods"); return; }
     sfView = true;

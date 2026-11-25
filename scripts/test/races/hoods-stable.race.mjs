@@ -2,6 +2,9 @@
 import assert from "node:assert/strict";
 import { devices } from "playwright";
 
+// The map's move has reached the app (the view follows), and the debounce and any load have settled.
+const settle = async (p, lng) => { await p.waitForFunction((x) => Math.abs(window.__tbApp.view.lng - x) < 1e-3, lng); await p.waitForFunction(() => window.__tbApp.sfSettled().then(() => true)); };
+
 export default async function (page, base) {
   const ctx = await page.context().browser().newContext({ ...devices["iPhone 13"], hasTouch: true, reducedMotion: "reduce" });
   try {
@@ -24,8 +27,8 @@ export default async function (page, base) {
 
     const swings = await p.evaluate(() => { window.__sec = []; new MutationObserver(() => window.__sec.push(!!document.querySelector("#listBody .sfsec"))).observe(document.querySelector("#listBody"), { childList: true }); });
     for (const [dx, dy] of [[0.004, 0.003], [-0.006, 0.002], [0.003, -0.005]]) {
-      await p.evaluate(([x, y]) => { const m = window.__tbApp.ctl.map; const c = m.getCenter(); m.jumpTo({ center: [c.lng + x, c.lat + y] }); }, [dx, dy]);
-      await p.waitForTimeout(500);
+      const lng = await p.evaluate(([x, y]) => { const m = window.__tbApp.ctl.map; const c = m.getCenter(); m.jumpTo({ center: [c.lng + x, c.lat + y] }); return c.lng + x; }, [dx, dy]);
+      await settle(p, lng);
       assert.deepEqual(await head(), ["San Francisco"], "header text stable after a pan");
     }
     assert.ok((await p.evaluate(() => window.__sec)).every(Boolean), "the section was never absent while panning inside SF");
@@ -40,7 +43,7 @@ export default async function (page, base) {
     });
     for (const lng of [-122.505, -122.516, -122.506, -122.518, -122.504, -122.515]) {
       await p.evaluate((x) => window.__tbApp.ctl.map.jumpTo({ center: [x, 37.76] }), lng);
-      await p.waitForTimeout(450);
+      await settle(p, lng);
     }
     const t = await p.evaluate(() => window.__tog);
     assert.equal(t, 1, `visibility toggled ${t} times at the edge (want exactly 1: on, no flicker)`);

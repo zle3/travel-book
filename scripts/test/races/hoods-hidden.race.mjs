@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { devices } from "playwright";
 
 const vis = (p) => p.evaluate(() => { const m = window.__tbApp.ctl.map; return m.getLayer("hoods-line") ? m.getLayoutProperty("hoods-line", "visibility") : "none"; });
-const fly = (p, lng, lat, zoom) => p.evaluate(([x, y, z]) => window.__tbApp.ctl.map.jumpTo({ center: [x, y], zoom: z }), [lng, lat, zoom]);
+const fly = async (p, lng, lat, zoom) => { await p.evaluate(([x, y, z]) => window.__tbApp.ctl.map.jumpTo({ center: [x, y], zoom: z }), [lng, lat, zoom]); await p.waitForFunction(([x, y]) => Math.abs(window.__tbApp.view.lng - x) < 1e-3 && Math.abs(window.__tbApp.view.lat - y) < 1e-3, [lng, lat]); await p.evaluate(() => window.__tbApp.sfSettled()); };
 
 export default async function (page, base) {
   const ctx = await page.context().browser().newContext({ ...devices["iPhone 13"], hasTouch: true, reducedMotion: "reduce" });
@@ -15,7 +15,7 @@ export default async function (page, base) {
     await p.route("**/api/**", (r) => r.fulfill({ status: 503, body: "{}" }));
     await p.goto(base + "/?debug", { waitUntil: "load" });
     await p.waitForFunction(() => !!window.__tbApp?.ctl);
-    await p.waitForTimeout(700);
+    await p.evaluate(() => window.__tbApp.sfSettled());
     assert.equal(await p.locator("#listBody .sfsec").count(), 0, "no San Francisco section on Oakland");
     assert.equal(await vis(p), "none", "outline layer hidden outside SF");
     assert.ok(!/DataSF/.test((await p.locator("#credit").textContent()) ?? ""), "no DataSF credit while the layer is off");

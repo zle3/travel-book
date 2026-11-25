@@ -10,6 +10,8 @@ export default async function (page, base) {
     await p.goto(base + "/?debug", { waitUntil: "load" });
     await p.waitForFunction(() => !!window.__tbApp?.ctl);
     await p.locator("#listBody .sfsec .hrow").first().waitFor({ state: "attached" });
+    await p.waitForFunction(() => window.__tbApp.ctl.map.getLayer("hoods-line") && window.__tbApp.ctl.map.getLayoutProperty("hoods-line", "visibility") === "visible");
+    await p.waitForFunction(() => /DataSF/.test(document.getElementById("credit")?.textContent ?? ""));
     await p.locator(".htog").tap();
     const names = await p.locator("#listBody .hrow .rn").allTextContents();
     assert.equal(names.length, 41, "all 41 neighborhoods are listed");
