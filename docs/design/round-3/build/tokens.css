@@ -1,0 +1,110 @@
+/* Little Travel Book, design tokens (round 3, build-ready).
+   Theme rules:
+   - The app sets <html data-theme="dark|light"> in an inline head script: stored choice (localStorage "tb-theme") else "dark" (zachle.info default).
+   - The prefers-color-scheme block below only applies when NO data-theme is set (JS off), so it never fights the stored choice.
+   - Names match DESIGN.md where they exist; --control, --cta-*, --cat-*, --map-* are new. */
+:root {
+  /* colour: light (lavender-white ground, plum ink) */
+  --bg: #f6f5fb; --surface: #ffffff; --surface-2: #f1eff7;
+  --ink: #3b2832; --ink-2: #6c495b; --muted: #7f5a6e; --line: #e8e4ef;
+  --accent: #e11d48; --accent-ink: #ffffff; --accent-soft: #ffe4e6; --accent-soft-ink: #be123c; /* rose-600 + white = 4.7:1 */
+  --control: #6c495b; --control-ink: #ffffff;           /* selected chips, toggles, segmented controls (mauve-700) */
+  --heart: #f43f5e;                                     /* graphic only, never text */
+  --focus: #9b6b84; --sel: #e7d9e1; --scrim: rgba(45,30,40,.38);
+  --warn-bg: #fff4d6; --warn-ink: #6b4a00;
+  --been: #2f7d6b; --been-ink: #ffffff;                 /* been check badge, 4.9:1 */
+  --new-bg: #e3e8f4; --new-ink: #34457a;                /* "New / Added" owner-content badge */
+  --pick-bg: #ffe4e6; --pick-ink: #9f1239;              /* "Zach's pick" */
+  /* category groups: disc colours carry a white glyph at >= 4.3:1 in BOTH themes (same discs on satellite) */
+  --cat-food: #e11d48;      --cat-drinks: #6d5fc0;  --cat-shop: #8a5a76;   --cat-sights: #55689a;
+  --cat-outdoors: #3f8070;  --cat-activities: #92357c; --cat-stay: #6b6b85; --cat-other: #6f6c7c;
+  --cat-ring: #ffffff;
+  --michelin: #b45309; --michelin-soft: #fdf0dc; --michelin-ink: #8a3f06; /* Michelin layer + distinctions: amber, own rosette icon, never Michelin logos */
+  /* soft tints behind icons in lists (bg / glyph) */
+  --tint-food: #ffe4e6;      --tint-food-ink: #be123c;
+  --tint-drinks: #ebe8fa;    --tint-drinks-ink: #5a4bb0;
+  --tint-shop: #f3e6ee;      --tint-shop-ink: #84596f;
+  --tint-sights: #e3e8f4;    --tint-sights-ink: #43568a;
+  --tint-outdoors: #ddf0ea;  --tint-outdoors-ink: #2f6f60;
+  --tint-activities: #f4e3ee;--tint-activities-ink: #7a2f60;
+  --tint-stay: #e8e8ef;      --tint-stay-ink: #55557a;
+  --tint-other: #ebeaee;     --tint-other-ink: #5b5867;
+  /* map (standard style restyle values, consumed by map-config.js) */
+  --map-bg: #f1effa; --map-water: #d5daf3; --map-park: #e6e9f4; --map-road: #ffffff; --map-casing: #e0dbee;
+  --map-building: #e8e4f2; --map-label: #6f5f80; --map-halo: #ffffff;
+  --map-pin-halo: rgba(59,40,50,.22); --map-sel: #6c495b; --map-user: #2f6fd6;
+  /* type */
+  --font-sans: 'Figtree', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --fs-xs: .75rem; --fs-sm: .8125rem; --fs-md: .9375rem; --fs-base: 1rem; --fs-lg: 1.25rem; --fs-xl: 1.5rem; --fs-2xl: 2rem; --lh-body: 1.4;
+  --fw-regular: 500; --fw-medium: 600; --fw-bold: 700;
+  /* space (4px base), radius, touch */
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-5: 20px; --space-6: 24px; --space-7: 32px;
+  --radius-sm: 12px; --radius: 18px; --radius-lg: 26px; --radius-pill: 999px; --tap: 44px;
+  /* depth */
+  --shadow-sm: 0 1px 2px rgba(59,40,50,.08), 0 2px 8px rgba(59,40,50,.08);
+  --shadow: 0 1px 2px rgba(59,40,50,.08), 0 6px 20px rgba(59,40,50,.10);
+  --shadow-up: 0 -2px 24px rgba(59,40,50,.14);
+  /* motion (all collapse to 0 under prefers-reduced-motion, see bottom) */
+  --ease: cubic-bezier(.2,.9,.25,1);        /* sheets, fly-to: decelerate, no overshoot */
+  --ease-pop: cubic-bezier(.3,1.5,.5,1);    /* heart pop, toggle thumb: tiny overshoot */
+  --ease-out: cubic-bezier(.2,.8,.3,1);
+  --t-fast: 120ms; --t-base: 260ms; --t-sheet: 440ms; --t-pop: 360ms; --t-fly: 600ms;
+  /* layout */
+  --wrap: 1200px; --panel-w: 408px; --header-h: 64px;
+}
+:root[data-theme="dark"] { color-scheme: dark; }
+:root[data-theme="light"] { color-scheme: light; }
+
+/* dark values, declared once as a block and applied two ways */
+:root[data-theme="dark"] {
+  --bg: #1e1520; --surface: #2b1e29; --surface-2: #382836;
+  --ink: #f6ecf2; --ink-2: #dbc8d3; --muted: #c4a6b8; --line: #4a3643;
+  --accent: #fb7185; --accent-ink: #3b0a17; --accent-soft: rgba(251,113,133,.22); --accent-soft-ink: #fecdd3; /* rose-400 + dark ink = 6.3:1 */
+  --control: #d9c6d0; --control-ink: #3b2832;
+  --heart: #fb7185; --focus: #d9c6d0; --sel: #5a3a4f; --scrim: rgba(10,5,12,.6);
+  --warn-bg: #3d3010; --warn-ink: #ffd98a;
+  --been: #4fb89f; --been-ink: #0e2a24;
+  --new-bg: #2c3550; --new-ink: #c3cff5; --pick-bg: #4a2030; --pick-ink: #fecdd3;
+  --tint-food: #4a2030; --tint-food-ink: #fda4af; --tint-drinks: #34305a; --tint-drinks-ink: #c4bbf5;
+  --tint-shop: #43303d; --tint-shop-ink: #e0b5cc; --tint-sights: #2c3550; --tint-sights-ink: #b0c0ee;
+  --tint-outdoors: #25423b; --tint-outdoors-ink: #9bdcc4; --tint-activities: #442236; --tint-activities-ink: #e8a6cc;
+  --tint-stay: #38384f; --tint-stay-ink: #b4b4d8; --tint-other: #3c3a44; --tint-other-ink: #c4c1cf;
+  --map-bg: #2a1d28; --map-water: #1b1a2f; --map-park: #31232f; --map-road: #4c3848; --map-casing: #201520;
+  --map-building: #352633; --map-label: #c0a9b9; --map-halo: #2a1d28; --map-pin-halo: rgba(0,0,0,.4); --map-sel: #f6ecf2; --map-user: #6aa2ff;
+  --michelin: #b45309; --michelin-soft: #44301a; --michelin-ink: #fcd28d;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.3), 0 2px 8px rgba(0,0,0,.25);
+  --shadow: 0 1px 2px rgba(0,0,0,.35), 0 8px 24px rgba(0,0,0,.35); --shadow-up: 0 -2px 28px rgba(0,0,0,.45);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    --bg: #1e1520; --surface: #2b1e29; --surface-2: #382836;
+    --ink: #f6ecf2; --ink-2: #dbc8d3; --muted: #c4a6b8; --line: #4a3643;
+    --accent: #fb7185; --accent-ink: #3b0a17; --accent-soft: rgba(251,113,133,.22); --accent-soft-ink: #fecdd3;
+    --control: #d9c6d0; --control-ink: #3b2832; --heart: #fb7185; --focus: #d9c6d0; --sel: #5a3a4f; --scrim: rgba(10,5,12,.6);
+    --warn-bg: #3d3010; --warn-ink: #ffd98a; --been: #4fb89f; --been-ink: #0e2a24;
+    --new-bg: #2c3550; --new-ink: #c3cff5; --pick-bg: #4a2030; --pick-ink: #fecdd3;
+    --tint-food: #4a2030; --tint-food-ink: #fda4af; --tint-drinks: #34305a; --tint-drinks-ink: #c4bbf5;
+    --tint-shop: #43303d; --tint-shop-ink: #e0b5cc; --tint-sights: #2c3550; --tint-sights-ink: #b0c0ee;
+    --tint-outdoors: #25423b; --tint-outdoors-ink: #9bdcc4; --tint-activities: #442236; --tint-activities-ink: #e8a6cc;
+    --tint-stay: #38384f; --tint-stay-ink: #b4b4d8; --tint-other: #3c3a44; --tint-other-ink: #c4c1cf;
+    --map-bg: #2a1d28; --map-water: #1b1a2f; --map-park: #31232f; --map-road: #4c3848; --map-casing: #201520;
+    --map-building: #352633; --map-label: #c0a9b9; --map-halo: #2a1d28; --map-pin-halo: rgba(0,0,0,.4); --map-sel: #f6ecf2; --map-user: #6aa2ff;
+    --michelin-soft: #44301a; --michelin-ink: #fcd28d;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,.3), 0 2px 8px rgba(0,0,0,.25);
+    --shadow: 0 1px 2px rgba(0,0,0,.35), 0 8px 24px rgba(0,0,0,.35); --shadow-up: 0 -2px 28px rgba(0,0,0,.45);
+  }
+}
+/* group helper classes: set --tb (tint bg), --ti (tint glyph) and --dc (pin disc) from the group token */
+.g-food{--tb:var(--tint-food);--ti:var(--tint-food-ink);--dc:var(--cat-food)}
+.g-drinks{--tb:var(--tint-drinks);--ti:var(--tint-drinks-ink);--dc:var(--cat-drinks)}
+.g-shop{--tb:var(--tint-shop);--ti:var(--tint-shop-ink);--dc:var(--cat-shop)}
+.g-sights{--tb:var(--tint-sights);--ti:var(--tint-sights-ink);--dc:var(--cat-sights)}
+.g-outdoors{--tb:var(--tint-outdoors);--ti:var(--tint-outdoors-ink);--dc:var(--cat-outdoors)}
+.g-activities{--tb:var(--tint-activities);--ti:var(--tint-activities-ink);--dc:var(--cat-activities)}
+.g-stay{--tb:var(--tint-stay);--ti:var(--tint-stay-ink);--dc:var(--cat-stay)}
+.g-other{--tb:var(--tint-other);--ti:var(--tint-other-ink);--dc:var(--cat-other)}
+@media (prefers-reduced-motion: reduce) {
+  :root { --t-fast: 0ms; --t-base: 0ms; --t-sheet: 0ms; --t-pop: 0ms; --t-fly: 0ms; }
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Round 3 refined design</title>
+<style>
+  :root { --bg: rgb(249,249,251); --ink: rgb(45,45,63); --ink-2: rgb(79,79,110); --line: rgb(205,205,219); --accent: rgb(190,18,60); --chip: rgb(248,244,246); --card: rgb(255,255,255); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bg: rgb(30,21,32); --ink: rgb(246,236,242); --ink-2: rgb(219,200,211); --line: rgb(74,54,67); --accent: rgb(253,164,175); --chip: rgb(56,40,54); --card: rgb(43,30,41); } }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 1320px; margin: 0 auto; padding: 40px 16px 80px; }
+  h1 { font-size: 2rem; letter-spacing: -0.02em; margin: 0 0 8px; }
+  h2 { font-size: 1.375rem; margin: 40px 0 12px; }
+  .lead { color: var(--ink-2); max-width: 72ch; margin: 0 0 12px; }
+  .links { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+  .links a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; border: 1px solid var(--line); border-radius: 22px; color: var(--ink); text-decoration: none; background: var(--chip); }
+  .links a:hover { border-color: var(--accent); }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .shots { display: flex; gap: 16px; overflow-x: auto; padding-bottom: 8px; }
+  .shots img { height: 460px; width: auto; border-radius: 12px; border: 1px solid var(--line); background: var(--card); }
+  .board { width: 100%; height: auto; border-radius: 12px; border: 1px solid var(--line); }
+  ol { padding-left: 1.2em; } li { margin-bottom: 8px; max-width: 78ch; }
+  ::selection { background: var(--accent); color: var(--bg); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Little Travel Book, round 3</h1>
+  <p class="lead">This is A (map first), refined as your own daily explorer. It is dark by default, every place is its own pin, and the category icons appear as you zoom in. It adds quick filters, search that jumps the map to places, areas and addresses, and Locate me (your position never leaves the browser). The Michelin layer is off until you turn it on, and the site keeps working when the home server is offline. Hearts and picks are still there for anyone you send it to.</p>
+  <p class="lead">The Michelin tags and points shown are samples until the real data lands. The "owner-added" items are samples of how your Discord posts will look.</p>
+  <div class="links">
+    <a href="phone.html">Phone prototype</a>
+    <a href="desktop.html">Desktop prototype</a>
+    <a href="states.html">All states, live</a>
+    <a href="icons.html">Icons and key</a>
+    <a href="HANDOFF.md">Build spec (HANDOFF.md)</a>
+    <a href="backend/compose.yaml">Home backend stack</a>
+  </div>
+
+  <h2>Phone and desktop</h2>
+  <div class="shots">
+    <img src="phone-dark.png" alt="Phone, dark (default)">
+    <img src="phone-light.png" alt="Phone, light">
+    <img src="desktop-dark.png" alt="Desktop, dark">
+    <img src="desktop-light.png" alt="Desktop, light">
+    <img src="desktop-search.png" alt="Desktop, search with places, areas and addresses">
+    <img src="desktop-located.png" alt="Desktop, located">
+    <img src="desktop-michelin.png" alt="Desktop, Michelin layer on">
+  </div>
+
+  <h2>Every state</h2>
+  <img class="board" src="phone-states.png" alt="Twenty phone states: landing dark and light, offline, search, area pin, filters, been peek, dense zoom hint, picks, shows, four locate states, owner-added samples, Michelin chip and layer at national and city zoom">
+
+  <h2>Still yours to decide</h2>
+  <ol>
+    <li>Sign off on this design so the build can start.</li>
+    <li>Where should the map open: San Francisco, your last view, or Locate on first visit (that needs a tap)?</li>
+    <li>Which categories get a quick chip on the phone, and which live only in Filters?</li>
+    <li>Michelin colours: amber for stars and teal for Bib Gourmand stand apart from your palette on purpose. Keep them or bring them closer?</li>
+    <li>Should new places you add from Discord float to the top of the feed for a while, or just carry a "New" badge?</li>
+    <li>Basemap coverage: which regions get detailed tiles on your home server, and should there be a world overview map for Michelin abroad?</li>
+    <li>Photon's index for the whole US needs tens of GB of disk. Index the whole US or only your states?</li>
+    <li>Is the server-side fetch of 19hz.info for shows acceptable under "no third-party services"?</li>
+    <li>Wordmark and app icon: plain text for now. Do you want an icon designed?</li>
+  </ol>
+</main>
+</body>
+</html>

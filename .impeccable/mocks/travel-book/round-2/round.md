@@ -1,7 +1,7 @@
 # Round 2 (branch): clean, minimal, cute accents
 
 Task design-r1 · director kotone-design-director · 2026-11-24
-Status: 3 variations built and reviewed; overview docs/design/round-2/index.html; waiting on owner.
+Status: CLOSED (owner chose A). Was: 3 variations built and reviewed; overview docs/design/round-2/index.html; waiting on owner.
 
 ## Brief from the owner
 - Clean, minimal, highly usable app UI; cuteness only from accents (custom group icons, micro-animations, warm palette, rounded shapes, friendly copy). Concept motifs at most as tiny touches.
@@ -24,4 +24,4 @@ Status: 3 variations built and reviewed; overview docs/design/round-2/index.html
 - Open for round 3/build: one shared colour key and icon set (owner may mix: e.g. B's icons + C's layout); pin crowding at zoom 12-13 in dense SF (no clustering by owner rule; consider collision-free label priority, slightly smaller discs at z12).
 
 ## Owner's choice
-(pending)
+A, map first (relayed by the lead). Owner also became the primary user. Round 2 closed; see round-3.

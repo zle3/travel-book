@@ -1,0 +1,101 @@
+# Little Travel Book home backend: one Dockge stack.
+# Spec for the build (kotone-senior-web / backend owner). Not deployed by design-r1.
+# Only `api` is reachable from outside, through the cloudflared tunnel
+# (public hostname api.travel.zachle.info -> http://api:8787, configured as a
+# remote-managed tunnel in the Cloudflare dashboard). tiles and photon are internal.
+# Secrets live in .env (see .env.example). Never commit .env.
+
+name: travel-backend
+
+services:
+  api:
+    # Built from the backend repo (Node or Go; SQLite via WAL). Pin the tag on every release.
+    image: travel-api:0.1.0
+    build:
+      context: ./api
+    restart: unless-stopped
+    environment:
+      PORT: "8787"
+      DATABASE_PATH: /data/live.sqlite
+      ADMIN_TOKEN: ${ADMIN_TOKEN}              # Bearer token for /v1/admin/*
+      PROXY_SECRET: ${PROXY_SECRET}            # must match the Worker's X-Travel-Proxy header
+      SITE_ORIGIN: ${SITE_ORIGIN}              # CORS allow-list, e.g. https://travel.zachle.info
+      TILES_UPSTREAM: http://tiles:8080        # API proxies /v1/tiles/* here and adds Cache-Control
+      PHOTON_UPSTREAM: http://photon:2322      # API proxies /v1/geocode here
+      DISCORD_PUBLIC_KEY: ${DISCORD_PUBLIC_KEY:-}  # later: interactions signature check
+    volumes:
+      - api_data:/data
+    healthcheck:
+      # The api image must ship wget (e.g. alpine base) or swap this for the app's own
+      # `healthcheck` subcommand. /v1/health returns 200 even when photon/tiles are down
+      # (it reports them as degraded), so a slow photon index never takes the api down.
+      test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8787/v1/health"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 10s
+    # No depends_on photon/tiles: the api must start and serve live data while photon
+    # is still indexing (first run takes a long time).
+    networks: [backend]
+
+  tiles:
+    # Serves every *.pmtiles in /data as /{name}/{z}/{x}/{y}.mvt and /{name}.json (TileJSON).
+    image: protomaps/go-pmtiles:v1.31.2
+    restart: unless-stopped
+    command: ["serve", "/data", "--port=8080", "--public-url=https://api.travel.zachle.info/v1/tiles"]
+    # CORS and Cache-Control for tiles are set by the api proxy (/v1/tiles/* is public, see HANDOFF §5b).
+    volumes:
+      - tiles_data:/data:ro                     # put basemap-v<date>.pmtiles here (regional extract)
+    # The image has no shell or HTTP client, so there is no in-container healthcheck;
+    # the api healthcheck reports tiles reachability in /v1/health instead.
+    networks: [backend]
+
+  photon:
+    # Self-hosted Photon (unofficial image). REGION picks the prebuilt index (e.g. "us").
+    # Verify before first run: tag 2.5.0, data path /photon/data and REGION=us (prebuilt index).
+    image: rtuszik/photon-docker:2.5.0
+    restart: unless-stopped
+    environment:
+      REGION: ${PHOTON_REGION:-us}
+      UPDATE_STRATEGY: ${PHOTON_UPDATE_STRATEGY:-SEQUENTIAL}
+      PUID: ${PUID:-1000}
+      PGID: ${PGID:-1000}
+    volumes:
+      - photon_data:/photon/data
+    healthcheck:
+      # Verify the image ships curl or wget; swap the command if not.
+      test: ["CMD-SHELL", "wget -qO- 'http://127.0.0.1:2322/api?q=test&limit=1' >/dev/null || exit 1"]
+      interval: 60s
+      timeout: 5s
+      retries: 5
+      start_period: 15m                        # first index download is large
+    networks: [backend]
+
+  cloudflared:
+    image: cloudflare/cloudflared:2026.11.2
+    restart: unless-stopped
+    command: ["tunnel", "--no-autoupdate", "--metrics", "0.0.0.0:2000", "run"]
+    environment:
+      TUNNEL_TOKEN: ${TUNNEL_TOKEN}
+    # Distroless image: no in-container healthcheck. Watch /ready on :2000 from the host if wanted.
+    depends_on:
+      api:
+        condition: service_healthy
+    networks: [backend]
+
+  # discord-bot:            # added later as another service in this stack
+  #   image: travel-bot:0.1.0
+  #   restart: unless-stopped
+  #   environment:
+  #     DISCORD_TOKEN: ${DISCORD_TOKEN}
+  #     API_BASE: http://api:8787
+  #     ADMIN_TOKEN: ${ADMIN_TOKEN}
+  #   networks: [backend]
+
+volumes:
+  api_data:
+  tiles_data:
+  photon_data:
+
+networks:
+  backend:
