@@ -14,10 +14,12 @@
     "deploy:production": "scripts/deploy.sh production"
   },
   "dependencies": {
-    "astro": "7.4.1"
+    "astro": "7.4.1",
+    "maplibre-gl": "4.7.1"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.12",
+    "@protomaps/basemaps": "5.7.2",
     "@types/node": "22.20.5",
     "playwright": "1.56.1",
     "typescript": "6.0.3",

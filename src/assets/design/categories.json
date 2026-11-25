@@ -1,0 +1,327 @@
+{
+ "_about": "Category key shared by chips, pins, rows, filters and the Key. icon = <symbol> id in icons.svg; color/tint = custom properties in tokens.css. Order = display order.",
+ "groups": [
+  {
+   "id": "food",
+   "label": "Food",
+   "chip": "Food",
+   "icon": "c-casual-food",
+   "color": "--cat-food",
+   "tint": "--tint-food",
+   "tintInk": "--tint-food-ink",
+   "hex": "#e11d48"
+  },
+  {
+   "id": "drinks",
+   "label": "Drinks and Nightlife",
+   "chip": "Drinks",
+   "icon": "c-tea-drinks",
+   "color": "--cat-drinks",
+   "tint": "--tint-drinks",
+   "tintInk": "--tint-drinks-ink",
+   "hex": "#6d5fc0"
+  },
+  {
+   "id": "shop",
+   "label": "Shopping",
+   "chip": "Shopping",
+   "icon": "c-shopping",
+   "color": "--cat-shop",
+   "tint": "--tint-shop",
+   "tintInk": "--tint-shop-ink",
+   "hex": "#8a5a76"
+  },
+  {
+   "id": "sights",
+   "label": "Sightseeing and Culture",
+   "chip": "Sights",
+   "icon": "c-tourist-attractions",
+   "color": "--cat-sights",
+   "tint": "--tint-sights",
+   "tintInk": "--tint-sights-ink",
+   "hex": "#55689a"
+  },
+  {
+   "id": "outdoors",
+   "label": "Outdoors",
+   "chip": "Outdoors",
+   "icon": "c-parks",
+   "color": "--cat-outdoors",
+   "tint": "--tint-outdoors",
+   "tintInk": "--tint-outdoors-ink",
+   "hex": "#3f8070"
+  },
+  {
+   "id": "activities",
+   "label": "Activities and Recreation",
+   "chip": "Activities",
+   "icon": "c-activities",
+   "color": "--cat-activities",
+   "tint": "--tint-activities",
+   "tintInk": "--tint-activities-ink",
+   "hex": "#92357c"
+  },
+  {
+   "id": "stay",
+   "label": "Travel Logistics",
+   "chip": "Hotels and parking",
+   "icon": "c-hotels",
+   "color": "--cat-stay",
+   "tint": "--tint-stay",
+   "tintInk": "--tint-stay-ink",
+   "hex": "#6b6b85"
+  },
+  {
+   "id": "other",
+   "label": "Other lists",
+   "chip": null,
+   "icon": "c-other",
+   "color": "--cat-other",
+   "tint": "--tint-other",
+   "tintInk": "--tint-other-ink",
+   "hex": "#6f6c7c"
+  }
+ ],
+ "categories": [
+  {
+   "id": "breakfast-brunch",
+   "label": "Breakfast/Brunch",
+   "group": "food",
+   "icon": "c-breakfast-brunch",
+   "color": "--cat-food",
+   "tint": "--tint-food"
+  },
+  {
+   "id": "casual-food",
+   "label": "Casual Food",
+   "group": "food",
+   "icon": "c-casual-food",
+   "color": "--cat-food",
+   "tint": "--tint-food"
+  },
+  {
+   "id": "sit-down-restaurants",
+   "label": "Sit Down Restaurants",
+   "group": "food",
+   "icon": "c-sit-down-restaurants",
+   "color": "--cat-food",
+   "tint": "--tint-food"
+  },
+  {
+   "id": "fine-dining",
+   "label": "Fine Dining",
+   "group": "food",
+   "icon": "c-fine-dining",
+   "color": "--cat-food",
+   "tint": "--tint-food"
+  },
+  {
+   "id": "bakery",
+   "label": "Bakery",
+   "group": "food",
+   "icon": "c-bakery",
+   "color": "--cat-food",
+   "tint": "--tint-food"
+  },
+  {
+   "id": "desserts",
+   "label": "Desserts",
+   "group": "food",
+   "icon": "c-desserts",
+   "color": "--cat-food",
+   "tint": "--tint-food"
+  },
+  {
+   "id": "tea-drinks",
+   "label": "Tea/Drinks",
+   "group": "drinks",
+   "icon": "c-tea-drinks",
+   "color": "--cat-drinks",
+   "tint": "--tint-drinks"
+  },
+  {
+   "id": "bar-club",
+   "label": "Bar/Club",
+   "group": "drinks",
+   "icon": "c-bar-club",
+   "color": "--cat-drinks",
+   "tint": "--tint-drinks"
+  },
+  {
+   "id": "shopping",
+   "label": "Shopping",
+   "group": "shop",
+   "icon": "c-shopping",
+   "color": "--cat-shop",
+   "tint": "--tint-shop"
+  },
+  {
+   "id": "clothing",
+   "label": "Clothing",
+   "group": "shop",
+   "icon": "c-clothing",
+   "color": "--cat-shop",
+   "tint": "--tint-shop"
+  },
+  {
+   "id": "grocery",
+   "label": "Grocery",
+   "group": "shop",
+   "icon": "c-grocery",
+   "color": "--cat-shop",
+   "tint": "--tint-shop"
+  },
+  {
+   "id": "points-of-interest",
+   "label": "Points of Interest",
+   "group": "sights",
+   "icon": "c-points-of-interest",
+   "color": "--cat-sights",
+   "tint": "--tint-sights"
+  },
+  {
+   "id": "tourist-attractions",
+   "label": "Tourist Attractions",
+   "group": "sights",
+   "icon": "c-tourist-attractions",
+   "color": "--cat-sights",
+   "tint": "--tint-sights"
+  },
+  {
+   "id": "museums",
+   "label": "Museums",
+   "group": "sights",
+   "icon": "c-museums",
+   "color": "--cat-sights",
+   "tint": "--tint-sights"
+  },
+  {
+   "id": "venues",
+   "label": "Venues",
+   "group": "sights",
+   "icon": "c-venues",
+   "color": "--cat-sights",
+   "tint": "--tint-sights"
+  },
+  {
+   "id": "roadside-destinations",
+   "label": "Roadside Destinations",
+   "group": "sights",
+   "icon": "c-roadside-destinations",
+   "color": "--cat-sights",
+   "tint": "--tint-sights"
+  },
+  {
+   "id": "parks",
+   "label": "Parks",
+   "group": "outdoors",
+   "icon": "c-parks",
+   "color": "--cat-outdoors",
+   "tint": "--tint-outdoors"
+  },
+  {
+   "id": "hiking",
+   "label": "Hiking",
+   "group": "outdoors",
+   "icon": "c-hiking",
+   "color": "--cat-outdoors",
+   "tint": "--tint-outdoors"
+  },
+  {
+   "id": "trails",
+   "label": "Trails",
+   "group": "outdoors",
+   "icon": "c-trails",
+   "color": "--cat-outdoors",
+   "tint": "--tint-outdoors"
+  },
+  {
+   "id": "activities",
+   "label": "Activities",
+   "group": "activities",
+   "icon": "c-activities",
+   "color": "--cat-activities",
+   "tint": "--tint-activities"
+  },
+  {
+   "id": "sports",
+   "label": "Sports",
+   "group": "activities",
+   "icon": "c-sports",
+   "color": "--cat-activities",
+   "tint": "--tint-activities"
+  },
+  {
+   "id": "guns",
+   "label": "Guns",
+   "group": "activities",
+   "icon": "c-guns",
+   "color": "--cat-activities",
+   "tint": "--tint-activities"
+  },
+  {
+   "id": "hotels",
+   "label": "Hotels",
+   "group": "stay",
+   "icon": "c-hotels",
+   "color": "--cat-stay",
+   "tint": "--tint-stay"
+  },
+  {
+   "id": "parking-lots",
+   "label": "Parking Lots",
+   "group": "stay",
+   "icon": "c-parking-lots",
+   "color": "--cat-stay",
+   "tint": "--tint-stay"
+  }
+ ],
+ "uncategorized": {
+  "id": "other",
+  "label": "Other lists (uncategorized)",
+  "group": "other",
+  "icon": "c-other",
+  "color": "--cat-other",
+  "hex": "#6f6c7c"
+ },
+ "awards": [
+  {
+   "id": "star",
+   "codes": [
+    "3s",
+    "2s",
+    "1s"
+   ],
+   "label": "Michelin Star",
+   "icon": "u-award",
+   "hex": "#b45309"
+  },
+  {
+   "id": "bib",
+   "codes": [
+    "bib"
+   ],
+   "label": "Bib Gourmand",
+   "icon": "u-award",
+   "hex": "#0e7490"
+  },
+  {
+   "id": "green",
+   "codes": [
+    "green"
+   ],
+   "label": "Green Star",
+   "icon": "u-award",
+   "hex": "#15803d"
+  },
+  {
+   "id": "sel",
+   "codes": [
+    "sel"
+   ],
+   "label": "Selected",
+   "icon": "u-award",
+   "hex": "#78716c"
+  }
+ ]
+}
