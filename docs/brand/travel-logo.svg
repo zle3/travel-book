@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" overflow="visible">
+  <defs>
+    <radialGradient id="tile" cx="50%" cy="45%" r="72%">
+      <stop offset="0" stop-color="#e4d6d9"/>
+      <stop offset=".55" stop-color="#d9c7cb"/>
+      <stop offset="1" stop-color="#cbafb6"/>
+    </radialGradient>
+    <g id="plane" transform="rotate(-24 256 256) translate(276 240) scale(1.22) translate(-262 -256)">
+      <rect x="104" y="226" width="300" height="60" rx="30"/>
+      <circle cx="388" cy="256" r="30"/>
+      <path d="M236 244 L212 126 L262 122 L326 244 Z"/>
+      <path d="M236 268 L212 386 L262 390 L326 268 Z"/>
+      <path d="M134 244 L112 184 L146 180 L176 244 Z"/>
+      <path d="M134 268 L112 328 L146 332 L176 268 Z"/>
+    </g>
+    <filter id="soft" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="1.1"/></filter>
+  </defs>
+  <rect x="16" y="16" width="480" height="480" rx="74" fill="url(#tile)"/>
+  <!-- faint light halo, darker blue-grey rim, then the body -->
+  <use href="#plane" fill="#f1e8ee" stroke="#f1e8ee" stroke-width="40" stroke-linejoin="round" opacity=".75" filter="url(#soft)"/>
+  <use href="#plane" fill="#7685a6" stroke="#7685a6" stroke-width="33" stroke-linejoin="round" filter="url(#soft)"/>
+  <use href="#plane" fill="#a5bad6" stroke="#a5bad6" stroke-width="28" stroke-linejoin="round"/>
+</svg>
