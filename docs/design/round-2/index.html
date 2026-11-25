@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Round 2 variations</title>
+<style>
+  :root {
+    --bg: rgb(249,249,251); --ink: rgb(45,45,63); --ink-2: rgb(79,79,110); --line: rgb(205,205,219);
+    --accent: rgb(190,18,60); --chip: rgb(248,244,246); --card: rgb(255,255,255);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg: rgb(30,24,30); --ink: rgb(249,249,251); --ink-2: rgb(205,205,219); --line: rgb(79,79,110); --accent: rgb(253,164,175); --chip: rgb(59,40,50); --card: rgb(45,32,40); }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 16px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 1320px; margin: 0 auto; padding: 40px 16px 80px; }
+  h1 { font-size: 2rem; letter-spacing: -0.02em; margin: 0 0 8px; }
+  .lead { color: var(--ink-2); max-width: 72ch; margin: 0 0 12px; }
+  .dir { border-top: 1px solid var(--line); padding: 32px 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; }
+  @media (min-width: 900px) { .dir { grid-template-columns: 320px minmax(0, 1fr); } }
+  h2 { font-size: 1.5rem; margin: 0 0 4px; letter-spacing: -0.01em; }
+  .tag { display: inline-block; font-size: .875rem; color: var(--ink-2); margin-bottom: 12px; }
+  .pitch { margin: 0 0 12px; }
+  .risk { color: var(--ink-2); font-size: .9375rem; }
+  .links { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+  .links a { display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; border: 1px solid var(--line); border-radius: 22px; color: var(--ink); text-decoration: none; background: var(--chip); }
+  .links a:hover { border-color: var(--accent); }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .shots { display: flex; gap: 16px; overflow-x: auto; padding-bottom: 8px; }
+  .shots img { height: 440px; width: auto; border-radius: 12px; border: 1px solid var(--line); background: var(--card); }
+  ol { padding-left: 1.2em; } li { margin-bottom: 8px; max-width: 75ch; }
+  ::selection { background: var(--accent); color: var(--bg); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Little Travel Book, round 2</h1>
+  <p class="lead">This round follows your notes: clean and easy to use, with the cuteness in the icons, the little animations and the colours. Every place is its own pin with its category icon, and nothing clusters. Moving the map updates the list, and tapping a pin opens a peek you can swipe through. "My lists / Other lists" switches the source, and Other-list places use the same categories as yours.</p>
+  <p class="lead">All three use the same real data: places from your Google Maps lists with their real categories, and shows from a 19hz.info snapshot of 24 Nov. They differ in layout and in how playful the accents are. Tap the hearts on the phone pages to see the animation.</p>
+
+  <section class="dir" id="a">
+    <div>
+      <h2>A · Map first, subtle</h2>
+      <span class="tag">Opens on the map · calm accents</span>
+      <p class="pitch">She lands on the map with an Apple-Maps-style sheet, which slides up into the list. It is calm and quiet, with rose saved for hearts and the send button.</p>
+      <p class="risk">Risk: the most "app-like" of the three. The greeting and the charm sit in the sheet, so the first impression is a map.</p>
+      <div class="links"><a href="a-map-first/phone.html">Phone</a><a href="a-map-first/desktop.html">Desktop</a><a href="a-map-first/icons.html">Icons and key</a><a href="a-map-first/notes.md">Notes</a></div>
+    </div>
+    <div class="shots"><img src="a-map-first/phone-light.png" alt="A, phone, light"><img src="a-map-first/phone-dark.png" alt="A, phone, dark"><img src="a-map-first/phone-states.png" alt="A, phone states"><img src="a-map-first/desktop-light.png" alt="A, desktop, light"><img src="a-map-first/desktop-dark.png" alt="A, desktop, dark"></div>
+  </section>
+
+  <section class="dir" id="b">
+    <div>
+      <h2>B · List first, playful</h2>
+      <span class="tag">Opens on a friendly feed · bouncier accents</span>
+      <p class="pitch">She lands on a warm feed with big icon tiles as quick filters and a floating Map button. Hearts burst into tiny hearts and the picks button wiggles.</p>
+      <p class="risk">Risk: the map is one tap away, so she might not discover it straight away.</p>
+      <div class="links"><a href="b-list-first/phone.html">Phone</a><a href="b-list-first/desktop.html">Desktop</a><a href="b-list-first/icons.html">Icons and key</a><a href="b-list-first/notes.md">Notes</a></div>
+    </div>
+    <div class="shots"><img src="b-list-first/phone-light.png" alt="B, phone, light"><img src="b-list-first/phone-dark.png" alt="B, phone, dark"><img src="b-list-first/phone-states.png" alt="B, phone states"><img src="b-list-first/desktop-light.png" alt="B, desktop, light"><img src="b-list-first/desktop-dark.png" alt="B, desktop, dark"></div>
+  </section>
+
+  <section class="dir" id="c">
+    <div>
+      <h2>C · Map and list together, tab bar</h2>
+      <span class="tag">A map card above the feed · medium accents</span>
+      <p class="pitch">A map card sits above the feed and expands to full screen, with Places, Shows and Picks in a tab bar. It shows the map and the list at once, with the accents in between A and B.</p>
+      <p class="risk">Risk: the small map card is crowded until she zooms in or filters.</p>
+      <div class="links"><a href="c-hybrid/phone.html">Phone</a><a href="c-hybrid/desktop.html">Desktop</a><a href="c-hybrid/icons.html">Icons and key</a><a href="c-hybrid/notes.md">Notes</a></div>
+    </div>
+    <div class="shots"><img src="c-hybrid/phone-light.png" alt="C, phone, light"><img src="c-hybrid/phone-dark.png" alt="C, phone, dark"><img src="c-hybrid/phone-states.png" alt="C, phone states"><img src="c-hybrid/desktop-light.png" alt="C, desktop, light"><img src="c-hybrid/desktop-dark.png" alt="C, desktop, dark"></div>
+  </section>
+
+  <section class="dir" id="questions">
+    <div><h2>To pick, tell us</h2></div>
+    <ol>
+      <li>Should she land on the map (A), the list (B), or both at once (C)?</li>
+      <li>How playful should the accents be: subtle (A), medium (C) or bouncy (B)?</li>
+      <li>Which icon set reads best on the map? Mixing is fine, for example B's icons with C's layout.</li>
+      <li>Should picks be a bottom sheet (A, B) or their own tab (C)?</li>
+      <li>What should the default feed order be: a mix of categories with your notes first (current), nearest to the map centre, or A to Z?</li>
+      <li>Should it open in dark or light?</li>
+    </ol>
+  </section>
+</main>
+</body>
+</html>

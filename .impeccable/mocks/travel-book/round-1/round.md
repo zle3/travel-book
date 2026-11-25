@@ -1,7 +1,7 @@
 # Round 1 (diverge): Little Travel Book, whole-site world
 
 Task design-r1 · director kotone-design-director · 2026-11-24
-Status: 4 prototypes done and reviewed; decision page served (key acd43254, http://127.0.0.1:42659/); static board docs/design/round-1/index.html; waiting on owner.
+Status: CLOSED (owner chose clean + cute accents; see round-2). Was: 4 prototypes done and reviewed; decision page served (key acd43254, http://127.0.0.1:42659/); static board docs/design/round-1/index.html; waiting on owner.
 
 ## Frame
 - Surface: the whole site's visual world (new world; DESIGN.md is the neutral starter). Mode: Experience for the world and landing (the gift leads); the map, list and filter screens follow Operate discipline inside that world.
@@ -39,8 +39,10 @@ Status: 4 prototypes done and reviewed; decision page served (key acd43254, http
 - Old Sacramento Waterfront (curated, been) was given approximate coordinates in A and B to demo "hide been". It is labeled "Sacramento picks" and disclosed in notes.md.
 - Detector advisories common to all: white text on rose-500 is 3.7:1 (filled buttons need rose-600/700 under white text); decorative grid/stripe backgrounds (B, C) are flagged as generated-UI tells and should become authored textures in round 2. Ghost hearts in dark mode (A) need 3:1 against the cloth for the control boundary.
 
-## Owner's choice
-(pending)
+## Owner's choice (relayed by the lead, 2026-11-24)
+"It doesn't need to be this stylized. It should be clean and minimal and easy to use, but with cute keynotes such as icons, animations, colors, etc."
+Read as: the standing exit (clean category-standard app UI) taken, with warmth carried only by accents. All four concept worlds dropped as the base; stamp/sticker/seal motifs survive at most as tiny touches. Telemetry recorded as canon.
+Follow-up: "I don't want tiles to group, I want to be able to easily explore." No marker clustering, no grouped sections.
 
 ## Carries forward to round 2 whatever wins
 - Real data only; sample.json is the scrubbed source. Fonts self-hosted in the build.
