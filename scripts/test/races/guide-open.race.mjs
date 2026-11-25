@@ -15,6 +15,7 @@ export default async function (page, base) {
     await card.tap();
     await p.locator("#listBody .ghead h2").waitFor();
     assert.equal(await p.locator("#listBody .ghead h2").textContent(), "Inner Richmond");
+    assert.equal(await p.evaluate(() => document.activeElement?.tagName + ":" + document.activeElement?.textContent), "H2:Inner Richmond", "focus moves to the guide title");
     assert.match((await p.locator("#listBody .ganchor").textContent()) ?? "", /Volcano Curry/, "the anchor is at the top");
     assert.ok((await p.locator("#listBody .ghead .gsub").textContent())?.length, "subtitle shown");
     const rows = await p.locator("#listBody .row").count();

@@ -14,6 +14,7 @@ export default async function (page, base) {
     assert.match(p.url(), /#guide=inner-richmond$/, "the guide has a shareable link");
     await p.locator('#listBody [data-act="guideBack"]').tap();
     await p.locator("#listBody .gcard").first().waitFor();
+    assert.equal(await p.evaluate(() => document.activeElement?.getAttribute("data-guide")), "inner-richmond", "focus returns to the card that opened the guide");
     assert.equal(await p.locator("#listBody .ghead").count(), 0, "guide header gone");
     assert.ok(await p.locator("#listBody .row").count() > 5, "the normal feed is back");
     assert.ok(!/guide=/.test(p.url()), "the link is cleared");

@@ -132,7 +132,7 @@ export async function start(): Promise<void> {
   function guideHtml(g: ResolvedGuide): string {
     const row = (r: ResolvedItem) => rowHtml(cfg, { ...(r.place as Place), note: r.note || (r.place as Place).note }, r.fromAnchorM, picked(r.place.id), edition, false);
     const a = g.anchor;
-    return `<div class="ghead"><button class="gback" data-act="guideBack" type="button">${icon("u-chev-l")}Back to places</button><h2>${esc(g.title)}</h2><p class="gsub">${esc(g.subtitle)}</p>${a ? `<p class="ganchor">${icon("u-pin")}<span>Around <b>${esc(a.place.n)}</b>${a.note ? `, ${esc(a.note)}` : ""}</span></p>` : ""}</div>${g.groups.map((gr) => `<h3 class="gh">${esc(gr.title)}</h3>${gr.items.map(row).join("")}`).join("")}<div class="hid"></div>`;
+    return `<div class="ghead"><button class="gback" data-act="guideBack" type="button">${icon("u-chev-l")}Back to places</button><h2 tabindex="-1">${esc(g.title)}</h2><p class="gsub">${esc(g.subtitle)}</p>${a ? `<p class="ganchor">${icon("u-pin")}<span>Around <b>${esc(a.place.n)}</b>${a.note ? `, ${esc(a.note)}` : ""}</span></p>` : ""}</div>${g.groups.map((gr) => `<h3 class="gh">${esc(gr.title)}</h3>${gr.items.map(row).join("")}`).join("")}<div class="hid"></div>`;
   }
   function paintGuide(): void {
     if (!guide) return;
@@ -143,20 +143,25 @@ export async function start(): Promise<void> {
     $("#hello").hidden = true;
     $("#sheet").classList.add("guiding");
   }
-  function openGuide(id: string): void {
+  function openGuide(id: string, focus = true): void {
     const g = guides.find((x) => x.id === id);
     if (!g) return;
     guide = g; selected = null; showPeek();
     history.replaceState(null, "", `${location.pathname}${location.search}#guide=${g.id}`);
     paintGuide(); renderChips(); topH(); pushMap();
+    // The list was replaced under the visitor's finger: move focus to the new view's title (the count above is a polite live region, so it is announced).
+    if (focus) $<HTMLElement>(".ghead h2", body).focus({ preventScroll: true });
     if (g.bounds) app.ctl?.fitBounds(g.bounds, sheetPad());
   }
   function closeGuide(): void {
     if (!guide) return;
+    const id = guide.id;
     guide = null; selected = null; showPeek();
     $("#sheet").classList.remove("guiding");
     history.replaceState(null, "", location.pathname + location.search);
     recompute(); renderFeed(); pushMap();
+    // Back to where they were: the card that opened the guide .
+    body.querySelector<HTMLElement>(`.gcard[data-guide="${id}"]`)?.focus({ preventScroll: true });
   }
 
   function renderChips(): void {
@@ -460,7 +465,7 @@ ${cfg.manifest.hasBeen ? `<label class="sw"><span class="nm">Hide places I have 
   syncDevice(); topH(); layoutSheet();
   addEventListener("resize", topH);
   recompute(); renderFeed(); pills();
-  if (guideFromHash) openGuide(guideFromHash);
+  if (guideFromHash) openGuide(guideFromHash, false);
   if (app.shared.length) { toast(`${app.shared.length} picks shared with you. Open Picks to see them.`); }
 
   const mapEl = $("#map");
