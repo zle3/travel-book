@@ -2,7 +2,7 @@
  * No clustering, no DOM markers. Loaded by dynamic import right after the shell paints. */
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-import { ATTRIBUTION, AWARD, FLAVOR, creditText, PALETTE, ZOOM, clearUser, loadMichelinImages, loadPinImages, michelinBadgeLayer, michelinLayers, pinLayers, pulseUser, registerPinImages, setUser, SEARCH_PIN_SVG } from "../../assets/design/map-config.js";
+import { ATTRIBUTION, AWARD, FLAVOR, creditText, hoodLayers, PALETTE, ZOOM, clearUser, loadMichelinImages, loadPinImages, michelinBadgeLayer, michelinLayers, pinLayers, pulseUser, registerPinImages, setUser, SEARCH_PIN_SVG } from "../../assets/design/map-config.js";
 import { LOW_MAX_ZOOM, tilesForBounds } from "../data/michelin";
 import type { Config, Place, View } from "./store";
 import { reducedMotion } from "./store";
@@ -19,6 +19,8 @@ export interface MapEvents {
   onMove(v: View, bounds: [number, number, number, number]): void;
   onPlace(id: string): void;
   onMichelin(p: MichelinPoint): void;
+  /** A tap on a neighborhood outline or fill (only while the San Francisco layer is shown). */
+  onHood(slug: string): void;
   onBackground(): void;
   onHomeFailing(): void;
   onReady(): void;
@@ -28,6 +30,10 @@ export interface MapEvents {
 export interface MapController {
   map: maplibregl.Map;
   setPlaces(list: Place[], hearted: Set<string>): void;
+  /** Show the neighborhood layer with this data, or hide it (null). */
+  setHoods(hoods: GeoJSON.FeatureCollection | null, labels?: GeoJSON.FeatureCollection): void;
+  /** Highlight one neighborhood (null clears). */
+  setHood(slug: string | null): void;
   setMichelin(on: boolean, bests: string[], currentOnly: boolean, edition: number): void;
   flyTo(lng: number, lat: number, zoom: number, pad?: Pad): void;
   fitBounds(b: [number, number, number, number], pad?: Pad): void;
@@ -56,9 +62,11 @@ export async function createMap(el: HTMLElement, cfg: Config, start: View, theme
 
   let placesFC: GeoJSON.FeatureCollection = { type: "FeatureCollection", features: [] };
   let michFC: GeoJSON.FeatureCollection = { type: "FeatureCollection", features: [] };
+  let hoodsFC: GeoJSON.FeatureCollection = { type: "FeatureCollection", features: [] }, hoodLabelsFC: GeoJSON.FeatureCollection = { type: "FeatureCollection", features: [] };
+  let hoodsOn = false, selHood = "";
   let michOn = false, michFilter: unknown = null, radarOn = false, homeOn = true, curTheme = theme;
   /** The credit line under the map lists only the sources that are showing (the licence duty for OpenStreetMap data). */
-  const writeCredit = () => { const c = document.getElementById("credit"); if (c) c.textContent = creditText({ michelin: michOn, radar: radarOn }); };
+  const writeCredit = () => { const c = document.getElementById("credit"); if (c) c.textContent = creditText({ michelin: michOn, radar: radarOn, hoods: hoodsOn }); };
   writeCredit();
   const homeLayers: Record<string, unknown[]> = {};
   const loadHome = async (t: "light" | "dark") => homeLayers[t] ?? (homeLayers[t] = await fetch(`/style/home-${t}.json`).then((r) => r.json()).catch(() => []));
@@ -72,6 +80,7 @@ export async function createMap(el: HTMLElement, cfg: Config, start: View, theme
       { id: "w-land", type: "fill", source: "world-land", paint: { "fill-color": fl.earth } },
       { id: "w-cities", type: "symbol", source: "world-cities", maxzoom: 8, layout: { "text-field": ["get", "name"], "text-font": ["noto-regular"], "text-size": 11, "text-optional": true, "text-max-width": 8, "symbol-sort-key": ["get", "r"] }, paint: { "text-color": pal.text, "text-halo-color": pal.halo, "text-halo-width": 1.4 } },
       ...home.map((l) => (homeOn ? l : { ...l, layout: { ...(l.layout ?? {}), visibility: "none" } })),
+      ...hoodLayers({ theme: t, on: hoodsOn, sel: selHood }),
       ...michelinLayers(michOn, michFilter).map((l: Record<string, unknown>) => { const { ["source-layer"]: _s, ...rest } = l; return rest; }),
       ...pinLayers({ theme: t, hasGlyphs: true }),
       ...michelinBadgeLayer(),
@@ -83,6 +92,8 @@ export async function createMap(el: HTMLElement, cfg: Config, start: View, theme
         "world-land": { type: "geojson", data: "/basemap/land.json" },
         "world-cities": { type: "geojson", data: "/basemap/cities.json" },
         "base-home": { type: "vector", tiles: [`${API_BASE}/v1/tiles/${TILESET}/{z}/{x}/{y}.mvt`], minzoom: HOME_MIN_ZOOM, maxzoom: 15, attribution: ATTRIBUTION.standard },
+        hoods: { type: "geojson", data: hoodsFC },
+        "hood-labels": { type: "geojson", data: hoodLabelsFC },
         places: { type: "geojson", data: placesFC },
         michelin: { type: "geojson", data: michFC },
         user: { type: "geojson", data: { type: "FeatureCollection", features: [] } },
@@ -160,7 +171,10 @@ export async function createMap(el: HTMLElement, cfg: Config, start: View, theme
     const mich = f.find((x) => x.layer.id.startsWith("mich-"));
     if (place) ev.onPlace(String(place.properties!.id));
     else if (mich) { const p = mich.properties!; const c = (mich.geometry as GeoJSON.Point).coordinates; ev.onMichelin({ id: String(p.id), name: String(p.name ?? ""), x: c[0]!, y: c[1]!, best: String(p.best), yr: Number(p.yr) }); }
-    else ev.onBackground();
+    else {
+      const hood = hoodsOn && map.getLayer("hoods-fill") ? map.queryRenderedFeatures(e.point, { layers: ["hoods-fill"] })[0] : undefined;
+      if (hood) ev.onHood(String(hood.properties!.slug)); else ev.onBackground();
+    }
   });
   map.on("mousemove", (e) => { const f = map.queryRenderedFeatures(e.point, { layers: hitLayers.filter((l) => map.getLayer(l)) }); map.getCanvas().style.cursor = f.length ? "pointer" : ""; });
 
@@ -186,6 +200,18 @@ export async function createMap(el: HTMLElement, cfg: Config, start: View, theme
     setPlaces(list, hearted) {
       placesFC = { type: "FeatureCollection", features: list.map((p) => ({ type: "Feature", properties: { id: p.id, n: p.n, cat: catGroup[p.c] ? p.c : "other", col: groupHex[catGroup[p.c]?.group ?? "other"], rank: hearted.has(p.id) ? 3 : p.s === "m" ? 2 : 1, been: !!p.been, mich: !!p.mich }, geometry: { type: "Point", coordinates: [p.x, p.y] } })) };
       (map.getSource("places") as maplibregl.GeoJSONSource | undefined)?.setData(placesFC);
+    },
+    setHoods(fc, labels) {
+      hoodsOn = !!fc; writeCredit();
+      if (fc) { hoodsFC = fc; hoodLabelsFC = labels ?? hoodLabelsFC; }
+      (map.getSource("hoods") as maplibregl.GeoJSONSource | undefined)?.setData(hoodsFC);
+      (map.getSource("hood-labels") as maplibregl.GeoJSONSource | undefined)?.setData(hoodLabelsFC);
+      for (const id of ["hoods-fill", "hoods-line", "hoods-sel", "hoods-label"]) if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", hoodsOn ? "visible" : "none");
+    },
+    setHood(slug) {
+      selHood = slug ?? "";
+      if (map.getLayer("hoods-fill")) map.setPaintProperty("hoods-fill", "fill-opacity", hoodLayers({ theme: curTheme, sel: selHood })[0].paint["fill-opacity"]);
+      if (map.getLayer("hoods-sel")) map.setFilter("hoods-sel", ["==", ["get", "slug"], selHood]);
     },
     setMichelin(on, bests, currentOnly, edition) {
       michOn = on; writeCredit();

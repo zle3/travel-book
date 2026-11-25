@@ -9,6 +9,8 @@ import { cleanIds, decodePicks, picksText, shareUrl, cityOf } from "../picks";
 import { QUICK } from "../quick";
 import guidesIndex from "../../data/guides.json";
 import { SF_BOX, inBox, resolveGuide } from "../guides";
+import { cityHash, hoodLabelsGeoJSON, hoodOf, hoodsGeoJSON, indexHoods, parseCityHash } from "../hoods";
+import type { HoodsFile } from "../hoods";
 import type { GuideData, ResolvedGuide, ResolvedItem } from "../guides";
 import type { MapController, MichelinPoint } from "./map";
 import { initSheet } from "./sheet";
@@ -25,6 +27,8 @@ export interface App {
   focusPlace(p: Place): void;
   openSheet(id: string): void; closeSheet(): void; refresh(): void; showTab(t: "places" | "shows" | "picks"): void;
   addLive(places: Place[]): void; setBackend(up: boolean): void;
+  /** Pick (or leave) San Francisco: shows the neighborhood layer and list. `hood` selects one right away. */
+  selectCity(on: boolean, opts?: { hood?: string | null; fit?: boolean }): Promise<void>;
   sheetPad(): { top?: number; bottom?: number; left?: number; right?: number };
 }
 
@@ -44,7 +48,7 @@ export async function start(): Promise<void> {
   const app: App = {
     cfg, places: [], byId: new Map(), filters: loadFilters(), picks: loadPicks(), shared: [], user: null,
     view: loadView() ?? SF_VIEW, bounds: [-180, -85, 180, 85], ctl: null, backendUp: null,
-    focusPoint: () => {}, focusPlace: () => {}, openSheet: () => {}, closeSheet: () => {}, refresh: () => {}, showTab: () => {}, addLive: () => {}, setBackend: () => {}, sheetPad: () => ({}),
+    focusPoint: () => {}, focusPlace: () => {}, openSheet: () => {}, closeSheet: () => {}, refresh: () => {}, showTab: () => {}, addLive: () => {}, setBackend: () => {}, selectCity: async () => {}, sheetPad: () => ({}),
   };
   let sort: Sort = loadSort();
   let sheetCtl: SheetCtl | null = null;
@@ -57,6 +61,10 @@ export async function start(): Promise<void> {
   let mapFailed = false;
   let guide: ResolvedGuide | null = null;
   const guides: ResolvedGuide[] = [];
+  // San Francisco neighborhoods: nothing is fetched or drawn until the visitor picks San Francisco.
+  const HOODS_URL = "/data/hoods/sf.json";
+  let sfOn = false, hood: string | null = null, hoodsOpen = true;
+  let hoodFile: HoodsFile | null = null, hoodIdx = new Map<string, string>(), hoodLoad: Promise<boolean> | null = null;
   const edition = cfg.manifest.currentEdition;
   const picked = (id: string) => app.picks.includes(id) || app.shared.includes(id);
   const hearted = () => new Set([...app.picks, ...app.shared]);
@@ -83,13 +91,15 @@ export async function start(): Promise<void> {
 
   // ---------- derived lists
   const ctx = { currentEdition: edition };
-  const filtered = (): Place[] => (guide ? (guide.places as Place[]) : app.places.filter((p) => matches(p, app.filters, ctx)));
+  const inHoodNow = (p: Place): boolean => !!hoodFile && hoodOf(p.id, p.x, p.y, hoodIdx, hoodFile.hoods) === hood;
+  const hooding = (): boolean => sfOn && !!hood && !!hoodFile;
+  const filtered = (): Place[] => (guide ? (guide.places as Place[]) : app.places.filter((p) => matches(p, app.filters, ctx) && (!hooding() || inHoodNow(p))));
   const origin = (): { x: number; y: number } => (app.user ? { x: app.user.lng, y: app.user.lat } : { x: app.view.lng, y: app.view.lat });
   const inBounds = (p: Place) => p.x >= app.bounds[0] && p.x <= app.bounds[2] && p.y >= app.bounds[1] && p.y <= app.bounds[3];
 
   function recompute(): void {
     const o = origin();
-    const list = filtered().filter((p) => (app.ctl ? inBounds(p) : true)).map((p) => ({ p, d: distanceM(o.x, o.y, p.x, p.y) }));
+    const list = filtered().filter((p) => (app.ctl && !hooding() ? inBounds(p) : true)).map((p) => ({ p, d: distanceM(o.x, o.y, p.x, p.y) }));
     list.sort((a, b) => a.d - b.d);
     if (sort === "az") list.sort((a, b) => a.p.n.localeCompare(b.p.n));
     else if (sort === "mix") { const m = list.filter((r) => r.p.s === "m"), t = list.filter((r) => r.p.s !== "m"); const out: typeof list = []; for (let i = 0; i < Math.max(m.length, t.length); i++) { if (m[i]) out.push(m[i]!); if (t[i]) out.push(t[i]!); } list.splice(0, list.length, ...out); }
@@ -104,13 +114,15 @@ export async function start(): Promise<void> {
     const slice = ordered.slice(0, feedLimit);
     const distOn = !!app.ctl || true;
     const focusedGuide = (document.activeElement as HTMLElement | null)?.closest?.<HTMLElement>(".gcard")?.dataset.guide; // a re-render (map moved) must not drop focus from a guide card
-    body.innerHTML = guidesHtml() + (slice.length
+    const focusedHood = (document.activeElement as HTMLElement | null)?.closest?.<HTMLElement>("[data-fk]")?.dataset.fk;
+    body.innerHTML = (hooding() ? hoodHeadHtml() + guidesHtml() : guidesHtml() + hoodListHtml()) + (slice.length
       ? slice.map((r) => rowHtml(cfg, r.p, distOn ? r.d : null, picked(r.p.id), edition, app.filters.mine && app.filters.other)).join("") + (ordered.length > feedLimit ? `<div class="endnote" id="feedEnd">Showing ${feedLimit} of ${ordered.length}. Keep scrolling for more.</div>` : `<div class="endnote">That is everything in view.</div>`) + `<div class="hid"></div>`
-      : `<div class="empty"><b>Nothing here with these filters.</b>Zoom out, move the map, or clear a filter.<button class="btn" data-act="clearF" type="button">Clear filters</button></div><div class="hid"></div>`);
+      : hooding() ? `<div class="empty"><b>No places here yet.</b>None of the places that match your filters are in ${esc(hoodName())}.<button class="btn" data-act="clearF" type="button">Clear filters</button></div><div class="hid"></div>` : `<div class="empty"><b>Nothing here with these filters.</b>Zoom out, move the map, or clear a filter.<button class="btn" data-act="clearF" type="button">Clear filters</button></div><div class="hid"></div>`);
+    if (focusedHood) body.querySelector<HTMLElement>(`[data-fk="${CSS.escape(focusedHood)}"]`)?.focus({ preventScroll: true });
     if (focusedGuide) body.querySelector<HTMLElement>(`.gcard[data-guide="${focusedGuide}"]`)?.focus({ preventScroll: true });
     const cnt = $("[data-cnt]");
     // One phrase everywhere: "N places in this area" once the map knows the area; before that, no number to contradict it.
-    cnt.textContent = app.ctl ? `${ordered.length.toLocaleString()} ${ordered.length === 1 ? "place" : "places"} in this area` : mapFailed ? `${ordered.length.toLocaleString()} places` : "Places in this area";
+    cnt.textContent = hooding() ? `${ordered.length.toLocaleString()} ${ordered.length === 1 ? "place" : "places"} in ${hoodName()}` : app.ctl ? `${ordered.length.toLocaleString()} ${ordered.length === 1 ? "place" : "places"} in this area` : mapFailed ? `${ordered.length.toLocaleString()} places` : "Places in this area";
     // Nearest is the default and needs no caption; only the other orders say what they do.
     const hello = $("#hello");
     hello.hidden = sort === "near";
@@ -129,7 +141,7 @@ export async function start(): Promise<void> {
   function guidesHtml(): string {
     const here = guidesHere();
     if (!here.length) return "";
-    return `<section class="gsec" aria-label="Guides in San Francisco"><h3 class="gh">Guides in San Francisco</h3>${here.map((g) => `<button class="gcard" data-act="guide" data-guide="${esc(g.id)}" type="button"><span class="ico g-sights">${icon("u-map")}</span><span class="rtx"><span class="rn">${esc(g.title)}</span><span class="rm">${esc(g.subtitle)}</span></span><span class="go">${icon("u-chev-r")}</span></button>`).join("")}</section>`;
+    return `<section class="gsec" aria-label="Guides in San Francisco"><h3 class="gh">Guides in San Francisco</h3><div class="gcity"><button class="chip" data-act="sfToggle" data-fk="sfchip" aria-pressed="${sfOn}" aria-label="${sfOn ? "Exit San Francisco neighborhoods" : "Show San Francisco neighborhoods"}" type="button">${icon("u-area")}San Francisco</button></div>${here.map((g) => `<button class="gcard" data-act="guide" data-guide="${esc(g.id)}" type="button"><span class="ico g-sights">${icon("u-map")}</span><span class="rtx"><span class="rn">${esc(g.title)}</span><span class="rm">${esc(g.subtitle)}</span></span><span class="go">${icon("u-chev-r")}</span></button>`).join("")}</section>`;
   }
   function guideHtml(g: ResolvedGuide): string {
     const row = (r: ResolvedItem) => rowHtml(cfg, { ...(r.place as Place), note: r.note || (r.place as Place).note }, r.fromAnchorM, picked(r.place.id), edition, false);
@@ -160,10 +172,75 @@ export async function start(): Promise<void> {
     const id = guide.id;
     guide = null; selected = null; showPeek();
     $("#sheet").classList.remove("guiding");
-    history.replaceState(null, "", location.pathname + location.search);
-    recompute(); renderFeed(); pushMap();
+    guide = null; syncCityHash();
+    recompute(); renderFeed(); pushMap(); pushHoods();
     // Back to where they were: the card that opened the guide .
     body.querySelector<HTMLElement>(`.gcard[data-guide="${id}"]`)?.focus({ preventScroll: true });
+  }
+
+  // ---------- San Francisco neighborhoods
+  const hoodName = (): string => hoodFile?.hoods.find((h) => h.s === hood)?.n ?? "";
+  const plural = (n: number): string => `${n.toLocaleString()} ${n === 1 ? "place" : "places"}`;
+  /** Places per neighborhood among those matching the current filters (the same set the feed shows once one is chosen). */
+  function hoodCounts(): Map<string, number> {
+    const m = new Map<string, number>();
+    if (!hoodFile) return m;
+    for (const p of app.places) {
+      if (!matches(p, app.filters, ctx)) continue;
+      const s = hoodOf(p.id, p.x, p.y, hoodIdx, hoodFile.hoods);
+      if (s) m.set(s, (m.get(s) ?? 0) + 1);
+    }
+    return m;
+  }
+  function hoodListHtml(): string {
+    if (!sfOn || !hoodFile) return "";
+    const counts = hoodCounts();
+    const rows = hoodFile.hoods.map((h) => `<li><button class="hrow" data-act="hood" data-hood="${h.s}" data-fk="h:${h.s}" type="button"><span class="rn">${esc(h.n)}</span><span class="hc">${counts.get(h.s) ?? 0}<span class="vh"> places</span></span>${icon("u-chev-r")}</button></li>`).join("");
+    return `<section class="hsec" aria-label="San Francisco neighborhoods"><div class="hsh"><h3 class="gh"><button class="htog" data-act="hoodsToggle" data-fk="htog" aria-expanded="${hoodsOpen}" aria-controls="hlist" type="button">Neighborhoods<span class="hn2">${hoodFile.hoods.length}</span>${icon("u-chev-r")}</button></h3><button class="link hexit" data-act="sfOff" data-fk="hexit" type="button">Exit San Francisco</button></div><ul class="hlist" id="hlist"${hoodsOpen ? "" : " hidden"}>${rows}</ul></section>`;
+  }
+  function hoodHeadHtml(): string {
+    return `<div class="hhead"><h2 id="hoodTitle" data-fk="hoodtitle" tabindex="-1">${esc(hoodName())} · ${plural(ordered.length)}</h2><button class="ibtn hx" data-act="hoodClear" aria-label="Clear ${esc(hoodName())}, show all of San Francisco" type="button">${icon("u-close")}</button></div>`;
+  }
+  const sfBounds = (): [number, number, number, number] | null => hoodFile ? [Math.min(...hoodFile.hoods.map((h) => h.b[0])), Math.min(...hoodFile.hoods.map((h) => h.b[1])), Math.max(...hoodFile.hoods.map((h) => h.b[2])), Math.max(...hoodFile.hoods.map((h) => h.b[3]))] : null;
+  const syncCityHash = (): void => { if (!guide) history.replaceState(null, "", location.pathname + location.search + cityHash(sfOn, hood)); };
+  /** Push the layer and the highlight to the map (also on map ready, when a deep link beat the map). */
+  function pushHoods(): void {
+    if (!app.ctl) return;
+    if (sfOn && hoodFile) app.ctl.setHoods(hoodsGeoJSON(hoodFile.hoods), hoodLabelsGeoJSON(hoodFile.hoods)); else app.ctl.setHoods(null);
+    app.ctl.setHood(hooding() ? hood : null);
+  }
+  function fitHood(): void {
+    if (!app.ctl || !hoodFile) return;
+    const b = hooding() ? hoodFile.hoods.find((h) => h.s === hood)?.b : sfBounds();
+    if (b) app.ctl.fitBounds(b as [number, number, number, number], sheetPad());
+  }
+  /** The file is fetched on the first pick of San Francisco and kept. */
+  function loadHoods(): Promise<boolean> {
+    return (hoodLoad ??= fetch(HOODS_URL).then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status))))).then((f: HoodsFile) => { hoodFile = f; hoodIdx = indexHoods(f); return true; }).catch(() => { hoodLoad = null; return false; }));
+  }
+  let pendingFit = false;
+  app.selectCity = async (on, opts = {}) => {
+    if (!on) {
+      if (!sfOn) return;
+      sfOn = false; hood = null; syncCityHash(); pushHoods(); pushMap(); recompute(); renderFeed();
+      body.querySelector<HTMLElement>('[data-fk="sfchip"]')?.focus({ preventScroll: true });
+      return;
+    }
+    if (!(await loadHoods()) || !hoodFile) { toast("Could not load the San Francisco neighborhoods"); return; }
+    sfOn = true;
+    hood = opts.hood && hoodFile.hoods.some((h) => h.s === opts.hood) ? opts.hood : null;
+    syncCityHash(); pushHoods(); pushMap(); recompute(); renderFeed();
+    if (opts.fit) { if (app.ctl) fitHood(); else pendingFit = true; }
+  };
+  function selectHood(slug: string | null, focus: boolean, fromMap = false): void {
+    const prev = hood;
+    if (!sfOn || !hoodFile || slug === hood || (slug && !hoodFile.hoods.some((h) => h.s === slug))) return;
+    hood = slug; selected = null; showPeek();
+    syncCityHash(); pushHoods(); pushMap(); recompute(); renderFeed(); fitHood();
+    if (fromMap && !isDesktop() && sheetCtl?.current() === "peek") sheetCtl.snap("half");
+    if (!focus) return;
+    if (hood) { body.scrollTop = 0; $<HTMLElement>("#hoodTitle", body)?.focus({ preventScroll: true }); }
+    else if (prev) body.querySelector<HTMLElement>(`[data-fk="h:${prev}"]`)?.focus();
   }
 
   function renderChips(): void {
@@ -395,6 +472,11 @@ ${cfg.manifest.hasBeen ? `<label class="sw"><span class="nm">Hide places I have 
     if (!t) { if (!(e.target as Element).closest(".sortmenu, .sortb")) closeSort(); return; }
     const act = t.dataset.act!, id = t.dataset.id ?? "";
     switch (act) {
+      case "sfToggle": void (sfOn ? app.selectCity(false) : app.selectCity(true, { fit: true })); break;
+      case "sfOff": void app.selectCity(false); break;
+      case "hood": selectHood(t.dataset.hood ?? null, true); break;
+      case "hoodClear": selectHood(null, true); break;
+      case "hoodsToggle": hoodsOpen = !hoodsOpen; t.setAttribute("aria-expanded", String(hoodsOpen)); body.querySelector<HTMLElement>("#hlist")?.toggleAttribute("hidden", !hoodsOpen); break;
       case "guide": openGuide(t.dataset.guide ?? ""); break;
       case "guideBack": closeGuide(); break;
       case "open": { const p = app.byId.get(id); if (p) { if (openId) closeSheetNow(false); app.focusPlace(p); } break; }
@@ -468,6 +550,7 @@ ${cfg.manifest.hasBeen ? `<label class="sw"><span class="nm">Hide places I have 
   addEventListener("resize", topH);
   recompute(); renderFeed(); pills();
   if (guideFromHash) openGuide(guideFromHash, false);
+  else { const ch = parseCityHash(hash); if (ch.city) void app.selectCity(true, { hood: ch.hood, fit: true }); }
   if (app.shared.length) { toast(`${app.shared.length} picks shared with you. Open Picks to see them.`); }
 
   const mapEl = $("#map");
@@ -478,10 +561,11 @@ ${cfg.manifest.hasBeen ? `<label class="sw"><span class="nm">Hide places I have 
         onMove: (v, b) => { app.view = v; app.bounds = b; saveView(v); recompute(); renderFeed(); window.dispatchEvent(new CustomEvent("tb:move")); },
         onPlace: (id) => { const p = app.byId.get(id); if (p) { selected = { kind: "place", id }; peekOpen = false; setNearby(p); showPeek(); sheetCtl?.snap("peek"); } },
         onMichelin: (m) => void showMichelin(m),
+        onHood: (slug) => selectHood(slug, true, true),
         onBackground: () => { if (selected) closePeek(); closeSort(); if (!isDesktop() && sheetCtl?.current() === "half") sheetCtl.snap("peek"); },
         onHomeFailing: () => app.setBackend(false),
         onUserMove: () => { userMoved = true; },
-        onReady: () => { app.ctl!.setPad(sheetPad()); pushMap(); if (guide?.bounds) app.ctl!.fitBounds(guide.bounds, sheetPad()); const b = app.ctl!.bounds(); app.bounds = b; recompute(); renderFeed(); window.dispatchEvent(new CustomEvent("tb:mapready")); },
+        onReady: () => { app.ctl!.setPad(sheetPad()); pushMap(); pushHoods(); if (pendingFit) { pendingFit = false; fitHood(); } if (guide?.bounds) app.ctl!.fitBounds(guide.bounds, sheetPad()); const b = app.ctl!.bounds(); app.bounds = b; recompute(); renderFeed(); window.dispatchEvent(new CustomEvent("tb:mapready")); },
       });
       app.ctl = ctl;
       window.dispatchEvent(new CustomEvent("tb:map"));
