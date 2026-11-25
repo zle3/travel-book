@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { setup, msg, place, event, FakeParser, CH, OWNER } from "./helpers.ts";
+import type { ParsedItem } from "../src/types.ts";
 import { ParseError } from "../src/types.ts";
 import { REPLY_QUEUED, REPLY_WORKING, threadName } from "../src/planner.ts";
 
@@ -59,15 +60,6 @@ test("items the model or the bot's text rules call private never go public, even
   assert.equal(t.api.items.size, 1);
 });
 
-test("🎟️ files the item privately", async () => {
-  const s = setup();
-  (s.parser as FakeParser).result = [event()];
-  await s.planner.onMessage(msg("1", "show"));
-  assert.equal(s.api.live().length, 1);
-  await tap(s, "1", "🎟️");
-  assert.equal(s.api.live().length, 0);
-});
-
 test("❌ deletes the message's items and reacts 🗑️; removing ❌ restores them and the 🗑️ without a new parse", async () => {
   const s = setup();
   await s.planner.onMessage(msg("1"));
@@ -93,19 +85,122 @@ test("❌ before parsing finishes (queued) means it is never parsed", async () =
   assert.equal(s.api.items.size, 0);
 });
 
-test("📅 / 📍 route by kind, 💭 files nothing", async () => {
-  const s = setup();
-  (s.parser as FakeParser).result = [place(), event()];
-  await s.planner.onMessage(msg("1"));
-  assert.equal(s.api.items.size, 2);
-  await tap(s, "1", "📅");
-  assert.deepEqual([...s.api.items.values()].map((i) => i.kind), ["event"]);
-  await tap(s, "1", "📅", false); await tap(s, "1", "📍");
-  assert.deepEqual([...s.api.items.values()].map((i) => i.kind), ["place"]);
-  await tap(s, "1", "📍", false); await tap(s, "1", "💭");
+// ---- destination matrix ----
+// 📅 private calendar item  🎟️ public event listing  📍 public place  💭 private idea (additive)  🔒 forces private
+const shape = (s: ReturnType<typeof setup>): string[] =>
+  [...s.api.items.values()].map((i) => `${i.kind}:${i.name}:${i.private ? "private" : "public"}`).sort();
+async function routed(items: ParsedItem[], taps: string[], content = "a thing") {
+  const s = setup(); (s.parser as FakeParser).result = items;
+  await s.planner.onMessage(msg("1", content));
+  for (const t of taps) await tap(s, "1", t);
+  return s;
+}
+
+test("no taps: the automatic choice stands (public when the model says public)", async () => {
+  assert.deepEqual(shape(await routed([place()], [])), ["place:Blue Bottle:public"]);
+  assert.deepEqual(shape(await routed([event()], [])), ["event:Show:public"]);
+  assert.deepEqual(shape(await routed([place({ public: false })], [])), ["place:Blue Bottle:private"]);
+});
+
+test("📅 alone: a private calendar item, never public, even when the model says public", async () => {
+  const s = await routed([event()], ["📅"]);
+  assert.deepEqual(shape(s), ["event:Show:private"]);
+  assert.equal(s.api.live().length, 0);
+  assert.match(s.chat.lastReply(), /private calendar item/);
+  // also for an item that was public automatically before the tap
+  const t = await routed([event()], []);
+  assert.equal(t.api.live().length, 1);
+  await tap(t, "1", "📅");
+  assert.equal(t.api.live().length, 0);
+});
+
+test("🎟️ alone on an event: the PUBLIC event listing", async () => {
+  const s = await routed([event()], ["🎟️"]);
+  assert.deepEqual(shape(s), ["event:Show:public"]);
+  assert.match(s.chat.lastReply(), /public event listing/);
+});
+
+test("📍 alone on a place: public place", async () => {
+  assert.deepEqual(shape(await routed([place()], ["📍"])), ["place:Blue Bottle:public"]);
+});
+
+test("💭 alone: a private idea, nothing public", async () => {
+  const s = await routed([place()], ["💭"]);
+  assert.deepEqual(shape(s), ["place:Blue Bottle:private"]);
+  assert.equal(s.api.live().length, 0);
+  assert.match(s.chat.lastReply(), /private idea/);
+});
+
+test("📅 + 🎟️: a private calendar copy plus a public event listing", async () => {
+  const s = await routed([event()], ["📅", "🎟️"]);
+  assert.deepEqual(shape(s), ["event:Show:private", "event:Show:public"]);
+  assert.equal(s.api.live().length, 1);
+});
+
+test("💭 + 📍: the place is public and the idea is recorded privately", async () => {
+  const s = await routed([place()], ["💭", "📍"]);
+  assert.deepEqual(shape(s), ["place:Blue Bottle:private", "place:Blue Bottle:public"]);
+  assert.equal(s.api.live().length, 1);
+});
+
+test("🔒 + 🎟️ is private, and removing 🔒 restores the public listing", async () => {
+  const s = await routed([event()], ["🎟️", "🔒"]);
+  assert.deepEqual(shape(s), ["event:Show:private"]);
+  assert.equal(s.api.live().length, 0);
+  await tap(s, "1", "🔒", false);
+  assert.deepEqual(shape(s), ["event:Show:public"]);
+});
+
+test("🔒 + 📍 and 🔒 + 📅 + 🎟️ + 📍: nothing public", async () => {
+  assert.equal((await routed([place()], ["📍", "🔒"])).api.live().length, 0);
+  const s = await routed([event({ lat: 1, lng: 2, category: "Parks" })], ["📅", "🎟️", "📍", "💭", "🔒"]);
+  assert.equal(s.api.live().length, 0);
+  assert.ok(s.api.items.size >= 3);
+});
+
+test("🎟️ on a place that is not event-like: flagged ❓ and kept private; with a date it is a public event", async () => {
+  const s = await routed([place()], ["🎟️"]);
+  assert.deepEqual(shape(s), ["place:Blue Bottle:private"]);
+  assert.equal(s.api.live().length, 0);
+  assert.match(s.chat.lastReply(), /❓ Blue Bottle: not clearly an event, kept private/);
+  const t = await routed([place({ date: "2026-12-05" })], ["🎟️"]);
+  assert.deepEqual(shape(t), ["event:Blue Bottle:public"]);
+});
+
+test("🎟️ + 📍 on a place without a date: only the public place", async () => {
+  assert.deepEqual(shape(await routed([place()], ["🎟️", "📍"])), ["place:Blue Bottle:public"]);
+});
+
+test("📅 on a place with no date: nothing filed, says why", async () => {
+  const s = await routed([place()], ["📅"]);
   assert.equal(s.api.items.size, 0);
-  await tap(s, "1", "💭", false);
-  assert.equal(s.api.items.size, 2);
+  assert.match(s.chat.lastReply(), /needs a date for the calendar/);
+});
+
+test("taps are exact and reversible: removing the last destination returns to the automatic choice", async () => {
+  const s = await routed([event()], ["📅"]);
+  assert.deepEqual(shape(s), ["event:Show:private"]);
+  await tap(s, "1", "📅", false);
+  assert.deepEqual(shape(s), ["event:Show:public"]);
+  await tap(s, "1", "🎟️"); await tap(s, "1", "📅");
+  assert.deepEqual(shape(s), ["event:Show:private", "event:Show:public"]);
+  await tap(s, "1", "🎟️", false);
+  assert.deepEqual(shape(s), ["event:Show:private"]);
+});
+
+test("privacy rules still beat a public tap: forced-private text never goes public via 🎟️ or 📍", async () => {
+  const s = await routed([event()], ["🎟️"], "I'm going to this, my tickets are bought");
+  assert.deepEqual(shape(s), ["event:Show:private"]);
+  const t = await routed([place({ public: false })], ["📍"]);
+  assert.equal(t.api.live().length, 0);
+});
+
+test("❌ after routing removes every copy, and undo restores the same set", async () => {
+  const s = await routed([event()], ["📅", "🎟️"]);
+  await tap(s, "1", "❌");
+  assert.equal(s.api.items.size, 0);
+  await tap(s, "1", "❌", false);
+  assert.deepEqual(shape(s), ["event:Show:private", "event:Show:public"]);
 });
 
 test("no API key: queued reply, nothing filed, nothing parsed", async () => {

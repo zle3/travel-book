@@ -168,3 +168,13 @@ test("data survives reopening the database (WAL on disk)", async () => {
   a.insert("places", { name: "P", lat: 1, lng: 1, category: "other" }); a.close();
   assert.equal(new Db(f).list("places").length, 1);
 });
+
+test("admin rate limit keys on cf-connecting-ip only: a spoofed x-forwarded-for cannot dodge it", async () => {
+  const s = createServer(cfgFor({ adminFailPerMin: 2 }), new Db(":memory:"));
+  const p = await listen(s); const u = `http://127.0.0.1:${p}/v1/admin/places`;
+  for (let i = 0; i < 2; i++) assert.equal((await fetch(u, { headers: { authorization: "Bearer bad", "x-forwarded-for": `1.2.3.${i}` } })).status, 401);
+  assert.equal((await fetch(u, { headers: { authorization: "Bearer bad", "x-forwarded-for": "9.9.9.9" } })).status, 429);
+  // a different client per cf-connecting-ip is counted separately
+  assert.equal((await fetch(u, { headers: { authorization: "Bearer bad", "cf-connecting-ip": "5.5.5.5" } })).status, 401);
+  s.close();
+});

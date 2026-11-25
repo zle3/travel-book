@@ -1,5 +1,5 @@
 export interface Config {
-  discordToken: string; channelId: string; ownerId: string | null;
+  discordToken: string; channelId: string; ownerId: string;
   apiBase: string; adminToken: string;
   anthropicKey: string | null; model: string;
   dbPath: string; heartbeatPath: string;
@@ -11,7 +11,7 @@ export function loadConfig(env: NodeJS.ProcessEnv): Config {
   return {
     discordToken: need("DISCORD_BOT_TOKEN"),
     channelId: need("DISCORD_PLANNER_CHANNEL_ID"),
-    ownerId: env.DISCORD_OWNER_ID?.trim() || null,
+    ownerId: need("DISCORD_OWNER_ID"),
     apiBase: (env.API_BASE || "http://api:8787").replace(/\/$/, ""),
     adminToken: need("ADMIN_TOKEN"),
     anthropicKey: env.ANTHROPIC_API_KEY?.trim() || null,

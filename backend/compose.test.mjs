@@ -7,7 +7,7 @@ import { tmpdir } from "node:os";
 
 const here = new URL(".", import.meta.url).pathname;
 const docker = spawnSync("docker", ["compose", "version"]).status === 0;
-const REQUIRED = { ADMIN_TOKEN: "a", DISCORD_BOT_TOKEN: "b", DISCORD_PLANNER_CHANNEL_ID: "1", TUNNEL_TOKEN: "t" };
+const REQUIRED = { ADMIN_TOKEN: "a", PROXY_SECRET: "p", DISCORD_OWNER_ID: "2", DISCORD_BOT_TOKEN: "b", DISCORD_PLANNER_CHANNEL_ID: "1", TUNNEL_TOKEN: "t" };
 
 function config(env, withEnvFile = false) {
   const dir = mkdtempSync(join(tmpdir(), "compose-"));

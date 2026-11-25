@@ -48,7 +48,8 @@ export function createServer(cfg: Config, db: Db): http.Server {
   };
 
   const clientKey = (req: http.IncomingMessage): string =>
-    String(req.headers["cf-connecting-ip"] ?? req.headers["x-forwarded-for"] ?? req.socket.remoteAddress ?? "?").split(",")[0]!.trim();
+    // Only the header Cloudflare sets (the tunnel overwrites it). x-forwarded-for is client-controlled and never trusted.
+    String(req.headers["cf-connecting-ip"] ?? req.socket.remoteAddress ?? "?").trim();
 
   async function readBody(req: http.IncomingMessage): Promise<unknown> {
     const chunks: Buffer[] = []; let size = 0;

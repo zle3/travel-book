@@ -25,28 +25,31 @@ The bot writes to the API over HTTP (`/v1/admin/*`), not into the API's SQLite f
 | Path | Auth | Notes |
 |---|---|---|
 | `GET /v1/health` | none | `{ok, version, live_updated_at}`. Also the container healthcheck. Never touches tiles, so a tile problem cannot take the API down. |
-| `GET /v1/live` | `X-Travel-Proxy` when `PROXY_SECRET` is set (constant-time compare), open when unset | `{places:[{id,name,lat,lng,category,note,added,source:"discord"}], events:[{id,title,venue,city,start,end,url,added}], updated_at}`. Private items are excluded in the SQL query. `?since=` is accepted and ignored (deletions make deltas unsafe; the set is small). `category` is the site's category id, so the site's `adaptLive` keeps it. |
+| `GET /v1/live` | `X-Travel-Proxy` = `PROXY_SECRET` (constant-time compare; the compose file refuses to start without it) | `{places:[{id,name,lat,lng,category,note,added,source:"discord"}], events:[{id,title,venue,city,start,end,url,added}], updated_at}`. Private items are excluded in the SQL query. `?since=` is accepted and ignored (deletions make deltas unsafe; the set is small). `category` is the site's category id, so the site's `adaptLive` keeps it. |
 | `GET /v1/tiles/{tileset}/{z}/{x}/{y}.mvt`, `/v1/tiles/{tileset}.json` | public | Proxy to `tiles:8080`. `Access-Control-Allow-Origin` is always `SITE_ORIGIN` (never echoes another origin), tiles `Cache-Control: public, max-age=2592000, immutable`, TileJSON one hour, misses five minutes. 502 if tiles is down. |
-| `GET/POST /v1/admin/places\|events`, `GET/PATCH/DELETE .../{id}` | `Authorization: Bearer ADMIN_TOKEN` | Constant-time compare. Rate limited per client IP (`CF-Connecting-IP`): 120 requests/min, and 10 failed logins/min after which even the right token waits. Bodies validated, unknown fields rejected, categories limited to the fixed list. |
+| `GET/POST /v1/admin/places\|events`, `GET/PATCH/DELETE .../{id}` | `Authorization: Bearer ADMIN_TOKEN` | Constant-time compare. Rate limited per client IP (`CF-Connecting-IP` only, set by Cloudflare; `X-Forwarded-For` is never trusted, and without the header the socket address is used): 120 requests/min, and 10 failed logins/min after which even the right token waits. Bodies validated, unknown fields rejected, categories limited to the fixed list. |
 | `GET/PATCH/DELETE /v1/admin/messages/{discordMessageId}` | admin | Everything filed from one Discord post: list, `{private: bool}` flip, delete. Used by the bot's taps. |
 
 Items have a `private` flag (admin view returns it as a boolean). Private items stay in the database, never in `/v1/live`.
 
 ## Bot behaviour
-Intents: Guilds, GuildMessages, MessageContent, GuildMessageReactions. It only looks at `DISCORD_PLANNER_CHANNEL_ID` (and only `DISCORD_OWNER_ID` when set).
+Intents: Guilds, GuildMessages, MessageContent, GuildMessageReactions. It only looks at `DISCORD_PLANNER_CHANNEL_ID`, and **only posts and taps from `DISCORD_OWNER_ID` count** (required; everyone else is ignored).
 
 **New post.** React ✅ first, then 📅 🎟️ 📍 💭 🔒 ❌. Start a thread on the post and send one message, "Got it, filing…". That message is **edited** with the outcome; the bot posts no further messages.
 
 **No pings.** Every send and edit uses `allowedMentions: {parse: [], repliedUser: false}`, the client default is the same, thread names have mentions and links stripped. Reactions never notify.
 
-**Taps** (add or remove, non-bot users), applied immediately and recorded in `bot_data`:
-| Tap | Effect |
+**Taps** (add or remove, from the owner only), applied immediately and recorded in `bot_data`. Destinations (owner spec):
+| Tap | Destination |
 |---|---|
-| 🔒 | the post's items become private (hidden from `/v1/live`); remove it to show them again |
-| 🎟️ | file privately (a ticket) |
-| 📅 / 📍 | only items of that kind are filed |
-| 💭 | an idea: nothing is filed |
-| ❌ | the post's items are deleted from the API and the bot reacts 🗑️. Remove ❌ to undo: items return (from the saved parse, no new AI call) and 🗑️ is removed |
+| 📅 Calendar | the owner's plans: a **private** calendar item, always private, never in `/v1/live` (needs a date) |
+| 🎟️ Events | the **public** event listing on the site (needs a date). On a place that is not event-like it is flagged ❓ and kept private |
+| 📍 Places | **public** place on the map and lists (needs coordinates) |
+| 💭 Want to do | a **private** idea, not on the site. Additive: with 📍 you get the public place plus a private copy |
+| 🔒 Private | overrides everything public: every copy stays private. Remove it and the public destinations come back |
+| ❌ Undo | removes everything filed for the post and the bot reacts 🗑️. Remove ❌ to restore (from the saved parse, no new AI call) and 🗑️ goes away |
+
+If any of 📅 🎟️ 📍 💭 is tapped, the post ends up in **exactly** those destinations (so 📅 + 🎟️ is a private calendar copy plus a public listing; 🔒 + 🎟️ is private). With none tapped, the **automatic choice stands**: by kind, public when the model says `public: true` and the privacy filter passes, otherwise private. The owner chose public-by-default for this channel. The privacy rules (below) still win over a public tap: a post the bot's text rules or the model call private is never published by 🎟️ or 📍, only 🔒 toggling or the owner's planner routine can change that. The matrix lives in `plan()` in `bot/src/planner.ts` and is tested combination by combination.
 
 **Parsing.**
 - With `ANTHROPIC_API_KEY`: `client.beta.messages.create` with `output_config.format` (JSON schema, up to 5 items of `{kind place|event|unclear, name, date, time, venue, city, lat, lng, url, category, public}`), screenshots as image blocks (HTTPS URLs), Discord embed text included, `betas: ["server-side-fallback-2026-07-01"]` with `fallbacks: "default"`, and a check of `stop_reason` (refusal is not retried and goes to the planner run). Post text is wrapped as data in the prompt, which tells the model never to follow it. The output is re-validated in code: category from the fixed 25-item list, coordinates in range, `http(s)` URLs only, and anything but an explicit `public: true` is private.
@@ -66,11 +69,11 @@ Nothing is done twice: every step (each reaction, the thread, the reply, each AP
 | Variable | Required | Meaning |
 |---|---|---|
 | `ADMIN_TOKEN` | yes | Bearer token for `/v1/admin/*`, used by the bot and the planner routine |
-| `PROXY_SECRET` | recommended | Shared with the Worker (`X-Travel-Proxy`). **Also set as a Worker secret.** Empty leaves `/v1/live` open |
+| `PROXY_SECRET` | yes | Shared with the Worker (`X-Travel-Proxy`). **Also set as a Worker secret** |
 | `TUNNEL_TOKEN` | yes | Remote-managed tunnel token (public hostname `api.travel.zachle.info` to `http://api:8787`) |
 | `DISCORD_BOT_TOKEN` | yes | Bot token. Message Content Intent must be enabled in the developer portal |
 | `DISCORD_PLANNER_CHANNEL_ID` | yes | The #planner channel |
-| `DISCORD_OWNER_ID` | no | Restrict posts and taps to one user |
+| `DISCORD_OWNER_ID` | yes | The owner's user id; posts and taps from anyone else are ignored |
 | `ANTHROPIC_API_KEY` | no | Turns AI parsing on (costs per post) |
 | `ANTHROPIC_MODEL` | no | Default `claude-opus-5-5` |
 | `CHECK_INTERVAL_MIN` | no | Default 5 |
@@ -82,9 +85,9 @@ The unused `PUID`/`PGID` and the old `DISCORD_PUBLIC_KEY`/`DISCORD_TOKEN` placeh
 
 ## Deploy (Dockge host, `/opt/stacks/travel-backend`)
 The owner runs Dockge; the lead deploys over SSH. Order matters for the secret:
-1. **Worker first:** `npx wrangler secret put PROXY_SECRET` (the value goes into `.env` as well). Until the Worker sends `X-Travel-Proxy`, do not set `PROXY_SECRET` on the backend, or `/api/live` answers 503.
+1. **Worker first:** `npx wrangler secret put PROXY_SECRET` (the same value goes into `.env`; the stack will not start without it). `/api/live` answers 503 until the Worker and the backend hold the same secret, so set the Worker side first and deploy the backend right after.
 2. Back up the interim stack: `cp compose.yaml compose.interim.yaml` and keep the current `.env` and `Caddyfile`.
-3. Copy the repo's `backend/` over the stack folder (keep `./tiles/` and `.env`). Add to `.env` the new keys from `env.example` (`ADMIN_TOKEN`, `DISCORD_BOT_TOKEN`, `DISCORD_PLANNER_CHANNEL_ID`, optional `ANTHROPIC_API_KEY`, `PROXY_SECRET`).
+3. Copy the repo's `backend/` over the stack folder (keep `./tiles/` and `.env`). Add to `.env` the new keys from `env.example` (`ADMIN_TOKEN`, `PROXY_SECRET`, `DISCORD_BOT_TOKEN`, `DISCORD_PLANNER_CHANNEL_ID`, `DISCORD_OWNER_ID`, optional `ANTHROPIC_API_KEY`).
 4. `docker compose build` then `docker compose up -d` (or Deploy in Dockge). `docker compose ps` should show `api`, `bot`, `cloudflared` healthy.
 5. Check: `curl https://api.travel.zachle.info/v1/health`; a tile URL from the site; `https://travel.zachle.info/api/live`; post a test message in #planner and watch the reactions and the thread reply; check `docker compose logs bot` says "logged in".
 6. `tiles` bind-mounts `./tiles` as the live stack does. The named volumes are `api_data` and `bot_data`; back them up with `docker run --rm -v travel-backend_api_data:/d -v $PWD:/b alpine tar czf /b/api_data.tgz -C /d .`.
@@ -100,17 +103,17 @@ docker compose up -d
 The `api_data` and `bot_data` volumes are not touched, so moving forward again keeps all data. The Worker keeps working against either stack (the stub ignores `X-Travel-Proxy`). The scheduled cloud planner routine stays the backup path the whole time.
 
 ## Tests
-`backend/test.sh` runs everything (Node 22.18 or newer; Docker is optional, the compose-config tests skip without it):
+`backend/test.sh` runs everything from a clean worktree: it runs `npm ci` in `backend/bot` when `node_modules` is missing (that also installs the pinned `typescript` used for the type check). Node 22.18 or newer; Docker is optional, the compose-config tests skip without it:
 - types (`tsc -p backend/tsconfig.json`)
-- `api/test/api.test.ts`: health, live shape, private filtering, proxy secret on/off, admin auth, validation, rate limits, tiles proxy headers and 502, WAL persistence
-- `bot/test/planner.test.ts`: reaction state machine, private and undo, queue path with no key, retries, idempotence (gateway plus sweep, repeated sweeps, crash recovery), catch-up of missed posts and taps; `parser.test.ts`: request shape, refusal, sanitising, private text rules, config and model env; `discord.test.ts`: discord.js adapter against a fake client, including `allowedMentions`
-- `compose.test.mjs`: `docker compose config` (valid, four services, healthchecks, no host ports, each required secret refused when missing)
+- `api/test/api.test.ts`: health, live shape, private filtering, proxy secret on/off, admin auth, validation, rate limits (keyed on `cf-connecting-ip` only), tiles proxy headers and 502, WAL persistence
+- `bot/test/planner.test.ts`: reaction state machine, the destination matrix (📅 🎟️ 📍 💭 🔒 combinations), private and undo, queue path with no key, retries, idempotence (gateway plus sweep, repeated sweeps, crash recovery), catch-up of missed posts and taps; `parser.test.ts`: request shape, refusal, sanitising, private text rules, config and model env; `discord.test.ts`: discord.js adapter against a fake client, including `allowedMentions`
+- `compose.test.mjs`: `docker compose config` (valid, four services, healthchecks, no host ports, each of the six required secrets refused when missing)
 
 **Not wired into `scripts/check.sh`**: that file is outside this task's claim (`backend/`, `docs/BACKEND.md`). NEED-PATHS: `scripts/check.sh` (add `step "backend" && backend/test.sh` to the full check, not `--fast`, since it needs `npm ci` for the bot).
 
 ## Owner must provide
 - `ADMIN_TOKEN` (`openssl rand -base64 48`)
 - `PROXY_SECRET` (same way), **also as a Worker secret**: `npx wrangler secret put PROXY_SECRET`
-- `DISCORD_BOT_TOKEN` and `DISCORD_PLANNER_CHANNEL_ID` (and optionally `DISCORD_OWNER_ID`); the bot must be invited to the server with View Channel, Read Message History, Add Reactions, Send Messages in Threads, Create Public Threads, and the Message Content Intent turned on
+- `DISCORD_BOT_TOKEN` and `DISCORD_PLANNER_CHANNEL_ID` and `DISCORD_OWNER_ID` (required); the bot must be invited to the server with View Channel, Read Message History, Add Reactions, Send Messages in Threads, Create Public Threads, and the Message Content Intent turned on
 - `ANTHROPIC_API_KEY` only if he wants instant AI parsing (costs per post; optional, and `ANTHROPIC_MODEL` to pick another model)
 - `TUNNEL_TOKEN` (already live on the interim stack)

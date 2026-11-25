@@ -1,7 +1,7 @@
 import { DatabaseSync } from "node:sqlite";
 
 export type Status = "received" | "queued" | "filed" | "manual" | "failed" | "removed";
-export interface FiledRef { idx: number; kind: "place" | "event"; id: string; name: string; priv: boolean }
+export interface FiledRef { key: string; kind: "place" | "event"; id: string; name: string; priv: boolean }
 export interface Row {
   id: string; channel_id: string; created_ms: number; status: Status;
   thread_id: string | null; reply_id: string | null; reply_text: string;

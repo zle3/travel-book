@@ -66,7 +66,7 @@ test("private text rules", () => {
 });
 
 test("config: model default and override, key optional, required vars, interval default", () => {
-  const base = { DISCORD_BOT_TOKEN: "t", DISCORD_PLANNER_CHANNEL_ID: "1", ADMIN_TOKEN: "a" };
+  const base = { DISCORD_BOT_TOKEN: "t", DISCORD_PLANNER_CHANNEL_ID: "1", ADMIN_TOKEN: "a", DISCORD_OWNER_ID: "9" };
   const c = loadConfig(base);
   assert.equal(c.model, "claude-opus-5-5");
   assert.equal(c.anthropicKey, null);
@@ -75,6 +75,7 @@ test("config: model default and override, key optional, required vars, interval 
   assert.equal(loadConfig({ ...base, ANTHROPIC_API_KEY: "  " }).anthropicKey, null);
   assert.equal(loadConfig({ ...base, CHECK_INTERVAL_MIN: "2" }).checkIntervalMin, 2);
   assert.throws(() => loadConfig({ ...base, ADMIN_TOKEN: "" }), /ADMIN_TOKEN/);
+  assert.throws(() => loadConfig({ ...base, DISCORD_OWNER_ID: "" }), /DISCORD_OWNER_ID/);
   assert.throws(() => loadConfig({}), /required/);
 });
 

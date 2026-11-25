@@ -16,7 +16,7 @@ services:
       PORT: "8787"
       DATABASE_PATH: /data/live.sqlite
       ADMIN_TOKEN: ${ADMIN_TOKEN:?set ADMIN_TOKEN in .env}
-      PROXY_SECRET: ${PROXY_SECRET:-}           # must match the Worker's X-Travel-Proxy secret; empty = /v1/live open (not recommended)
+      PROXY_SECRET: ${PROXY_SECRET:?set PROXY_SECRET in .env}  # must match the Worker's X-Travel-Proxy secret
       SITE_ORIGIN: ${SITE_ORIGIN:-https://travel.zachle.info}
       TILES_UPSTREAM: http://tiles:8080
     volumes:
@@ -38,7 +38,7 @@ services:
     environment:
       DISCORD_BOT_TOKEN: ${DISCORD_BOT_TOKEN:?set DISCORD_BOT_TOKEN in .env}
       DISCORD_PLANNER_CHANNEL_ID: ${DISCORD_PLANNER_CHANNEL_ID:?set DISCORD_PLANNER_CHANNEL_ID in .env}
-      DISCORD_OWNER_ID: ${DISCORD_OWNER_ID:-}   # optional: only this user's posts and taps count
+      DISCORD_OWNER_ID: ${DISCORD_OWNER_ID:?set DISCORD_OWNER_ID in .env}  # only this user's posts and taps count
       API_BASE: http://api:8787
       ADMIN_TOKEN: ${ADMIN_TOKEN:?set ADMIN_TOKEN in .env}
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}  # optional: empty = no AI parsing, posts wait for the planner run

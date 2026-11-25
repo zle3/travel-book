@@ -158,7 +158,7 @@ export class Planner {
       let filed = JSON.parse(row.filed) as FiledRef[];
       if (filed.length || !row.removed_applied) {
         const known = new Set(filed.map((f) => f.id));
-        const extra = (await d.api.byMessage(id)).filter((i) => !known.has(i.id)).map((i): FiledRef => ({ idx: -1, kind: i.kind, id: i.id, name: i.name, priv: i.private }));
+        const extra = (await d.api.byMessage(id)).filter((i) => !known.has(i.id)).map((i): FiledRef => ({ key: "", kind: i.kind, id: i.id, name: i.name, priv: i.private }));
         for (const f of [...filed, ...extra]) { await d.api.remove(f.kind, f.id); }
         filed = [];
         d.store.set(id, { filed: "[]" });
@@ -177,61 +177,45 @@ export class Planner {
     if (!row.parsed) return; // not parsed yet: nothing to apply; process() or the sweep will parse it
 
     const items = JSON.parse(row.parsed) as ParsedItem[];
-    const lines: string[] = [];
-    type Want = { idx: number; item: ParsedItem; priv: boolean };
-    const want: Want[] = [];
-    const routeKinds = T.has("📅") || T.has("📍");
-    items.forEach((item, idx) => {
-      const name = item.name || "(no name)";
-      if (T.has("💭")) { lines.push(`💭 ${name}: kept as an idea, not filed`); return; }
-      if (item.kind === "unclear") { lines.push(`❔ ${name}: not sure what this is, left for the planner run`); return; }
-      if (routeKinds && !((item.kind === "event" && T.has("📅")) || (item.kind === "place" && T.has("📍")))) { lines.push(`⏭️ ${name}: skipped by your taps`); return; }
-      if (item.kind === "place" && (item.lat === null || item.lng === null || !categoryId(item.category))) { lines.push(`📍 ${name}: needs a pin, left for the planner run`); return; }
-      if (item.kind === "event" && !item.date) { lines.push(`📅 ${name}: needs a date, left for the planner run`); return; }
-      const priv = item.forcedPrivate || !item.public || T.has("🔒") || T.has(norm("🎟️"));
-      want.push({ idx, item, priv });
-    });
+    const { outs: want, notes } = plan(items, T);
+    const lines: string[] = [...notes];
 
     let filed = JSON.parse(row.filed) as FiledRef[];
     const save = (): void => d.store.set(id, { filed: JSON.stringify(filed) });
-    if (want.some((w) => !filed.find((f) => f.idx === w.idx))) {
+    if (want.some((w) => !filed.find((f) => f.key === w.key))) {
       // Crash recovery: adopt what the API already holds for this message before creating anything.
       const existing = await d.api.byMessage(id);
       for (const w of want) {
-        if (filed.find((f) => f.idx === w.idx)) continue;
-        const kind = w.item.kind as "place" | "event";
-        const hit = existing.find((x) => x.kind === kind && x.name === w.item.name && !filed.some((f) => f.id === x.id));
-        if (hit) filed.push({ idx: w.idx, kind, id: hit.id, name: hit.name, priv: hit.private });
+        if (filed.find((f) => f.key === w.key)) continue;
+        const hit = existing.find((x) => x.kind === w.kind && x.name === w.item.name && x.private === w.priv && !filed.some((f) => f.id === x.id));
+        if (hit) filed.push({ key: w.key, kind: w.kind, id: hit.id, name: hit.name, priv: hit.private });
       }
       save();
     }
     for (const f of [...filed]) {
-      if (want.some((w) => w.idx === f.idx)) continue;
+      if (want.some((w) => w.key === f.key)) continue;
       await d.api.remove(f.kind, f.id);
       filed = filed.filter((x) => x !== f); save();
     }
     for (const w of want) {
-      const kind = w.item.kind as "place" | "event";
-      const ref = filed.find((f) => f.idx === w.idx);
+      const ref = filed.find((f) => f.key === w.key);
       if (ref) {
         if (ref.priv !== w.priv) { await d.api.patchPrivate(ref.kind, ref.id, w.priv); ref.priv = w.priv; save(); }
       } else {
-        const fields = kind === "place"
+        const fields = w.kind === "place"
           ? { name: w.item.name, lat: w.item.lat, lng: w.item.lng, category: categoryId(w.item.category), note: "", url: w.item.url, private: w.priv, msg_id: id, source: "discord" }
           : { title: w.item.name, venue: w.item.venue, city: w.item.city, start: startOf(w.item), url: w.item.url, private: w.priv, msg_id: id, source: "discord" };
-        const newId = await d.api.create(kind, fields);
-        filed.push({ idx: w.idx, kind, id: newId, name: w.item.name, priv: w.priv }); save();
+        const newId = await d.api.create(w.kind, fields);
+        filed.push({ key: w.key, kind: w.kind, id: newId, name: w.item.name, priv: w.priv }); save();
       }
     }
     let estimate = false;
-    for (const w of want) {
-      const where = w.priv ? "private, not on the site" : "live on the site";
-      const cat = w.item.kind === "event" ? "Event" : label(w.item.category);
-      lines.unshift(`${w.item.kind === "event" ? "📅" : "📍"} ${w.item.name}${cat ? ` (${cat})` : ""}: ${where}`);
-      if (w.item.kind === "place") estimate = true;
+    for (const w of [...want].reverse()) {
+      lines.unshift(`${DEST_ICON[w.dest]} ${w.item.name}${w.kind === "place" && label(w.item.category) ? ` (${label(w.item.category)})` : w.kind === "event" ? " (Event)" : ""}: ${destText(w)}`);
+      if (w.kind === "place" && !w.priv) estimate = true;
     }
     if (estimate) lines.push("Pins come from the AI and may be a bit off. Tap ❌ to remove.");
-    d.store.set(id, { status: want.length ? "filed" : "manual" });
+    d.store.set(id, { status: want.length || notes.some((n) => n.startsWith("💭")) ? "filed" : "manual" });
     await this.say(id, lines.join("\n") || "Nothing to file here, left for the planner run");
   }
 
@@ -308,4 +292,56 @@ function fromStored(row: Row): IncomingMessage | null {
 export function threadName(text: string): string {
   const t = text.replace(/<[@#&!][^>]*>/g, "").replace(/https?:\/\/\S+/g, "").replace(/@/g, "").replace(/\s+/g, " ").trim().slice(0, 60);
   return t || "Planner post";
+}
+
+export type Dest = "auto" | "cal" | "ev" | "evq" | "pl" | "idea";
+export interface Out { key: string; kind: "place" | "event"; item: ParsedItem; priv: boolean; dest: Dest }
+const DEST_ICON: Record<Dest, string> = { auto: "📌", cal: "📅", ev: "🎟️", evq: "❓", pl: "📍", idea: "💭" };
+function destText(w: Out): string {
+  if (w.dest === "cal") return "private calendar item, not on the site";
+  if (w.dest === "idea") return "private idea, not on the site";
+  if (w.dest === "evq") return "not clearly an event, kept private";
+  return w.priv ? "private, not on the site" : w.kind === "event" ? "public event listing" : "live on the site";
+}
+
+/**
+ * The destination matrix. Taps among 📅 🎟️ 📍 💭 pick the destinations exactly; with none tapped the automatic choice stands
+ * (by kind, public when the model says public and the privacy rules pass). Destinations:
+ *   📅 private calendar item (always private)    🎟️ public event listing    📍 public place    💭 private idea (additive)
+ * 🔒 forces every output private. forcedPrivate (bot's text rules) and the model's own public:false also keep public outputs private.
+ * Pure: exported for tests.
+ */
+export function plan(items: ParsedItem[], T: Set<string>): { outs: Out[]; notes: string[] } {
+  const outs: Out[] = []; const notes: string[] = [];
+  const cal = T.has("📅"), ev = T.has(norm("🎟️")), pl = T.has("📍"), idea = T.has("💭"), lock = T.has("🔒");
+  const anyDest = cal || ev || pl || idea;
+  items.forEach((item, idx) => {
+    const name = item.name || "(no name)";
+    const noPublic = item.forcedPrivate || !item.public || lock;
+    const placeOk = item.lat !== null && item.lng !== null && !!categoryId(item.category);
+    const eventOk = !!item.date;
+    const add = (dest: Dest, kind: "place" | "event", priv: boolean): void => { outs.push({ key: `${idx}:${dest}`, kind, item, priv, dest }); };
+    if (!anyDest) {
+      if (item.kind === "unclear") notes.push(`❔ ${name}: not sure what this is, left for the planner run`);
+      else if (item.kind === "place") placeOk ? add("auto", "place", noPublic) : notes.push(`📍 ${name}: needs a pin, left for the planner run`);
+      else eventOk ? add("auto", "event", noPublic) : notes.push(`📅 ${name}: needs a date, left for the planner run`);
+      return;
+    }
+    if (cal) eventOk ? add("cal", "event", true) : notes.push(`📅 ${name}: needs a date for the calendar, left for the planner run`);
+    if (ev) {
+      if (eventOk) add("ev", "event", noPublic);
+      else {
+        notes.push(`❓ ${name}: not clearly an event, kept private`);
+        if (placeOk && !pl) add("evq", "place", true);
+      }
+    }
+    if (pl) placeOk ? add("pl", "place", noPublic) : notes.push(`📍 ${name}: needs a pin, left for the planner run`);
+    if (idea) {
+      const dup = pl && placeOk && noPublic; // 📍 already produced a private copy
+      if (placeOk) { if (!dup) add("idea", "place", true); }
+      else if (eventOk) add("idea", "event", true);
+      else notes.push(`💭 ${name}: kept as an idea (nothing to pin or date)`);
+    }
+  });
+  return { outs, notes };
 }
