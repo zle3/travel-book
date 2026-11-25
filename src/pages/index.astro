@@ -23,8 +23,8 @@ const first = features
 <Base title={SITE.name}>
   <Fragment set:html={`<svg width="0" height="0" class="sprite" aria-hidden="true">${sprite.replace(/<svg[^>]*>|<\/svg>|<!--[\s\S]*?-->/g, "")}</svg>`} />
   <a class="skip" href="#listBody">Skip to the list of places</a>
-  <h1 class="vh">Little Travel Book</h1>
-  <div id="app">
+  <main id="app">
+    <h1 class="vh">Little Travel Book</h1>
     <div id="map" role="region" aria-label="Map of saved places. Every place is also in the list."></div>
     <p class="mapnote" id="mapnote" hidden>The map could not start here. The list still shows every place.</p>
 
@@ -101,7 +101,7 @@ const first = features
       <button data-act="tab" data-tab="shows" type="button"><Icon name="u-shows" />Shows</button>
       <button data-act="tab" data-tab="picks" aria-label="Picks" type="button"><span class="counter"><span class="pill" data-picks-pill>0</span></span><Icon name="u-heart" />Picks</button>
     </nav>
-  </div>
+  </main>
   <div class="scrim" id="scrim"></div>
   <section class="msheet tall" id="filtersSheet" role="dialog" aria-modal="true" aria-label="Filters" aria-hidden="true" tabindex="-1"><div class="gr"><i></i></div><div class="mhost" id="filtersHost"></div></section>
   <section class="msheet" id="picksSheet" role="dialog" aria-modal="true" aria-label="Your picks" aria-hidden="true" tabindex="-1"><div class="gr"><i></i></div><div class="mhost" id="picksHost"></div></section>

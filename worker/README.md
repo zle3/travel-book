@@ -1,4 +1,6 @@
-# Edge worker: password gate and bot policy
+# Edge worker: API routes, bot policy and (optional) password gate
+
+**This project runs with the gate off** (`GATE_DISABLED=1` in `wrangler.jsonc`, owner decision 2026-11-24, see PRODUCT.md): the site is public, bot blocking, `robots.txt` and `noindex` stay on. Past the gate step the Worker serves `/api/*` (`worker/api.ts`: 19hz shows, Open-Meteo weather, NWS alerts, backend health and live proxy, documented in `docs/ROUTES.md`) and otherwise the static assets, adding long cache headers to the bulk data files. The rest of this file describes the gate, which is still in the code and tested.
 
 `worker/index.ts` runs first for every request (Workers static assets, `run_worker_first`). Dependency-free; wrangler bundles it. Tests: `node scripts/test/gate.test.mjs` (stubbed DNS, no network).
 

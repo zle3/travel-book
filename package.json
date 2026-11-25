@@ -11,7 +11,11 @@
     "check:fast": "scripts/check.sh --fast",
     "astro-check": "astro check",
     "deploy:preview": "scripts/deploy.sh preview",
-    "deploy:production": "scripts/deploy.sh production"
+    "deploy:production": "scripts/deploy.sh production",
+    "data:build": "node scripts/data/build-data.mjs",
+    "data:check": "node scripts/data/build-data.mjs --check",
+    "data:gazetteer": "node scripts/data/build-gazetteer.mjs",
+    "data:basemap": "node scripts/data/build-basemap.mjs"
   },
   "dependencies": {
     "astro": "7.4.1",

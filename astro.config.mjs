@@ -6,4 +6,6 @@ export default defineConfig({
   output: "static",
   trailingSlash: "ignore",
   build: { format: "directory" },
+  // MapLibre is one lazy chunk (about 210 KB gzipped); the warning is expected.
+  vite: { build: { chunkSizeWarningLimit: 900 } },
 });

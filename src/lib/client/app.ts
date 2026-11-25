@@ -26,6 +26,10 @@ export interface App {
 }
 
 const FEED_CHUNK = 40;
+/** Non-critical notices (dense hint, offline pill) wait for the page to settle so they never compete with the first paint (LCP). */
+let settled = false;
+const settledP = new Promise<void>((r) => setTimeout(() => { settled = true; r(); }, 6000));
+const whenSettled = (f: () => void): void => { if (settled) f(); else void settledP.then(f); };
 
 export async function start(): Promise<void> {
   const cfg = JSON.parse($("#tb-config").textContent ?? "{}") as Config;
@@ -109,7 +113,7 @@ export async function start(): Promise<void> {
 
   function denseHint(): void {
     const on = !denseDismissed() && app.view.zoom < 14 && app.view.zoom > 9 && ordered.length > 250;
-    $("#dense").classList.toggle("on", on);
+    whenSettled(() => $("#dense").classList.toggle("on", on && !denseDismissed()));
   }
 
   function pushMap(): void {
@@ -291,7 +295,7 @@ ${cfg.manifest.hasBeen ? `<label class="sw"><span class="nm">Hide places I have 
     for (const p of list) { if (app.byId.has(p.id)) continue; app.places.push(p); app.byId.set(p.id, p); }
     app.refresh();
   };
-  app.setBackend = (up) => { app.backendUp = up; $("#offline").classList.toggle("on", !up && !offlineDismissed); app.ctl?.setHome(up); };
+  app.setBackend = (up) => { app.backendUp = up; whenSettled(() => $("#offline").classList.toggle("on", app.backendUp === false && !offlineDismissed)); app.ctl?.setHome(up); };
   let offlineDismissed = false;
 
   // ---------- events
