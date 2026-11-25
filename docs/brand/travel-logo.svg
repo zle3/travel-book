@@ -14,15 +14,10 @@
       <path d="M134 268 L112 328 L146 332 L176 268 Z"/>
     </g>
     <filter id="soft" x="-5%" y="-5%" width="110%" height="110%"><feGaussianBlur stdDeviation="1.1"/></filter>
-    <filter id="eye" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="1.6"/></filter>
   </defs>
   <rect x="16" y="16" width="480" height="480" rx="74" fill="url(#tile)"/>
   <!-- faint light halo, darker blue-grey rim, then the body -->
   <use href="#plane" fill="#f1e8ee" stroke="#f1e8ee" stroke-width="40" stroke-linejoin="round" opacity=".75" filter="url(#soft)"/>
   <use href="#plane" fill="#7685a6" stroke="#7685a6" stroke-width="33" stroke-linejoin="round" filter="url(#soft)"/>
   <use href="#plane" fill="#a5bad6" stroke="#a5bad6" stroke-width="28" stroke-linejoin="round"/>
-  <g transform="rotate(-24 256 256) translate(276 240) scale(1.22) translate(-262 -256)" fill="#f2bcc6" filter="url(#eye)">
-    <ellipse cx="384" cy="254" rx="8" ry="11" transform="rotate(8 384 254)"/>
-    <ellipse cx="350" cy="258" rx="8" ry="11" transform="rotate(8 350 258)"/>
-  </g>
 </svg>
