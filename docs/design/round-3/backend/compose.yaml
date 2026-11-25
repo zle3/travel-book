@@ -3,7 +3,7 @@
 # Only `api` is reachable from outside, through the cloudflared tunnel
 # (public hostname api.travel.zachle.info -> http://api:8787, configured as a
 # remote-managed tunnel in the Cloudflare dashboard). tiles and photon are internal.
-# Secrets live in .env (see .env.example). Never commit .env.
+# Secrets live in .env (template: env.example, copy to .env). Never commit .env.
 
 name: travel-backend
 
