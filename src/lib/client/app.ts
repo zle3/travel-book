@@ -105,7 +105,8 @@ export async function start(): Promise<void> {
     for (const q of QUICK) { if (q.shows) continue; const el = $<HTMLButtonElement>(`[data-chip="${q.id}"]`); el?.setAttribute("aria-pressed", String(q.cats.every((c) => app.filters.cats.includes(c)))); }
     const f = app.filters;
     const n = activeCount(f);
-    $("#qr1").innerHTML = `${n ? `<button class="chip clr" data-act="clearF" aria-label="Clear ${n} active filters" type="button">${icon("u-close")}</button>` : ""}<div class="srcseg" role="group" aria-label="Sources"><button data-act="src" data-src="mine" aria-pressed="${f.mine}" type="button">${icon("u-pin")}My lists</button><button data-act="src" data-src="other" aria-pressed="${f.other}" type="button">${icon("c-other")}Other lists</button><button data-act="src" data-src="mich" data-michelin aria-pressed="${f.michelinLayer}" type="button">${icon("u-award")}Michelin</button></div>${cfg.manifest.hasBeen ? `<button class="chip q-been" data-act="been" aria-pressed="${f.hideBeen}" type="button">${icon("u-eye-off")}Hide been</button>` : ""}`;
+    // The clear button always has its slot (hidden when nothing is active), so toggling a chip never moves the row.
+    $("#qr1").innerHTML = `<button class="chip clr" data-act="clearF" aria-label="${n ? `Clear ${n} active filters` : "No filters to clear"}" type="button"${n ? "" : " disabled"}>${icon("u-close")}</button><div class="srcseg" role="group" aria-label="Sources"><button data-act="src" data-src="mine" aria-pressed="${f.mine}" type="button">${icon("u-pin")}My lists</button><button data-act="src" data-src="other" aria-pressed="${f.other}" type="button">${icon("c-other")}Other lists</button><button data-act="src" data-src="mich" data-michelin aria-pressed="${f.michelinLayer}" type="button">${icon("u-award")}Michelin</button></div>${cfg.manifest.hasBeen ? `<button class="chip q-been" data-act="been" aria-pressed="${f.hideBeen}" type="button">${icon("u-eye-off")}Hide been</button>` : ""}`;
     for (const k of ["star", "bib"] as AwardKind[]) $("#qr2").querySelector(`[data-mich="${k}"]`)?.setAttribute("aria-pressed", String(f.mich.includes(k)));
   }
   // Michelin chips live at the end of the scrolling row.
@@ -136,7 +137,7 @@ export async function start(): Promise<void> {
   app.sheetPad = sheetPad;
   function layoutSheet(): void {
     if (isDesktop()) { sheet.style.transform = ""; sheet.classList.remove("full"); root.classList.remove("fullmode"); app.ctl?.setPad(sheetPad()); return; }
-    sheetCtl ??= initSheet(sheet, [$("#grab"), $(".shead", sheet), $(".crow", sheet), $("#hello")], (s: Snap) => { $$("[data-seg]").forEach((b) => b.setAttribute("aria-pressed", String((b.dataset.seg === "list") === (s === "full")))); app.ctl?.setPad(sheetPad()); });
+    sheetCtl ??= initSheet(sheet, { handles: [$("#grab"), $(".shead", sheet), $(".crow", sheet), $("#hello")], list: $("#listBody") }, (s: Snap) => { $$("[data-seg]").forEach((b) => b.setAttribute("aria-pressed", String((b.dataset.seg === "list") === (s === "full")))); app.ctl?.setPad(sheetPad()); });
     sheetCtl.snap(sheetCtl.current(), false);
   }
   const topH = () => { const t = $("#top"); const h = Math.round(t.getBoundingClientRect().height); document.documentElement.style.setProperty("--topH", `${h}px`); };
@@ -307,6 +308,7 @@ ${cfg.manifest.hasBeen ? `<label class="sw"><span class="nm">Hide places I have 
       case "open": { const p = app.byId.get(id); if (p) { if (openId) closeSheetNow(false); app.focusPlace(p); } break; }
       case "heart": togglePick(id, t); break;
       case "src": { const k = t.dataset.src; if (k === "mine") app.filters.mine = !app.filters.mine; else if (k === "other") app.filters.other = !app.filters.other; else app.filters.michelinLayer = !app.filters.michelinLayer; app.refresh(); rerenderOpen(); break; }
+      case "quick": { const q = QUICK.find((x) => x.id === t.dataset.chip); if (q) { const on = q.cats.every((c) => app.filters.cats.includes(c)); app.filters.cats = on ? app.filters.cats.filter((c) => !q.cats.includes(c)) : [...new Set([...app.filters.cats, ...q.cats])]; app.refresh(); rerenderOpen(); } break; }
       case "cat": app.filters.cats = toggleCats(app.filters.cats, [t.dataset.cat!]); app.refresh(); rerenderOpen(); break;
       case "grp": { const ids = cfg.categories.categories.filter((c) => c.group === t.dataset.grp).map((c) => c.id); app.filters.cats = toggleCats(app.filters.cats, ids); app.refresh(); rerenderOpen(); break; }
       case "mich": app.filters.mich = toggleIn(app.filters.mich, t.dataset.mich as AwardKind); app.refresh(); rerenderOpen(); break;
