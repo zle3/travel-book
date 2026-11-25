@@ -106,7 +106,7 @@ files.set("__manifest", JSON.stringify(manifest, null, 1) + "\n");
 const outDirs = ["public/data", "public/michelin", "public/search"];
 const wanted = new Map([...files].filter(([k]) => k !== "__manifest").map(([k, v]) => [`public/${k}`, v]));
 wanted.set("src/generated/manifest.json", files.get("__manifest"));
-const have = new Set(outDirs.flatMap((d) => (fs.existsSync(path.join(root, d)) ? walk(path.join(root, d)).map((f) => path.relative(root, f)) : [])));
+const have = new Set(outDirs.flatMap((d) => (fs.existsSync(path.join(root, d)) ? walk(path.join(root, d)).map((f) => path.relative(root, f)).filter((f) => !f.startsWith("public/data/hoods/")) : [])));
 function walk(d) { return fs.readdirSync(d, { withFileTypes: true }).flatMap((e) => (e.isDirectory() ? walk(path.join(d, e.name)) : [path.join(d, e.name)])); }
 const stale = [];
 for (const [rel, text] of wanted) { const f = path.join(root, rel); if (!fs.existsSync(f) || fs.readFileSync(f, "utf8") !== text) stale.push(rel); }

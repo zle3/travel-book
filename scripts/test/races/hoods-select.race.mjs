@@ -24,6 +24,8 @@ export default async function (page, base) {
     assert.equal((await p.locator("#hoodTitle").textContent()).trim(), `Mission · ${n} places`, "header carries name and count");
     assert.equal(await p.evaluate(() => document.activeElement?.id), "hoodTitle", "focus moves into the header");
     assert.equal(await p.locator("#listBody .row").count(), Math.min(n, 40), "the feed lists the neighborhood's places");
+    const dst = await p.locator("#listBody .row .dst").allTextContents();
+    assert.ok(new Set(dst).size >= 2, `rows show varied distances from the map centre (${[...new Set(dst)]})`);
     assert.equal(await p.evaluate(() => window.__tbApp.ctl.map.getSource("places")._data.features.length), n, "the map shows only those pins");
     assert.match((await p.locator("[data-cnt]").textContent()) ?? "", new RegExp(`^${n} places in Mission`));
     await p.waitForFunction(() => { const b = window.__tbApp.ctl.bounds(); return b[0] < -122.43 && b[2] > -122.40 && b[2] < -122.30; });
