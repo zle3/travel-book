@@ -103,9 +103,11 @@ export async function start(): Promise<void> {
     if (reset) feedLimit = FEED_CHUNK;
     const slice = ordered.slice(0, feedLimit);
     const distOn = !!app.ctl || true;
+    const focusedGuide = (document.activeElement as HTMLElement | null)?.closest?.<HTMLElement>(".gcard")?.dataset.guide; // a re-render (map moved) must not drop focus from a guide card
     body.innerHTML = guidesHtml() + (slice.length
       ? slice.map((r) => rowHtml(cfg, r.p, distOn ? r.d : null, picked(r.p.id), edition, app.filters.mine && app.filters.other)).join("") + (ordered.length > feedLimit ? `<div class="endnote" id="feedEnd">Showing ${feedLimit} of ${ordered.length}. Keep scrolling for more.</div>` : `<div class="endnote">That is everything in view.</div>`) + `<div class="hid"></div>`
       : `<div class="empty"><b>Nothing here with these filters.</b>Zoom out, move the map, or clear a filter.<button class="btn" data-act="clearF" type="button">Clear filters</button></div><div class="hid"></div>`);
+    if (focusedGuide) body.querySelector<HTMLElement>(`.gcard[data-guide="${focusedGuide}"]`)?.focus({ preventScroll: true });
     const cnt = $("[data-cnt]");
     // One phrase everywhere: "N places in this area" once the map knows the area; before that, no number to contradict it.
     cnt.textContent = app.ctl ? `${ordered.length.toLocaleString()} ${ordered.length === 1 ? "place" : "places"} in this area` : mapFailed ? `${ordered.length.toLocaleString()} places` : "Places in this area";
