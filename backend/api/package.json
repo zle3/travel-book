@@ -1,0 +1,12 @@
+{
+  "name": "travel-api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Little Travel Book home API: live places and events, admin CRUD, tiles proxy. No runtime dependencies (node:http, node:sqlite).",
+  "engines": { "node": ">=22.18" },
+  "scripts": {
+    "start": "node src/main.ts",
+    "test": "node --test test/*.test.ts"
+  }
+}
