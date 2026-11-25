@@ -1,0 +1,183 @@
+{
+ "id": "inner-richmond",
+ "city": "San Francisco",
+ "title": "Inner Richmond",
+ "subtitle": "Central and Inner Richmond, Golden Gate Park edge, Lands End",
+ "anchor": {
+  "name": "Volcano Curry",
+  "address": "5454 Geary Blvd, San Francisco, CA 94121",
+  "note": "Japanese curry, counter service, 11:30-8:30 daily",
+  "lat": 37.7802,
+  "lng": -122.4755
+ },
+ "groups": [
+  {
+   "title": "Dessert, bakery, drinks",
+   "items": [
+    {
+     "name": "Na Ya Dessert Cafe",
+     "note": "Asian desserts"
+    },
+    {
+     "name": "Bread n' Chu",
+     "note": "Korean bakery and cafe"
+    },
+    {
+     "name": "Breadbelly",
+     "note": "kaya toast, Asian pastries",
+     "address": "1408 Clement St"
+    },
+    {
+     "name": "diamond coffee and pastries",
+     "address": "1014 Clement St"
+    },
+    {
+     "name": "Kiss of Matcha",
+     "note": "matcha drinks"
+    },
+    {
+     "name": "Aroma Tea Shop",
+     "note": "loose-leaf tea, free tastings",
+     "address": "302 6th Ave"
+    },
+    {
+     "name": "Pixlcat Coffee",
+     "address": "519 Clement St"
+    },
+    {
+     "name": "Genki Crepes & Mini Mart",
+     "note": "crepes, Japanese snack aisle",
+     "address": "330 Clement St"
+    },
+    {
+     "name": "Schubert's Bakery",
+     "note": "classic SF cake shop",
+     "address": "521 Clement St"
+    },
+    {
+     "name": "Not latte",
+     "note": "drinks",
+     "address": "2142 Irving St"
+    },
+    {
+     "name": "Pineapple King Bakery - San Francisco",
+     "note": "pineapple buns",
+     "address": "1915 Irving St"
+    }
+   ]
+  },
+  {
+   "title": "Shopping and browsing",
+   "items": [
+    {
+     "name": "Green Apple Books",
+     "note": "big used and new bookstore",
+     "address": "506 Clement St"
+    },
+    {
+     "name": "Kamei Housewares & Restaurant Supply",
+     "note": "Asian kitchenware",
+     "address": "525 Clement St"
+    },
+    {
+     "name": "CHOCOCO Korean fashion boutique",
+     "address": "455 Clement St"
+    },
+    {
+     "name": "TANTRUM",
+     "note": "boutique",
+     "address": "248 Clement St"
+    },
+    {
+     "name": "Scissor Me Whiskers Too",
+     "note": "gifts",
+     "address": "317 Clement St"
+    },
+    {
+     "name": "Foggy Notion",
+     "note": "local SF goods",
+     "address": "124 Clement St"
+    }
+   ]
+  },
+  {
+   "title": "Parks and views",
+   "items": [
+    {
+     "name": "Lands End Trail Eagles Point",
+     "note": "cliff walk, Golden Gate views"
+    },
+    {
+     "name": "Sutro Baths",
+     "note": "ruins below Lands End",
+     "lat": 37.7804,
+     "lng": -122.5137
+    },
+    {
+     "name": "Strawberry Hill",
+     "note": "Stow Lake island hill, waterfall, pavilion"
+    },
+    {
+     "name": "San Francisco Botanical Garden"
+    },
+    {
+     "name": "Mountain Lake Park",
+     "note": "small lake park",
+     "lat": 37.7865,
+     "lng": -122.47
+    },
+    {
+     "name": "Presidio of San Francisco",
+     "note": "trails and overlooks"
+    }
+   ]
+  },
+  {
+   "title": "Museums and art",
+   "items": [
+    {
+     "name": "Legion of Honor",
+     "note": "Azzedine Alaia: Sculpting Fashion (limited run), 9:30-5:15",
+     "lat": 37.7845,
+     "lng": -122.5008
+    },
+    {
+     "name": "Three Gems By James Turrell",
+     "note": "free sky chamber in the de Young garden"
+    },
+    {
+     "name": "Japanese Tea Garden",
+     "note": "free 9-10am Mon/Wed/Fri"
+    },
+    {
+     "name": "de Young Museum",
+     "lat": 37.7715,
+     "lng": -122.4687
+    }
+   ]
+  },
+  {
+   "title": "Other food",
+   "items": [
+    {
+     "name": "Good Luck Dim Sum",
+     "note": "takeout, cash",
+     "address": "736 Clement St"
+    },
+    {
+     "name": "Xiao Long Bao",
+     "note": "soup dumplings",
+     "address": "625 Clement St"
+    },
+    {
+     "name": "Izakaya mayumi",
+     "address": "2221 Clement St"
+    },
+    {
+     "name": "Violet's",
+     "address": "2301 Clement St"
+    }
+   ]
+  }
+ ]
+}

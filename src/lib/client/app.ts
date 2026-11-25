@@ -7,6 +7,9 @@ import { parseAwards } from "../data/michelin";
 import type { AwardCode } from "../data/michelin";
 import { cleanIds, decodePicks, picksText, shareUrl, cityOf } from "../picks";
 import { QUICK } from "../quick";
+import guidesIndex from "../../data/guides.json";
+import { SF_BOX, inBox, resolveGuide } from "../guides";
+import type { GuideData, ResolvedGuide, ResolvedItem } from "../guides";
 import type { MapController, MichelinPoint } from "./map";
 import { initSheet } from "./sheet";
 import type { SheetCtl, Snap } from "./sheet";
@@ -52,6 +55,8 @@ export async function start(): Promise<void> {
   let peekOpen = false;
   let stopPulse: (() => void) | null = null;
   let mapFailed = false;
+  let guide: ResolvedGuide | null = null;
+  const guides: ResolvedGuide[] = [];
   const edition = cfg.manifest.currentEdition;
   const picked = (id: string) => app.picks.includes(id) || app.shared.includes(id);
   const hearted = () => new Set([...app.picks, ...app.shared]);
@@ -60,6 +65,16 @@ export async function start(): Promise<void> {
   const geo = (await fetch(cfg.manifest.places).then((r) => r.json())) as { features: { geometry: { coordinates: [number, number] }; properties: Record<string, unknown> }[] };
   app.places = geo.features.map((f) => { const p = f.properties as Record<string, unknown>; return { id: String(p.id), n: String(p.n), c: String(p.c), s: p.s === "m" ? "m" : "o", l: (p.l as string[]) ?? [], note: String(p.note ?? ""), addr: String(p.addr ?? ""), maps: String(p.maps ?? ""), x: f.geometry.coordinates[0], y: f.geometry.coordinates[1], mich: p.mich ? String(p.mich) : undefined, ex: p.ex ? 1 : undefined, br: p.br ? String(p.br) : undefined } as Place; });
   app.byId = new Map(app.places.map((p) => [p.id, p]));
+  // Area guides: resolved against the saved places once; guide-only pins are registered by id so hearts and picks work on them.
+  const guideFiles = import.meta.glob("../../data/guide-*.json", { eager: true, import: "default" }) as Record<string, GuideData>;
+  for (const row of guidesIndex.guides) {
+    const data = guideFiles[`../../data/${row.file}`];
+    if (!data) continue;
+    const g = resolveGuide(data, app.places);
+    for (const x of g.extras) app.byId.set(x.id, x as Place);
+    guides.push(g);
+  }
+  const guideFromHash = /(?:^|[#&])guide=([a-z0-9-]+)/.exec(location.hash)?.[1];
   const hash = location.hash;
   if (/picks=/.test(hash)) {
     app.shared = cleanIds(decodePicks(hash)).filter((id) => app.byId.has(id));
@@ -68,7 +83,7 @@ export async function start(): Promise<void> {
 
   // ---------- derived lists
   const ctx = { currentEdition: edition };
-  const filtered = (): Place[] => app.places.filter((p) => matches(p, app.filters, ctx));
+  const filtered = (): Place[] => (guide ? (guide.places as Place[]) : app.places.filter((p) => matches(p, app.filters, ctx)));
   const origin = (): { x: number; y: number } => (app.user ? { x: app.user.lng, y: app.user.lat } : { x: app.view.lng, y: app.view.lat });
   const inBounds = (p: Place) => p.x >= app.bounds[0] && p.x <= app.bounds[2] && p.y >= app.bounds[1] && p.y <= app.bounds[3];
 
@@ -84,12 +99,13 @@ export async function start(): Promise<void> {
   // ---------- rendering
   const body = $("#listBody");
   function renderFeed(reset = true): void {
+    if (guide) { renderChips(); topH(); return; } // the guide view paints itself (paintGuide), so a pan never resets its scroll
     if (reset) feedLimit = FEED_CHUNK;
     const slice = ordered.slice(0, feedLimit);
     const distOn = !!app.ctl || true;
-    body.innerHTML = slice.length
+    body.innerHTML = guidesHtml() + (slice.length
       ? slice.map((r) => rowHtml(cfg, r.p, distOn ? r.d : null, picked(r.p.id), edition, app.filters.mine && app.filters.other)).join("") + (ordered.length > feedLimit ? `<div class="endnote" id="feedEnd">Showing ${feedLimit} of ${ordered.length}. Keep scrolling for more.</div>` : `<div class="endnote">That is everything in view.</div>`) + `<div class="hid"></div>`
-      : `<div class="empty"><b>Nothing here with these filters.</b>Zoom out, move the map, or clear a filter.<button class="btn" data-act="clearF" type="button">Clear filters</button></div><div class="hid"></div>`;
+      : `<div class="empty"><b>Nothing here with these filters.</b>Zoom out, move the map, or clear a filter.<button class="btn" data-act="clearF" type="button">Clear filters</button></div><div class="hid"></div>`);
     const cnt = $("[data-cnt]");
     // One phrase everywhere: "N places in this area" once the map knows the area; before that, no number to contradict it.
     cnt.textContent = app.ctl ? `${ordered.length.toLocaleString()} ${ordered.length === 1 ? "place" : "places"} in this area` : mapFailed ? `${ordered.length.toLocaleString()} places` : "Places in this area";
@@ -104,6 +120,43 @@ export async function start(): Promise<void> {
     renderChips();
     denseHint();
     topH();
+  }
+
+  // ---------- guides: a section under the feed header while the map is on a city that has them, and the guide view itself
+  const guidesHere = (): ResolvedGuide[] => guides.filter((g) => g.city === "San Francisco" && inBox(app.view.lng, app.view.lat, SF_BOX));
+  function guidesHtml(): string {
+    const here = guidesHere();
+    if (!here.length) return "";
+    return `<section class="gsec" aria-label="Guides in San Francisco"><h3 class="gh">Guides in San Francisco</h3>${here.map((g) => `<button class="gcard" data-act="guide" data-guide="${esc(g.id)}" type="button"><span class="ico g-sights">${icon("u-map")}</span><span class="rtx"><span class="rn">${esc(g.title)}</span><span class="rm">${esc(g.subtitle)}</span></span><span class="go">${icon("u-chev-r")}</span></button>`).join("")}</section>`;
+  }
+  function guideHtml(g: ResolvedGuide): string {
+    const row = (r: ResolvedItem) => rowHtml(cfg, { ...(r.place as Place), note: r.note || (r.place as Place).note }, r.fromAnchorM, picked(r.place.id), edition, false);
+    const a = g.anchor;
+    return `<div class="ghead"><button class="gback" data-act="guideBack" type="button">${icon("u-chev-l")}Back to places</button><h2>${esc(g.title)}</h2><p class="gsub">${esc(g.subtitle)}</p>${a ? `<p class="ganchor">${icon("u-pin")}<span>Around <b>${esc(a.place.n)}</b>${a.note ? `, ${esc(a.note)}` : ""}</span></p>` : ""}</div>${g.groups.map((gr) => `<h3 class="gh">${esc(gr.title)}</h3>${gr.items.map(row).join("")}`).join("")}<div class="hid"></div>`;
+  }
+  function paintGuide(): void {
+    if (!guide) return;
+    body.innerHTML = guideHtml(guide);
+    body.scrollTop = 0;
+    const n = guide.groups.reduce((t, gr) => t + gr.items.length, 0);
+    $("[data-cnt]").textContent = `${n} places in ${guide.title}`;
+    $("#hello").hidden = true;
+    $("#sheet").classList.add("guiding");
+  }
+  function openGuide(id: string): void {
+    const g = guides.find((x) => x.id === id);
+    if (!g) return;
+    guide = g; selected = null; showPeek();
+    history.replaceState(null, "", `${location.pathname}${location.search}#guide=${g.id}`);
+    paintGuide(); renderChips(); topH(); pushMap();
+    if (g.bounds) app.ctl?.fitBounds(g.bounds, sheetPad());
+  }
+  function closeGuide(): void {
+    if (!guide) return;
+    guide = null; selected = null; showPeek();
+    $("#sheet").classList.remove("guiding");
+    history.replaceState(null, "", location.pathname + location.search);
+    recompute(); renderFeed(); pushMap();
   }
 
   function renderChips(): void {
@@ -335,6 +388,8 @@ ${cfg.manifest.hasBeen ? `<label class="sw"><span class="nm">Hide places I have 
     if (!t) { if (!(e.target as Element).closest(".sortmenu, .sortb")) closeSort(); return; }
     const act = t.dataset.act!, id = t.dataset.id ?? "";
     switch (act) {
+      case "guide": openGuide(t.dataset.guide ?? ""); break;
+      case "guideBack": closeGuide(); break;
       case "open": { const p = app.byId.get(id); if (p) { if (openId) closeSheetNow(false); app.focusPlace(p); } break; }
       case "heart": togglePick(id, t); break;
       case "src": { const k = t.dataset.src; if (k === "mine") app.filters.mine = !app.filters.mine; else if (k === "other") app.filters.other = !app.filters.other; else app.filters.michelinLayer = !app.filters.michelinLayer; app.refresh(); rerenderOpen(); break; }
@@ -405,6 +460,7 @@ ${cfg.manifest.hasBeen ? `<label class="sw"><span class="nm">Hide places I have 
   syncDevice(); topH(); layoutSheet();
   addEventListener("resize", topH);
   recompute(); renderFeed(); pills();
+  if (guideFromHash) openGuide(guideFromHash);
   if (app.shared.length) { toast(`${app.shared.length} picks shared with you. Open Picks to see them.`); }
 
   const mapEl = $("#map");
@@ -418,7 +474,7 @@ ${cfg.manifest.hasBeen ? `<label class="sw"><span class="nm">Hide places I have 
         onBackground: () => { if (selected) closePeek(); closeSort(); if (!isDesktop() && sheetCtl?.current() === "half") sheetCtl.snap("peek"); },
         onHomeFailing: () => app.setBackend(false),
         onUserMove: () => { userMoved = true; },
-        onReady: () => { app.ctl!.setPad(sheetPad()); pushMap(); const b = app.ctl!.bounds(); app.bounds = b; recompute(); renderFeed(); window.dispatchEvent(new CustomEvent("tb:mapready")); },
+        onReady: () => { app.ctl!.setPad(sheetPad()); pushMap(); if (guide?.bounds) app.ctl!.fitBounds(guide.bounds, sheetPad()); const b = app.ctl!.bounds(); app.bounds = b; recompute(); renderFeed(); window.dispatchEvent(new CustomEvent("tb:mapready")); },
       });
       app.ctl = ctl;
       window.dispatchEvent(new CustomEvent("tb:map"));

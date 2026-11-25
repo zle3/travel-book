@@ -1,0 +1,11 @@
+{
+ "guides": [
+  {
+   "id": "inner-richmond",
+   "city": "San Francisco",
+   "title": "Inner Richmond",
+   "subtitle": "Central and Inner Richmond, Golden Gate Park edge, Lands End",
+   "file": "guide-inner-richmond.json"
+  }
+ ]
+}
