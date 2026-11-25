@@ -352,8 +352,8 @@ const metaFragments = (S, O) => [
   `<meta property="og:image:alt" content="${S.imageAlt}">`, '<meta name="twitter:card" content="summary_large_image">',
   `<meta name="twitter:title" content="${S.title}">`, `<meta name="twitter:description" content="${S.description}">`,
   `<meta name="twitter:image" content="${O}${S.previewImage}">`,
-  '<link rel="icon" href="/favicon.svg" type="image/svg+xml">', '<link rel="icon" href="/favicon.ico" sizes="32x32">',
-  '<link rel="apple-touch-icon" href="/apple-touch-icon.png">', '<link rel="manifest" href="/site.webmanifest">',
+  '<link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml">', '<link rel="icon" href="/favicon.ico?v=2" sizes="32x32">',
+  '<link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2">', '<link rel="manifest" href="/site.webmanifest?v=2">',
   `<meta name="theme-color" content="${S.themeColorLight}" media="(prefers-color-scheme: light)">`,
   `<meta name="theme-color" content="${S.themeColorDark}" media="(prefers-color-scheme: dark)">`,
   ...S.credit,
@@ -362,6 +362,18 @@ const metaFragments = (S, O) => [
 await test("gate page carries description, og, twitter, icons, theme-color from the site config", async () => {
   const body = await (await handle(req("/demos/x"), env(), deps())).text();
   for (const frag of metaFragments(CFG, "https://example.test")) assert.ok(body.includes(frag), frag);
+});
+
+await test("gate page icon links carry the ?v= cache-bust query", async () => {
+  const body = await (await handle(req("/demos/x"), env(), deps())).text();
+  for (const p of ["/favicon.svg", "/favicon.ico", "/apple-touch-icon.png", "/site.webmanifest"]) {
+    assert.ok(new RegExp(`href="${p.replace(/\./g, "\\.")}\\?v=\\d+"`).test(body), p);
+  }
+});
+
+await test("the public allow-list matches icon paths with a query string (pathname match)", async () => {
+  const res = await handle(req("/favicon.svg?v=2"), env(), deps());
+  assert.notEqual(res.status, 401);
 });
 
 await test("the preview image is on the public allow-list", () => {
