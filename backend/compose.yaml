@@ -1,16 +1,13 @@
-# Little Travel Book home backend: one Dockge stack.
-# Spec for the build (kotone-senior-web / backend owner). Not deployed by design-r1.
-# Only `api` is reachable from outside, through the cloudflared tunnel
-# (public hostname api.travel.zachle.info -> http://api:8787, configured as a
-# remote-managed tunnel in the Cloudflare dashboard). tiles is internal.
-# No geocoder: the site searches saved places, Michelin names and a build-time gazetteer in the browser.
-# Secrets live in .env (template: env.example, copy to .env). Never commit .env.
+# Little Travel Book home backend: one Dockge stack (api, bot, tiles, cloudflared).
+# Only cloudflared reaches the internet, through the Cloudflare tunnel (public hostname
+# api.travel.zachle.info -> http://api:8787, remote-managed in the Cloudflare dashboard).
+# No ports are published on the host. Secrets live in .env (template: env.example). Never commit .env.
+# Docs: docs/BACKEND.md
 
 name: travel-backend
 
 services:
   api:
-    # Built from the backend repo (Node or Go; SQLite via WAL). Pin the tag on every release.
     image: travel-api:0.1.0
     build:
       context: ./api
@@ -18,35 +15,60 @@ services:
     environment:
       PORT: "8787"
       DATABASE_PATH: /data/live.sqlite
-      ADMIN_TOKEN: ${ADMIN_TOKEN}              # Bearer token for /v1/admin/*
-      PROXY_SECRET: ${PROXY_SECRET}            # must match the Worker's X-Travel-Proxy header
-      SITE_ORIGIN: ${SITE_ORIGIN}              # CORS allow-list, e.g. https://travel.zachle.info
-      TILES_UPSTREAM: http://tiles:8080        # API proxies /v1/tiles/* here and adds Cache-Control
-      DISCORD_PUBLIC_KEY: ${DISCORD_PUBLIC_KEY:-}  # later: interactions signature check
+      ADMIN_TOKEN: ${ADMIN_TOKEN:?set ADMIN_TOKEN in .env}
+      PROXY_SECRET: ${PROXY_SECRET:-}           # must match the Worker's X-Travel-Proxy secret; empty = /v1/live open (not recommended)
+      SITE_ORIGIN: ${SITE_ORIGIN:-https://travel.zachle.info}
+      TILES_UPSTREAM: http://tiles:8080
     volumes:
       - api_data:/data
     healthcheck:
-      # The api image must ship wget (e.g. alpine base) or swap this for the app's own
-      # `healthcheck` subcommand. /v1/health returns 200 even when tiles is down
-      # (it reports tiles as degraded), so a slow tiles server never takes the api down.
       test: ["CMD", "wget", "-qO-", "http://127.0.0.1:8787/v1/health"]
       interval: 30s
       timeout: 3s
       retries: 3
       start_period: 10s
-    # No depends_on tiles: the api must start and serve live data even if tiles is down.
+    # No depends_on tiles: live data must keep working when the tile server is down.
+    networks: [backend]
+
+  bot:
+    image: travel-bot:0.1.0
+    build:
+      context: ./bot
+    restart: unless-stopped
+    environment:
+      DISCORD_BOT_TOKEN: ${DISCORD_BOT_TOKEN:?set DISCORD_BOT_TOKEN in .env}
+      DISCORD_PLANNER_CHANNEL_ID: ${DISCORD_PLANNER_CHANNEL_ID:?set DISCORD_PLANNER_CHANNEL_ID in .env}
+      DISCORD_OWNER_ID: ${DISCORD_OWNER_ID:-}   # optional: only this user's posts and taps count
+      API_BASE: http://api:8787
+      ADMIN_TOKEN: ${ADMIN_TOKEN:?set ADMIN_TOKEN in .env}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}  # optional: empty = no AI parsing, posts wait for the planner run
+      ANTHROPIC_MODEL: ${ANTHROPIC_MODEL:-claude-opus-5-5}
+      CHECK_INTERVAL_MIN: ${CHECK_INTERVAL_MIN:-5}
+      BOT_DB_PATH: /data/bot.sqlite
+      HEARTBEAT_PATH: /data/heartbeat
+    volumes:
+      - bot_data:/data
+    healthcheck:
+      # The bot touches /data/heartbeat every 30 s once it is logged in to Discord.
+      test: ["CMD", "node", "-e", "const s=require('fs').statSync('/data/heartbeat');process.exit(Date.now()-s.mtimeMs<120000?0:1)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 60s
+    depends_on:
+      api:
+        condition: service_healthy
     networks: [backend]
 
   tiles:
-    # Serves every *.pmtiles in /data as /{name}/{z}/{x}/{y}.mvt and /{name}.json (TileJSON).
+    # Serves every *.pmtiles in /data as /{name}/{z}/{x}/{y}.mvt and /{name}.json (TileJSON). Internal only.
     image: protomaps/go-pmtiles:v1.31.2
     restart: unless-stopped
     command: ["serve", "/data", "--port=8080", "--public-url=https://api.travel.zachle.info/v1/tiles"]
-    # CORS and Cache-Control for tiles are set by the api proxy (/v1/tiles/* is public, see HANDOFF §5b).
     volumes:
-      - tiles_data:/data:ro                     # put basemap-v<date>.pmtiles here (regional extract)
-    # The image has no shell or HTTP client, so there is no in-container healthcheck;
-    # the api healthcheck reports tiles reachability in /v1/health instead.
+      - ./tiles:/data:ro                        # basemap-v<date>.pmtiles lives here (as on the live host)
+    # The image is a single static binary with no shell or HTTP client, so no in-container check is possible.
+    # The api proxy answers 502 when this service is down; restart: unless-stopped brings it back.
     networks: [backend]
 
   cloudflared:
@@ -54,25 +76,21 @@ services:
     restart: unless-stopped
     command: ["tunnel", "--no-autoupdate", "--metrics", "0.0.0.0:2000", "run"]
     environment:
-      TUNNEL_TOKEN: ${TUNNEL_TOKEN}
-    # Distroless image: no in-container healthcheck. Watch /ready on :2000 from the host if wanted.
+      TUNNEL_TOKEN: ${TUNNEL_TOKEN:?set TUNNEL_TOKEN in .env}
+    healthcheck:
+      test: ["CMD", "cloudflared", "tunnel", "--metrics", "0.0.0.0:2000", "ready"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
     depends_on:
       api:
         condition: service_healthy
     networks: [backend]
 
-  # discord-bot:            # added later as another service in this stack
-  #   image: travel-bot:0.1.0
-  #   restart: unless-stopped
-  #   environment:
-  #     DISCORD_TOKEN: ${DISCORD_TOKEN}
-  #     API_BASE: http://api:8787
-  #     ADMIN_TOKEN: ${ADMIN_TOKEN}
-  #   networks: [backend]
-
 volumes:
   api_data:
-  tiles_data:
+  bot_data:
 
 networks:
   backend:
