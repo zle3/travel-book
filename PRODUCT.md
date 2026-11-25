@@ -83,3 +83,6 @@ Only the exported data above. No testimonials, ratings, prices or claims beyond 
 7. No address search; city/neighborhood/ZIP gazetteer only. No Photon service.
 8. External **data sources for events** (19hz.info etc.) are fine; the "no third-party services" rule covers infrastructure (search, tiles, storage), not event data.
 9. Wordmark: plain text.
+
+## Owner decisions (2026-11-25)
+- **San Francisco neighborhoods auto-show** (owner decision 2026-11-25, replacing the earlier "select San Francisco first" rule): whenever the map is showing San Francisco (centre inside the city, zoom about 11 or more) the neighborhood outlines and labels appear, and a stable "San Francisco" section (Guides plus a collapsible Neighborhoods list with counts) leads the feed. No search, chip or selection is needed; panning away hides them. Tapping a neighborhood still filters the feed.

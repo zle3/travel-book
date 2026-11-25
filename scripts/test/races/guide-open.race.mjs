@@ -11,7 +11,7 @@ export default async function (page, base) {
     await p.locator("#qr1 [data-src=mine]").waitFor(); // the app has started
     const card = p.locator('#listBody .gcard[data-guide="inner-richmond"]');
     await card.waitFor();
-    assert.equal(await p.locator("#listBody .gh").first().textContent(), "Guides in San Francisco");
+    assert.equal(await p.locator("#listBody .gh").first().textContent(), "San Francisco");
     await card.tap();
     await p.locator("#listBody .ghead h2").waitFor();
     assert.equal(await p.locator("#listBody .ghead h2").textContent(), "Inner Richmond");

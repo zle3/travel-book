@@ -29,6 +29,17 @@ export function hoodAt(x: number, y: number, hoods: Hood[]): string | null {
   return null;
 }
 
+/** The map is "showing San Francisco": centre inside the city (the union of the shapes) and zoomed in enough. */
+export const SF_ZOOM_IN = 11, SF_ZOOM_OUT = 10.5, SF_EDGE = 0.02;
+export const inCity = (x: number, y: number, hoods: Hood[]): boolean => hoodAt(x, y, hoods) !== null;
+/** Hysteresis: once showing, the city counts as in view while the centre or a point about 2 km from it is inside, so a pan at the border does not flicker. */
+export function cityInView(x: number, y: number, zoom: number, hoods: Hood[], wasOn: boolean): boolean {
+  if (zoom < (wasOn ? SF_ZOOM_OUT : SF_ZOOM_IN)) return false;
+  if (inCity(x, y, hoods)) return true;
+  if (!wasOn) return false;
+  return [[SF_EDGE, 0], [-SF_EDGE, 0], [0, SF_EDGE], [0, -SF_EDGE]].some(([dx, dy]) => inCity(x + dx!, y + dy!, hoods));
+}
+
 /** Place id -> slug, from the precomputed lists; ids the build did not see (live and guide-only places) fall back to point-in-polygon. */
 export function indexHoods(file: HoodsFile): Map<string, string> {
   const m = new Map<string, string>();
@@ -52,7 +63,7 @@ export function hoodLabelsGeoJSON(hoods: Hood[]): GeoJSON.FeatureCollection {
   return { type: "FeatureCollection", features: hoods.map((h) => ({ type: "Feature", properties: { slug: h.s, name: h.n }, geometry: { type: "Point", coordinates: h.c } })) };
 }
 
-/** Hash: `#city=sf` and `#city=sf&hood=<slug>`. */
+/** Hash: `#city=sf&hood=<slug>` (a plain `#city=sf` still opens the city; the layer shows on its own whenever the map is on San Francisco). */
 export function parseCityHash(hash: string): { city: boolean; hood: string | null } {
   const q = new URLSearchParams(hash.replace(/^#/, ""));
   const city = q.get("city") === CITY_SF;
