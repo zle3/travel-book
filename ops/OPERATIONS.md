@@ -4,7 +4,7 @@ How work moves from request to production without duplicated effort or conflicts
 
 ## Stack
 - **Site:** Astro, static output. Design system and rules: `DESIGN.md`. Product truth: `PRODUCT.md`.
-- **Source:** GitHub repo `OWNER/travel-book` (private). `main` is production. Work happens on `task/<id>` branches, one git worktree each.
+- **Source:** GitHub repo `zle3/travel-book` (private). `main` is production. Work happens on `task/<id>` branches, one git worktree each.
 - **Hosting:** Cloudflare **Workers static assets**. Worker `travel-book`, config `wrangler.jsonc`: `main: worker/index.ts` (password gate and bot policy, see `worker/README.md`), assets from `./dist` with `binding: ASSETS` and `run_worker_first: true`, `not_found_handling: 404-page`. **Direct upload** with `wrangler` from the merge queue. No Cloudflare Git integration, so the bytes that passed the local check are exactly the bytes that ship.
   - Live address: **https://travel.zachle.info** (custom domain route in `wrangler.jsonc`; `workers_dev` is off). The Worker and the domain's zone must be in the **same Cloudflare account**.
   - `public/robots.txt` matches what the Worker serves for `/robots.txt` (a gate test checks this). It disallows every crawler and has no Sitemap line.
