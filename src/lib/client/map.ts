@@ -63,7 +63,7 @@ export async function createMap(el: HTMLElement, cfg: Config, start: View, theme
   let placesFC: GeoJSON.FeatureCollection = { type: "FeatureCollection", features: [] };
   let michFC: GeoJSON.FeatureCollection = { type: "FeatureCollection", features: [] };
   let hoodsFC: GeoJSON.FeatureCollection = { type: "FeatureCollection", features: [] }, hoodLabelsFC: GeoJSON.FeatureCollection = { type: "FeatureCollection", features: [] };
-  let hoodsOn = false, selHood = "";
+  let hoodsOn = false, hoodsApplied = false, selHood = "";
   let michOn = false, michFilter: unknown = null, radarOn = false, homeOn = true, curTheme = theme;
   /** The credit line under the map lists only the sources that are showing (the licence duty for OpenStreetMap data). */
   const writeCredit = () => { const c = document.getElementById("credit"); if (c) c.textContent = creditText({ michelin: michOn, radar: radarOn, hoods: hoodsOn }); };
@@ -202,11 +202,14 @@ export async function createMap(el: HTMLElement, cfg: Config, start: View, theme
       (map.getSource("places") as maplibregl.GeoJSONSource | undefined)?.setData(placesFC);
     },
     setHoods(fc, labels) {
+      const was = hoodsOn;
       hoodsOn = !!fc; writeCredit();
-      if (fc) { hoodsFC = fc; hoodLabelsFC = labels ?? hoodLabelsFC; }
-      (map.getSource("hoods") as maplibregl.GeoJSONSource | undefined)?.setData(hoodsFC);
-      (map.getSource("hood-labels") as maplibregl.GeoJSONSource | undefined)?.setData(hoodLabelsFC);
-      for (const id of ["hoods-fill", "hoods-line", "hoods-sel", "hoods-label"]) if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", hoodsOn ? "visible" : "none");
+      if (fc && fc !== hoodsFC) {
+        hoodsFC = fc; hoodLabelsFC = labels ?? hoodLabelsFC;
+        (map.getSource("hoods") as maplibregl.GeoJSONSource | undefined)?.setData(hoodsFC);
+        (map.getSource("hood-labels") as maplibregl.GeoJSONSource | undefined)?.setData(hoodLabelsFC);
+      }
+      if (was !== hoodsOn || !hoodsApplied) { hoodsApplied = true; for (const id of ["hoods-fill", "hoods-line", "hoods-sel", "hoods-label"]) if (map.getLayer(id)) map.setLayoutProperty(id, "visibility", hoodsOn ? "visible" : "none"); }
     },
     setHood(slug) {
       selHood = slug ?? "";

@@ -3,7 +3,6 @@ import { fold } from "../data/geo";
 import { shardForQuery } from "../data/michelin";
 import { buildAreaIndex, buildPlaceIndex, searchAreas, searchMichelin, searchPlaces } from "../search";
 import type { AreaIndexRow, AreaRow, Hit, MichelinRow, PlaceIndexRow } from "../search";
-import { SF_BOX, inBox } from "../guides";
 import type { App } from "./app";
 import { $, $$, esc, icon } from "./store";
 import { catOf } from "./ui";
@@ -71,8 +70,6 @@ export function initSearch(app: App): void {
     if (h.kind === "michelin") { window.dispatchEvent(new CustomEvent("tb:michelin", { detail: { id: h.id, name: h.name, x: h.x, y: h.y, best: h.best, yr: 0 } })); return; }
     app.focusPoint(h.x, h.y, h.area === "city" ? 12.2 : h.area === "zip" ? 13.4 : 14);
     app.ctl?.setSearchPin(h.x, h.y);
-    // Picking the city itself is how the neighborhood layer is asked for; nothing else turns it on.
-    if (h.area === "city" && h.name === "San Francisco" && inBox(h.x, h.y, SF_BOX)) void app.selectCity(true);
     const spin = $("#spin");
     spin.innerHTML = `${icon("u-pin")}<span>${esc(h.name)}</span><button data-act="spinX" aria-label="Remove the search pin" type="button">${icon("u-close")}</button>`;
     spin.classList.add("on");

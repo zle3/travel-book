@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import fs from "node:fs";
 import zlib from "node:zlib";
 import { execFileSync } from "node:child_process";
-import { hoodSlug, inHood, inPoly, parseCityHash, cityHash } from "../../../src/lib/hoods.ts";
+import { hoodSlug, inHood, inPoly, parseCityHash, cityHash, cityInView } from "../../../src/lib/hoods.ts";
 
 test("hoods file is current, under 80 KB gzipped, labels inside shapes", () => {
   execFileSync("node", ["scripts/data/build-hoods.mjs", "--check"], { stdio: "pipe" });
@@ -35,4 +35,17 @@ test("city hash parse and build", () => {
   assert.deepEqual(parseCityHash("#city=sf&hood=../x"), { city: true, hood: null });
   assert.equal(cityHash(true, "mission"), "#city=sf&hood=mission");
   assert.equal(cityHash(false, null), "");
+});
+test("city in view: centre inside and zoom 11+, with hysteresis at the edge and at low zoom", () => {
+  const f = JSON.parse(fs.readFileSync("public/data/hoods/sf.json", "utf8"));
+  assert.equal(cityInView(-122.4194, 37.7749, 12, f.hoods, false), true);
+  assert.equal(cityInView(-122.27, 37.80, 12, f.hoods, false), false, "Oakland");
+  assert.equal(cityInView(-122.4194, 37.7749, 10.8, f.hoods, false), false, "too far out to turn on");
+  assert.equal(cityInView(-122.4194, 37.7749, 10.8, f.hoods, true), true, "stays on until 10.5");
+  assert.equal(cityInView(-122.4194, 37.7749, 10.2, f.hoods, true), false);
+  assert.equal(cityInView(-122.516, 37.76, 12, f.hoods, false), false, "just off the western shore: not on");
+  assert.equal(cityInView(-122.516, 37.76, 12, f.hoods, true), true, "but stays on once showing");
+  assert.equal(cityInView(-122.505, 37.76, 12, f.hoods, false), true, "just inside the shore: on");
+  assert.equal(cityInView(-122.56, 37.76, 12, f.hoods, true), false, "well out to sea: off");
+  assert.equal(cityInView(-122.27, 37.80, 12, f.hoods, true), false, "Oakland turns it off");
 });
