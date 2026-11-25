@@ -42,7 +42,7 @@ const first = features
           <div class="qr2" id="qr2">
             {QUICK.map((q) => q.shows
               ? <button class="chip" data-act="tab" data-tab="shows" type="button"><span class="ico sm g-sights"><Icon name="u-shows" /></span>{q.label}</button>
-              : <button class="chip" data-chip={q.id} aria-pressed="false" type="button"><span class={`ico sm g-${q.group}`}><Icon name={q.icon} /></span>{q.label}</button>)}
+              : <button class="chip" data-act="quick" data-chip={q.id} aria-pressed="false" type="button"><span class={`ico sm g-${q.group}`}><Icon name={q.icon} /></span>{q.label}</button>)}
           </div>
         </div>
       </header>

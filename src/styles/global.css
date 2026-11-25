@@ -289,10 +289,17 @@ input{caret-color:var(--heart)}
 .scrim.on{opacity:1;pointer-events:auto}
 /* ---------- PHONE ---------- */
 .phone #app{position:fixed;inset:0;overflow:hidden}
-.phone .sheet{position:absolute;left:0;right:0;top:122px;bottom:60px;background:var(--surface);border-radius:26px 26px 0 0;box-shadow:var(--shadow-up);z-index:8;display:flex;flex-direction:column;touch-action:none;will-change:transform}
-.phone .grab{height:22px;display:grid;place-items:center;flex:none;cursor:grab}
+.phone .sheet{position:absolute;left:0;right:0;top:122px;bottom:60px;background:var(--surface);border-radius:26px 26px 0 0;box-shadow:var(--shadow-up);z-index:8;display:flex;flex-direction:column;touch-action:pan-x pan-y;will-change:transform}
+.phone .grab{height:22px;display:grid;place-items:center;flex:none;cursor:grab;touch-action:none}
 .phone .grab i{width:38px;height:5px;border-radius:3px;background:var(--line);filter:saturate(1.5) brightness(.9)}
-.phone .shead{display:flex;align-items:center;justify-content:space-between;padding:0 16px;gap:12px;flex:none}
+.phone .shead{display:flex;align-items:center;justify-content:space-between;padding:0 16px;gap:12px;flex:none;touch-action:none}
+/* Pinch and double-tap zoom belong to the map only: chrome and chips never zoom the page (no pinch-zoom in these). */
+.top,.ctl,.bar,.peek,.dense,.offline,.msheet{touch-action:pan-x pan-y}
+.phone .qr2{touch-action:pan-x}
+.phone .crow{touch-action:pan-x}
+.phone .sheet.min .shead,.phone .sheet.min .crow,.phone .sheet.min #hello,.phone .sheet.min .sbody{visibility:hidden}
+.phone input,.phone select,.phone textarea{font-size:16px}
+.chip.clr:disabled{visibility:hidden}
 .seg{display:inline-flex;background:var(--surface-2);border-radius:22px;padding:3px;height:44px}
 .seg button{padding:0 16px;border-radius:19px;height:38px;display:flex;align-items:center;gap:6px;font-weight:650;font-size:15px;color:var(--ink-2);transition:background .2s,color .2s}
 .seg button .ic{font-size:18px}
