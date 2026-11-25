@@ -51,6 +51,7 @@ export async function start(): Promise<void> {
   let nearby: Place[] = [];
   let peekOpen = false;
   let stopPulse: (() => void) | null = null;
+  let mapFailed = false;
   const edition = cfg.manifest.currentEdition;
   const picked = (id: string) => app.picks.includes(id) || app.shared.includes(id);
   const hearted = () => new Set([...app.picks, ...app.shared]);
@@ -90,8 +91,12 @@ export async function start(): Promise<void> {
       ? slice.map((r) => rowHtml(cfg, r.p, distOn ? r.d : null, picked(r.p.id), edition, app.filters.mine && app.filters.other)).join("") + (ordered.length > feedLimit ? `<div class="endnote" id="feedEnd">Showing ${feedLimit} of ${ordered.length}. Keep scrolling for more.</div>` : `<div class="endnote">That is everything in view.</div>`) + `<div class="hid"></div>`
       : `<div class="empty"><b>Nothing here with these filters.</b>Zoom out, move the map, or clear a filter.<button class="btn" data-act="clearF" type="button">Clear filters</button></div><div class="hid"></div>`;
     const cnt = $("[data-cnt]");
-    cnt.textContent = app.ctl ? `${ordered.length.toLocaleString()} ${ordered.length === 1 ? "place" : "places"} in this area` : `${ordered.length.toLocaleString()} places`;
-    $("#hello").textContent = app.user ? "Sorted by distance from you." : sort === "az" ? "Places in view, A to Z." : "Places in view, nearest to the middle of the map first.";
+    // One phrase everywhere: "N places in this area" once the map knows the area; before that, no number to contradict it.
+    cnt.textContent = app.ctl ? `${ordered.length.toLocaleString()} ${ordered.length === 1 ? "place" : "places"} in this area` : mapFailed ? `${ordered.length.toLocaleString()} places` : "Places in this area";
+    // Nearest is the default and needs no caption; only the other orders say what they do.
+    const hello = $("#hello");
+    hello.hidden = sort === "near";
+    hello.textContent = sort === "az" ? "Places in view, A to Z." : sort === "mix" ? "My lists and Other lists, taking turns." : "";
     $("[data-sort]").textContent = sort === "near" ? "Nearest" : sort === "mix" ? "Mix" : "A-Z";
     const io = $("#feedEnd");
     if (io && "IntersectionObserver" in window) new IntersectionObserver((es, ob) => { if (es[0]?.isIntersecting) { ob.disconnect(); feedLimit += FEED_CHUNK; renderFeed(false); } }, { root: body.closest(".sheet") === null ? null : body, rootMargin: "200px" }).observe(io);
@@ -102,7 +107,7 @@ export async function start(): Promise<void> {
   }
 
   function renderChips(): void {
-    for (const q of QUICK) { if (q.shows) continue; const el = $<HTMLButtonElement>(`[data-chip="${q.id}"]`); el?.setAttribute("aria-pressed", String(q.cats.every((c) => app.filters.cats.includes(c)))); }
+    for (const q of QUICK) { const el = $<HTMLButtonElement>(`[data-chip="${q.id}"]`); el?.setAttribute("aria-pressed", String(q.cats.every((c) => app.filters.cats.includes(c)))); }
     const f = app.filters;
     const n = activeCount(f);
     // The clear button always has its slot (hidden when nothing is active), so toggling a chip never moves the row.
@@ -238,7 +243,7 @@ export async function start(): Promise<void> {
     const n = filtered().length;
     return `${sheetHead("Filters", `<button class="link" data-act="clearF" type="button">Clear</button>`)}<div class="fbody">
 <h3>Show</h3><div class="tri"><button data-act="src" data-src="mine" aria-pressed="${f.mine}" type="button">${icon("u-pin")}My lists</button><button data-act="src" data-src="other" aria-pressed="${f.other}" type="button">${icon("c-other")}Other lists</button><button data-act="src" data-src="mich" aria-pressed="${f.michelinLayer}" type="button">${icon("u-award")}Michelin</button></div>
-<p class="hint">Michelin adds every Michelin restaurant worldwide (2022 to ${edition}) as its own layer on the map. Other lists are saved by other people, not friends' picks.</p>
+<p class="hint">Michelin adds every Michelin restaurant worldwide (2022 to ${edition}) as its own layer on the map. Other lists: saved by other people.</p>
 <h3>Michelin distinctions</h3><div class="cw">${kinds.map(([k, l]) => `<button class="chip g-mich" data-act="mich" data-mich="${k}" aria-pressed="${f.mich.includes(k)}" type="button"><span class="ico sm ringico" style="--rc:var(${AWARD_HEX[k]})">${icon("u-award")}</span>${l}</button>`).join("")}</div>
 <label class="sw"><span class="nm">Any year (2022 to ${edition})<small class="hint2">Off: only the ${edition} edition</small></span><input type="checkbox" data-act="anyyear" ${f.anyYear ? "checked" : ""} /><span class="tg"></span></label>
 <h3>Region</h3><div class="cw">${regions.map(([id, l]) => `<button class="chip" data-act="region" data-region="${id}" aria-pressed="${f.regions.includes(id)}" type="button">${esc(l)}</button>`).join("")}</div>
@@ -255,10 +260,13 @@ ${cfg.manifest.hasBeen ? `<label class="sw"><span class="nm">Hide places I have 
     const empty = `<div class="pkempty"><span class="big">${icon("u-heart")}</span><b>No picks yet</b>Tap the heart on any place to keep it here. Picks stay in this browser until you send them.</div>`;
     return `${sheetHead(`Your picks${mine.length ? ` (${mine.length})` : ""}`)}<div class="pkbody">${sh.length ? `<h3 class="shared-h">Shared with you (${sh.length})</h3>${sh.map(row).join("")}<div class="pkfoot"><button class="btn" data-act="saveShared" type="button">${icon("u-heart")}Save these to my picks</button></div>` : ""}${mine.length ? mine.map(row).join("") : sh.length ? "" : empty}</div>${mine.length ? `<div class="pkfoot"><button class="cta" data-act="sharePicks" type="button">${icon("u-share")}Send me your picks</button><button class="btn" data-act="copyPicks" type="button">${icon("u-copy")}Copy as text</button></div>` : ""}`;
   }
+  /** Sun/moon toggle for phones, where the top bar is full (the launcher sits there); desktop has its own at the top right. */
+  const themeLabel = (t: "light" | "dark"): string => (t === "light" ? "Switch to dark theme" : "Switch to light theme");
+  const themeBtnHtml = (): string => `<button class="ibtn themeb" data-act="theme" data-themebtn aria-label="${themeLabel(theme())}" type="button">${icon(theme() === "light" ? "u-moon" : "u-sun")}</button>`;
   function legendHtml(): string {
     const gs = cfg.categories.groups.map((g) => `<h3 class="lgh2">${esc(g.label)}</h3>${cfg.categories.categories.filter((c) => c.group === g.id).map((c) => `<div class="it"><span class="disc g-${g.id}">${icon(c.icon)}</span>${esc(c.label)}</div>`).join("")}`).join("");
     const aw = cfg.categories.awards.map((a) => `<div class="it"><span class="disc ring" style="--rc:var(${AWARD_HEX[a.id]})">${icon("u-award")}</span>${esc(a.label)}</div>`).join("");
-    return `${sheetHead("Key")}<div class="lg2"><h3 class="lgh2">Pins</h3><div class="it"><span class="disc g-other">${icon("u-heart")}</span>Hearted pins wear a rose heart</div><div class="it"><span class="disc dsm g-other">${icon("c-other")}</span>Dots when zoomed out, icons up close</div>${gs}<h3 class="lgh2">Michelin layer</h3>${aw}</div>`;
+    return `${sheetHead("Key", themeBtnHtml())}<div class="lg2"><h3 class="lgh2">Pins</h3><div class="it"><span class="disc g-other">${icon("u-heart")}</span>Hearted pins wear a rose heart</div><div class="it"><span class="disc dsm g-other">${icon("c-other")}</span>Dots when zoomed out, icons up close</div>${gs}<h3 class="lgh2">Michelin layer</h3>${aw}</div>`;
   }
 
   // ---------- picks
@@ -344,6 +352,7 @@ ${cfg.manifest.hasBeen ? `<label class="sw"><span class="nm">Hide places I have 
       case "tab": app.showTab(t.dataset.tab as "places" | "shows" | "picks"); break;
       case "theme": { const next = theme() === "light" ? "dark" : "light"; setTheme(next); break; }
       case "locate": locate(); break;
+      case "zoomIn": case "zoomOut": userMoved = true; if (act === "zoomIn") app.ctl?.map.zoomIn(); else app.ctl?.map.zoomOut(); break;
       case "locX": $("#loccard").classList.remove("on"); break;
       case "offX": retire("offline"); break;
       case "dense": sheetCtl?.snap("peek"); app.ctl?.map.zoomIn(); break;
@@ -387,7 +396,7 @@ ${cfg.manifest.hasBeen ? `<label class="sw"><span class="nm">Hide places I have 
   $("#grab").addEventListener("keydown", (e) => { if ((e as KeyboardEvent).key === "Enter" || (e as KeyboardEvent).key === " ") { e.preventDefault(); const c = sheetCtl?.current(); sheetCtl?.snap(c === "peek" ? "half" : c === "half" ? "full" : "peek"); } });
   document.addEventListener("tb:theme", (e) => {
     const t = (e as CustomEvent<"light" | "dark">).detail;
-    const b = $("#themeBtn"); b.setAttribute("aria-label", t === "light" ? "Switch to dark theme" : "Switch to light theme"); b.innerHTML = icon(t === "light" ? "u-moon" : "u-sun");
+    for (const b of $$("#themeBtn, [data-themebtn]")) { b.setAttribute("aria-label", themeLabel(t)); b.innerHTML = icon(t === "light" ? "u-moon" : "u-sun"); }
     app.ctl?.setTheme(t);
   });
   { const t = theme(); const b = $("#themeBtn"); b.setAttribute("aria-label", t === "light" ? "Switch to dark theme" : "Switch to light theme"); b.innerHTML = icon(t === "light" ? "u-moon" : "u-sun"); }
@@ -415,6 +424,7 @@ ${cfg.manifest.hasBeen ? `<label class="sw"><span class="nm">Hide places I have 
       window.dispatchEvent(new CustomEvent("tb:map"));
     } catch (err) {
       console.warn("map unavailable", err);
+      mapFailed = true; renderFeed();
       $("#mapnote").hidden = false;
       sheetCtl?.snap("full", false);
     }

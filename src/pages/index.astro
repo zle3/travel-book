@@ -45,17 +45,17 @@ const first = features
         </div>
         <div class="search" role="search">
           <Icon name="u-search" />
-          <input id="q" type="search" placeholder="Search saved places, Michelin, cities, ZIPs" aria-label="Search saved places, Michelin restaurants, cities, neighborhoods and ZIP codes" role="combobox" aria-expanded="false" aria-controls="sugg" aria-autocomplete="list" autocomplete="off" enterkeyhint="search" />
+          <input id="q" type="search" placeholder="Search places or a city" aria-label="Search saved places, Michelin restaurants, cities, neighborhoods and ZIP codes" role="combobox" aria-expanded="false" aria-controls="sugg" aria-autocomplete="list" autocomplete="off" enterkeyhint="search" />
           <button class="xq" data-act="xq" aria-label="Clear search" type="button"><Icon name="u-close" /></button>
           <button class="fbtn" data-act="openF" aria-label="Filters" type="button"><Icon name="u-filter" />Filters<span class="badge" data-fcount hidden>0</span></button>
         </div>
         <div class="sugg" id="sugg" role="listbox" aria-label="Suggestions"></div>
         <div class="quick" id="chips" role="group" aria-label="Quick filters">
+          <p class="qlab" id="qlab1">Show</p>
           <div class="qr1" id="qr1"></div>
+          <p class="qlab" id="qlab2">Categories</p>
           <div class="qr2" id="qr2">
-            {QUICK.map((q) => q.shows
-              ? <button class="chip" data-act="tab" data-tab="shows" type="button"><span class="ico sm g-sights"><Icon name="u-shows" /></span>{q.label}</button>
-              : <button class="chip" data-act="quick" data-chip={q.id} aria-pressed="false" type="button"><span class={`ico sm g-${q.group}`}><Icon name={q.icon} /></span>{q.label}</button>)}
+            {QUICK.map((q) => <button class="chip" data-act="quick" data-chip={q.id} aria-pressed="false" type="button"><span class={`ico sm g-${q.group}`}><Icon name={q.icon} /></span>{q.label}</button>)}
           </div>
         </div>
       </header>
@@ -70,11 +70,11 @@ const first = features
           </div>
         </div>
         <div class="crow">
-          <p class="cnt" data-cnt aria-live="polite">{features.length} places</p>
+          <p class="cnt" data-cnt aria-live="polite">Places in this area</p>
           <button class="sortb" data-act="sort" aria-haspopup="menu" aria-expanded="false" aria-label="Change sort order" type="button"><Icon name="u-sort" />Sort: <span data-sort>Nearest</span></button>
           <div class="sortmenu" id="sortmenu" role="menu"></div>
         </div>
-        <p class="hello" id="hello">Places in view, nearest to the middle of the map first.</p>
+        <p class="hello" id="hello" hidden></p>
         <div class="sbody" id="listBody" tabindex="-1">
           {first.map(({ p, d }) => {
             const cat = catById.get(p.c) ?? cats.uncategorized;
@@ -95,6 +95,7 @@ const first = features
     </div>
 
     <div class="ctl" id="ctl">
+      <div class="grp zoomg" role="group" aria-label="Zoom"><button class="cb2" data-act="zoomIn" aria-label="Zoom in" type="button"><Icon name="u-plus" /></button><button class="cb2" data-act="zoomOut" aria-label="Zoom out" type="button"><Icon name="u-minus" /></button></div>
       <button class="cb2 wxchip" id="wxchip" data-act="weather" aria-label="Weather for the middle of the map" hidden type="button"><svg class="ic"><use href="#w-cloud"></use></svg><b></b></button>
       <button class="cb2" data-act="locate" id="locateBtn" aria-label="Locate me" type="button"><Icon name="u-locate" /></button>
       <button class="cb2 keyb" data-act="key" type="button"><Icon name="u-key" />Key</button>
