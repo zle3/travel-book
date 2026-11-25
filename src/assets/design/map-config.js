@@ -10,7 +10,7 @@
    - Labels only from ZOOM.labels, with collision (no allow-overlap) so they never pile up.
    - Pins stay legible on standard light and dark: white ring plus a soft dark halo. */
 
-export const BASE_STYLE_URL = 'https://tiles.openfreemap.org/styles/positron';   // OpenFreeMap, open data, no key
+/* The shipped basemap is Protomaps (see ATTRIBUTION). Nothing here fetches OpenFreeMap; the layer ids named in the comments below come from an early positron prototype. */
 
 /* Attribution strings (render in a small credit line; keep it visible, never hidden behind sheets). */
 export const ATTRIBUTION = {
